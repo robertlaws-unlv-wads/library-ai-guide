@@ -268,12 +268,17 @@ main:focus { outline: none; }
 .site-nav ul {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.15rem;
   margin: 0;
   padding: 0;
   list-style: none;
   font-size: 0.95rem;
 }
+
+/* Spacing here is the flex gap. Cancel the prose rhythm, which would
+   otherwise offset every item after the first. */
+.site-nav li + li { margin-block-start: 0; }
 
 .site-nav a {
   display: inline-block;
@@ -393,8 +398,15 @@ a:hover { color: var(--scarlet-deep); }
 strong { font-weight: 700; }
 
 ul, ol { padding-inline-start: 1.4rem; }
-li + li { margin-block-start: 0.45em; }
 li::marker { color: var(--ink-muted); }
+
+/* Vertical rhythm for PROSE lists only. Any list used as a layout container
+   sets its own spacing with flex/gap or grid/gap, and this margin fights it:
+   it pushed every nav item after the first down by 0.45em (misaligning them
+   against the active pill) and made the first gap in the table of contents
+   smaller than the rest. If you add another layout list, reset it the same
+   way — the resets live with their components, .site-nav and .toc below. */
+li + li { margin-block-start: 0.45em; }
 
 blockquote {
   margin-inline: 0;
@@ -1048,9 +1060,13 @@ details > :last-child { padding-block-end: 1.1rem; }
   padding: 0;
   margin-block: 2rem;
   display: grid;
-  gap: 0.75rem;
+  gap: 0.85rem;
   counter-reset: toc;
 }
+
+/* Spacing here is the grid gap. Cancel the prose rhythm, which would
+   otherwise make the first gap smaller than all the others. */
+.toc__item + .toc__item { margin-block-start: 0; }
 
 .toc__item {
   counter-increment: toc;
