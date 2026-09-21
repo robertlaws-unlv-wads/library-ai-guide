@@ -91,9 +91,28 @@ node tools/contrast.mjs "#b10202" "#ffffff"
 ```
 
 Brand note: UNLV publishes separate print and screen scarlets. We use the
-**screen** value `#B10202` (7.29:1). The print value `#E31837` reaches only
-4.72:1 and is too marginal for body text. `#9FA1A4` (UNLV Gray Light) is
-2.59:1 and must never carry text or meaning — decorative borders only.
+**screen** value `#B10202` — 6.41:1 on the cream ground, 7.18:1 on the card
+surface. The print value `#E31837` reaches only 4.72:1 and is too marginal
+for body text. `#9FA1A4` (UNLV Gray Light) is 2.59:1 and is **not used
+anywhere** — it fails both the text and the UI threshold.
+
+The page ground is a warm cream (`#F4F0E6`) rather than white, with content
+on a lighter card surface (`#FFFDF8`). Pure white at full-page scale is
+fatiguing across a 40-minute read. The two surfaces are only 1.12:1 apart,
+so **cards must also carry a border** — the tint alone is not a perceivable
+boundary.
+
+Two boundary values were tightened after measurement and should not be
+lightened again:
+
+- `--border-strong` is `#847C6C` (3.63:1 on ground, 4.07:1 on surface). An
+  earlier `#9C9482` measured 2.65:1 and failed 1.4.11.
+- A `.choice` row is the hit area for a form control, so its border uses
+  `--border-strong`, not the decorative `--border` (`#E0D9C7`, only 1.38:1
+  against the card).
+
+Scarlet is unreadable on the dark `.takeaways` block (2.25:1). Accents there
+use `--scarlet-on-dark` (`#FFA39E`, 8.59:1).
 
 ### No web fonts
 

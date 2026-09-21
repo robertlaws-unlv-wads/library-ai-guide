@@ -2,72 +2,102 @@
    AI Literacy Module — UNLV Libraries
    The only stylesheet. No build step, no preprocessor, no third-party imports.
 
-   COLOR TOKENS: every value below was measured with `node tools/contrast.mjs`.
-   The ratio in each comment is against --surface (#ffffff) unless stated.
+   DESIGN NOTES
+   Warm cream ground rather than white, with content sitting on lighter cards.
+   Pure white at full-page scale is fatiguing over a 40-minute read and reads
+   as clinical; a warm ground is calmer and gives the cards something to sit
+   on. Display type is large, heavy and set tight (line-height ~1.02, negative
+   tracking) so hierarchy is obvious at a glance, against body copy that stays
+   modest and highly readable.
+
+   COLOR TOKENS: every value was measured with `node tools/contrast.mjs`.
+   Ratios in the comments are against --ground unless stated.
    If you change a color, RE-RUN THE CHECKER. Do not eyeball it.
 
-   Brand source: https://www.unlv.edu/brand/colors  ("Screen Standards")
+   Brand source: https://www.unlv.edu/brand/colors ("Screen Standards")
    UNLV publishes separate print and screen scarlets. We use the SCREEN value
-   (#B10202), not the print value (#E31837, only 4.72:1 and marginal for text).
+   (#B10202). The print value (#E31837) is only 4.72:1 and too weak for text.
    ========================================================================== */
 
 :root {
+  /* --- Ground and surfaces ----------------------------------------------
+     The page is cream; cards are a warm near-white that lifts off it. The
+     two are only 1.12:1 apart, which is fine for a decorative distinction
+     but means cards also need a border to be reliably perceivable.        */
+  --ground: #f4f0e6;
+  --ground-deep: #ebe6d8;        /* recessed bands, table headers */
+  --surface: #fffdf8;            /* cards, exercises, callouts */
+  --border: #e0d9c7;
+  --border-strong: #847c6c;      /* 3.63:1 on ground, 4.07:1 on surface — meets 1.4.11 */
+
+  /* --- Ink ---------------------------------------------------------------
+     A warm near-black rather than #000. Pure black on cream is harsh and
+     slightly vibrates; this sits in the paper.
+       --ink        14.43:1 on ground, 16.15:1 on surface   PASS
+       --ink-muted   6.59:1 on ground,  7.37:1 on surface   PASS          */
+  --ink: #221f1a;
+  --ink-muted: #5a544a;
+  --ink-inverse: #fffdf8;
+
   /* --- Brand -------------------------------------------------------------
-     UNLV Scarlet (screen standard)        7.29:1  text PASS
-     UNLV Gray (screen standard)           5.74:1  text PASS
-     UNLV Gray Light — 2.59:1, FAILS text. Decorative borders ONLY.          */
-  --brand-scarlet: #b10202;
-  --brand-gray: #666666;
-  --brand-gray-light: #9fa1a4;
-
-  /* --- Text ------------------------------------------------------------- */
-  --text: #1b1b1b;               /* 17.22:1  PASS */
-  --text-muted: #565656;         /*  7.34:1  PASS */
-  --text-on-dark: #ffffff;       /*  7.29:1 on --brand-scarlet  PASS */
-
-  /* --- Surfaces --------------------------------------------------------- */
-  --surface: #ffffff;
-  --surface-sunken: #f7f7f5;     /* --text on this: 16.6:1  PASS */
-  --border: #d4d4d0;
-  --border-strong: #8a8a84;      /* 3.4:1 on --surface — meets 1.4.11 for UI */
+     UNLV Scarlet, screen standard.  6.41:1 on ground, 7.18:1 on surface.
+     --scarlet-deep for hover/active.  8.26:1 on ground.
+     UNLV Gray Light (#9FA1A4) is 2.59:1 and is NOT used — it fails text
+     contrast and must never carry meaning.                                */
+  --scarlet: #b10202;
+  --scarlet-deep: #8c1515;
+  --scarlet-wash: #f7e9e4;       /* --ink on this: 13.6:1  PASS */
+  /* Scarlet is unreadable on the dark ink surface (2.25:1). This lighter
+     tint is for accents inside .takeaways only.  8.59:1 on --ink  PASS */
+  --scarlet-on-dark: #ffa39e;
 
   /* --- Interactive ------------------------------------------------------ */
-  --link: #b10202;               /*  7.29:1  PASS  (always underlined too) */
-  --link-hover: #7d0101;
-  --focus: #0b5fff;              /*  5.13:1  PASS  — >=3:1 required by 2.4.7 */
+  --link: #b10202;
+  --focus: #0b5fff;              /* 4.6:1 on ground — >=3:1 required (2.4.7) */
 
   /* --- Feedback states ---------------------------------------------------
-     Never used alone. Every state also carries a text label and an icon.   */
-  --correct: #136c3a;            /*  6.49:1  PASS */
-  --correct-bg: #e8f4ec;         /* --text on this: 15.24:1  PASS */
-  --incorrect: #a8200d;          /*  7.30:1  PASS */
-  --incorrect-bg: #fdeaea;       /* --text on this: 14.87:1  PASS */
-  --partial: #7a5300;            /*  6.05:1  PASS */
-  --partial-bg: #fff6e0;         /* --text on this: 16.00:1  PASS */
+     Never used alone. Every state also carries a text label and an icon.  */
+  --correct: #10603a;            /* 7.3:1 on surface  PASS */
+  --correct-bg: #e6f2ea;
+  --incorrect: #a8200d;          /* 6.8:1 on surface  PASS */
+  --incorrect-bg: #fbe9e6;
+  --partial: #74520a;            /* 6.2:1 on surface  PASS */
+  --partial-bg: #fbf1dc;
 
   /* --- Callouts --------------------------------------------------------- */
-  --note-bg: #eef3fb;            /* --text on this: 15.46:1  PASS */
+  --note-bg: #eaf0f7;
   --note-border: #2c5aa0;
-  --caution-bg: #fff6e0;
+  --caution-bg: #fbf1dc;
   --caution-border: #8a5a00;
-  --example-bg: #f4f1f7;
+  --example-bg: #f1edf6;
   --example-border: #5b4a7a;
 
   /* --- Type -------------------------------------------------------------
      UNLV's brand typeface is Roboto. We deliberately do NOT load it from
-     Google Fonts: that is a third-party request, and this site's privacy
-     claim ("nothing leaves your browser") must be verifiable in the Network
-     tab, not merely asserted. The UNLV brand guide explicitly permits
-     "Arial, Helvetica, Calibri, or other simple sans-serif typefaces" as
-     alternatives. If you later want true Roboto, SELF-HOST the woff2 files
-     (Apache 2.0, redistributable) — do not link to fonts.googleapis.com.    */
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-               Arial, sans-serif;
+     Google Fonts: that is a third-party request, and the privacy claim on
+     the About page must be verifiable in the Network tab. The brand guide
+     explicitly permits "Arial, Helvetica, Calibri, or other simple
+     sans-serif typefaces" as alternatives.
+
+     --font-display is a SEPARATE TOKEN so a self-hosted display face can be
+     dropped in by changing one line. If you do that, self-host the woff2
+     (Roboto is Apache 2.0 and redistributable) — never link to
+     fonts.googleapis.com.                                                 */
+  --font-display: system-ui, -apple-system, "Segoe UI", Roboto,
+                  "Helvetica Neue", Arial, sans-serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --measure: 68ch;               /* prose line length */
-  --step: 1rem;
-  --radius: 4px;
+  --measure: 66ch;
+  --radius: 10px;
+  --radius-lg: 20px;             /* cards — borrowed proportion */
+  --radius-pill: 100px;
+
+  --shadow-card: 0 1px 2px rgba(34, 31, 26, 0.04),
+                 0 6px 18px rgba(34, 31, 26, 0.05);
+  --shadow-lift: 0 2px 4px rgba(34, 31, 26, 0.06),
+                 0 12px 32px rgba(34, 31, 26, 0.08);
 }
 
 /* ==========================================================================
@@ -93,12 +123,11 @@ html {
 body {
   margin: 0;
   font-family: var(--font-sans);
-  /* 1.125rem base: this is long-form instructional prose read on screen. */
   font-size: 1.125rem;
   line-height: 1.65;
-  color: var(--text);
-  background: var(--surface);
-  /* No fixed heights anywhere; satisfies 1.4.12 text-spacing overrides. */
+  color: var(--ink);
+  background: var(--ground);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ==========================================================================
@@ -110,30 +139,26 @@ body {
   left: -9999px;
   top: 0;
   z-index: 100;
-  padding: 0.75rem 1.25rem;
+  padding: 0.75rem 1.5rem;
   background: var(--surface);
   color: var(--link);
-  font-weight: 600;
+  font-weight: 700;
   border: 3px solid var(--focus);
+  border-radius: var(--radius-pill);
 }
 
-.skip-link:focus {
-  left: 0.5rem;
-  top: 0.5rem;
-}
+.skip-link:focus { left: 0.75rem; top: 0.75rem; }
 
 /* ==========================================================================
-   Focus — never remove, never rely on color alone
+   Focus — never removed, never colour-only
    ========================================================================== */
 
 :focus-visible {
   outline: 3px solid var(--focus);
-  outline-offset: 2px;
-  border-radius: 2px;
+  outline-offset: 3px;
+  border-radius: 3px;
 }
 
-/* Only suppress the default ring where :focus-visible is supported, so
-   keyboard users never lose an indicator in older engines. */
 :focus:not(:focus-visible) { outline: none; }
 
 /* ==========================================================================
@@ -142,61 +167,67 @@ body {
 
 .wrap {
   width: 100%;
-  max-width: 78ch;
+  max-width: 76ch;
   margin-inline: auto;
-  /* 16px gutter holds at 320px with no horizontal scroll (1.4.10). */
-  padding-inline: 1rem;
+  padding-inline: 1rem;          /* holds at 320px with no h-scroll (1.4.10) */
+}
+
+@media (min-width: 40rem) {
+  .wrap { padding-inline: 2rem; }
 }
 
 main { display: block; }
-
 main:focus { outline: none; }
 
-.page-body > * + * { margin-block-start: 1.1em; }
-
+.page-body { padding-block: 1rem 2rem; }
+.page-body > * + * { margin-block-start: 1.15em; }
 .prose { max-width: var(--measure); }
 
 /* ==========================================================================
-   Site header / footer
+   Site header
    ========================================================================== */
 
 .site-header {
-  border-block-end: 4px solid var(--brand-scarlet);
-  background: var(--surface);
+  background: var(--ground);
+  border-block-end: 1px solid var(--border);
 }
 
 .site-header__inner {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
-  align-items: baseline;
+  gap: 0.5rem 2rem;
+  align-items: center;
   justify-content: space-between;
-  padding-block: 0.9rem;
+  padding-block: 1.1rem;
 }
 
-.site-title {
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-}
-
-.site-title a { color: var(--text); text-decoration: none; }
-.site-title a:hover { text-decoration: underline; }
+.site-title { margin: 0; line-height: 1.2; }
 
 .site-title__org {
   display: block;
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--brand-scarlet);
+  letter-spacing: 0.12em;
+  color: var(--scarlet);
+  margin-block-end: 0.15rem;
 }
+
+.site-title a {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.site-title a:hover { color: var(--scarlet); }
 
 .site-nav ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 1.25rem;
+  gap: 0.15rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -205,107 +236,190 @@ main:focus { outline: none; }
 
 .site-nav a {
   display: inline-block;
-  /* 44px min target height via padding + line-height (2.5.8 / 2.5.5). */
-  padding: 0.6rem 0.15rem;
-  color: var(--text);
+  padding: 0.6rem 0.9rem;        /* clears 44px with line-height */
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  background: var(--surface);
+  color: var(--ink);
 }
 
 .site-nav a[aria-current="page"] {
-  font-weight: 700;
-  color: var(--brand-scarlet);
-  text-decoration-thickness: 3px;
-  text-underline-offset: 4px;
+  background: var(--ink);
+  color: var(--ink-inverse);
 }
+
+/* At phone widths the nav has to share a row with the wordmark, so tighten
+   it rather than letting a single item wrap onto a line of its own. Targets
+   stay at 44px via the vertical padding. */
+@media (max-width: 30rem) {
+  .site-header__inner { gap: 0.35rem 1rem; }
+  .site-nav { margin-inline-start: -0.55rem; }
+  .site-nav ul { gap: 0; font-size: 0.88rem; }
+  .site-nav a { padding: 0.65rem 0.55rem; }
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
 
 .site-footer {
-  margin-block-start: 4rem;
-  padding-block: 2rem;
+  margin-block-start: 5rem;
+  padding-block: 2.5rem 3rem;
   border-block-start: 1px solid var(--border);
-  background: var(--surface-sunken);
   font-size: 0.95rem;
-  color: var(--text-muted);
+  color: var(--ink-muted);
 }
 
-.site-footer p { margin-block: 0.4em; }
+.site-footer p { margin-block: 0.45em; }
 .site-footer a { color: var(--link); }
 
 /* ==========================================================================
-   Typography
+   Typography — the main lever on "look and feel"
    ========================================================================== */
 
 h1, h2, h3, h4 {
-  line-height: 1.25;
-  font-weight: 700;
-  /* text-wrap: balance is progressive enhancement; ignored where unsupported */
+  font-family: var(--font-display);
+  color: var(--ink);
   text-wrap: balance;
-  margin-block: 1.6em 0.5em;
 }
 
 h1 {
-  font-size: clamp(1.8rem, 1.3rem + 2.2vw, 2.6rem);
-  margin-block-start: 1rem;
+  font-size: clamp(2.4rem, 1.5rem + 4.2vw, 4rem);
+  font-weight: 800;
+  line-height: 1.02;             /* very tight — the jamm move */
+  letter-spacing: -0.035em;
+  margin-block: 1.5rem 0.6em;
+  max-width: 18ch;               /* forces the 2–3 line stack that reads well */
 }
 
-h2 { font-size: clamp(1.4rem, 1.15rem + 1.1vw, 1.8rem); }
-h3 { font-size: 1.2rem; }
-h4 { font-size: 1.05rem; }
+h2 {
+  font-size: clamp(1.6rem, 1.25rem + 1.6vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-block: 2.4em 0.5em;
+  max-width: 24ch;
+}
 
-p { margin-block: 0 1em; }
+h3 {
+  font-size: 1.3rem;
+  font-weight: 750;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  margin-block: 2em 0.4em;
+}
 
-a { color: var(--link); text-underline-offset: 2px; }
-a:hover { color: var(--link-hover); }
+h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-block: 1.6em 0.3em;
+}
 
-/* Links in body prose are ALWAYS underlined — color alone is not a cue
-   (1.4.1). Nav and buttons are exempt because position/shape identifies them. */
-.prose a, .page-body a { text-decoration: underline; }
+/* The measure limit on h1/h2 is for display headings in prose. Component
+   headings are labels and must not inherit it. */
+.callout__title,
+.two-situations__title,
+.exercise__title,
+.objectives h2,
+.takeaways h2,
+.takeaways h3,
+.results__heading,
+.error-summary h2,
+.error-summary h3,
+.content-error h2,
+.noscript-note h2 { max-width: none; }
+
+/* First heading in a container should not push off the top. */
+.page-body > h1:first-child,
+.callout > :first-child,
+.takeaways > :first-child,
+.exercise__body > :first-child { margin-block-start: 0; }
+
+p { margin-block: 0 1.1em; }
+
+a { color: var(--link); text-underline-offset: 3px; }
+a:hover { color: var(--scarlet-deep); }
+
+/* Body links always underlined — colour alone is not a cue (1.4.1). */
+.prose a, .page-body a, .feedback a, .consequence a { text-decoration: underline; }
 
 strong { font-weight: 700; }
 
-ul, ol { padding-inline-start: 1.5rem; }
-li + li { margin-block-start: 0.4em; }
+ul, ol { padding-inline-start: 1.4rem; }
+li + li { margin-block-start: 0.45em; }
+li::marker { color: var(--ink-muted); }
 
 blockquote {
   margin-inline: 0;
-  padding-inline-start: 1.25rem;
-  border-inline-start: 4px solid var(--border-strong);
-  color: var(--text-muted);
+  margin-block: 1.75rem;
+  padding: 1rem 1.4rem;
+  border-inline-start: 4px solid var(--scarlet);
+  background: var(--surface);
+  border-radius: 0 var(--radius) var(--radius) 0;
 }
+
+blockquote p:last-child { margin-block-end: 0; }
 
 code, kbd, samp {
   font-family: var(--font-mono);
-  font-size: 0.92em;
-  background: var(--surface-sunken);
-  padding: 0.12em 0.35em;
-  border-radius: 3px;
+  font-size: 0.9em;
+  background: var(--ground-deep);
+  padding: 0.14em 0.4em;
+  border-radius: 4px;
 }
 
 hr {
   border: 0;
   border-block-start: 1px solid var(--border);
-  margin-block: 2.5rem;
+  margin-block: 3rem;
 }
+
+/* --- Tables ------------------------------------------------------------- */
 
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 0.97rem;
-  margin-block: 1.5rem;
+  margin-block: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 
 caption {
   text-align: start;
   font-weight: 700;
-  padding-block-end: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  padding-block-end: 0.6rem;
 }
 
 th, td {
   text-align: start;
   vertical-align: top;
-  padding: 0.6rem 0.75rem;
+  padding: 0.85rem 1rem;
   border-block-end: 1px solid var(--border);
 }
 
-th { background: var(--surface-sunken); }
+thead th {
+  background: var(--ground-deep);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+tbody tr:last-child th,
+tbody tr:last-child td { border-block-end: 0; }
+
+tbody th[scope="row"] { font-weight: 700; }
 
 /* ==========================================================================
    Utilities
@@ -323,59 +437,69 @@ th { background: var(--surface-sunken); }
 }
 
 .lede {
-  font-size: 1.22rem;
-  line-height: 1.55;
-  color: var(--text);
+  font-size: clamp(1.2rem, 1.08rem + 0.5vw, 1.4rem);
+  line-height: 1.5;
+  color: var(--ink-muted);
+  max-width: 44ch;
+  margin-block-end: 2rem;
 }
 
-.meta {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-}
+.meta { font-size: 0.88rem; color: var(--ink-muted); }
 
 /* ==========================================================================
-   Callouts — every variant REQUIRES a visible heading. Color never carries
-   meaning on its own (1.4.1); the heading text is the actual signal.
+   Cards — the structural idea borrowed from the reference: content sits on
+   raised surfaces floating on the warm ground, rather than running edge to
+   edge on a white page.
    ========================================================================== */
 
 .callout {
-  margin-block: 1.75rem;
-  padding: 1rem 1.25rem;
-  border-inline-start: 5px solid var(--note-border);
+  margin-block: 2rem;
+  padding: 1.35rem 1.6rem;
   background: var(--note-bg);
-  border-radius: 0 var(--radius) var(--radius) 0;
+  border: 1px solid var(--border);
+  border-inline-start: 5px solid var(--note-border);
+  border-radius: var(--radius) var(--radius-lg) var(--radius-lg) var(--radius);
 }
 
 .callout > :first-child { margin-block-start: 0; }
 .callout > :last-child { margin-block-end: 0; }
 
+/* Every callout REQUIRES a visible heading. Colour never carries meaning
+   on its own (1.4.1) — the heading text is the actual signal. */
 .callout__title {
-  margin-block: 0 0.5rem;
-  font-size: 1rem;
+  margin-block: 0 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.1em;
+  color: var(--note-border);
 }
 
 .callout--caution { background: var(--caution-bg); border-inline-start-color: var(--caution-border); }
+.callout--caution .callout__title { color: var(--caution-border); }
 .callout--example { background: var(--example-bg); border-inline-start-color: var(--example-border); }
+.callout--example .callout__title { color: var(--example-border); }
 
-/* --- Two situations: the same principle, shown for both audiences -------- */
+/* --- Two situations ----------------------------------------------------- */
 
 .two-situations {
-  margin-block: 2rem;
+  margin-block: 2.75rem;
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
   overflow: hidden;
 }
 
 .two-situations__title {
   margin: 0;
-  padding: 0.7rem 1.15rem;
-  font-size: 0.85rem;
+  padding: 0.85rem 1.5rem;
+  font-size: 0.78rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  background: var(--brand-scarlet);
-  color: var(--text-on-dark);
+  letter-spacing: 0.1em;
+  background: var(--ink);
+  color: var(--ink-inverse);
 }
 
 .two-situations__grid {
@@ -384,19 +508,22 @@ th { background: var(--surface-sunken); }
   background: var(--border);
 }
 
-@media (min-width: 42rem) {
+@media (min-width: 44rem) {
   .two-situations__grid { grid-template-columns: 1fr 1fr; }
 }
 
 .two-situations__case {
-  padding: 1rem 1.15rem;
+  padding: 1.35rem 1.5rem;
   background: var(--surface);
 }
 
 .two-situations__case h4 {
-  margin-block: 0 0.4em;
-  font-size: 0.95rem;
-  color: var(--brand-scarlet);
+  margin-block: 0 0.45em;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--scarlet);
 }
 
 .two-situations__case p:last-child { margin-block-end: 0; }
@@ -404,103 +531,124 @@ th { background: var(--surface-sunken); }
 /* --- AI output panel: canned, curated output the learner examines -------- */
 
 .ai-output {
-  margin-block: 1.75rem;
+  margin-block: 2rem;
+  padding: 1.4rem 1.6rem;
+  background: var(--ground-deep);
   border: 2px dashed var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--surface-sunken);
-  padding: 1rem 1.25rem;
+  border-radius: var(--radius-lg);
 }
 
 .ai-output__label {
-  margin-block: 0 0.75rem;
-  font-size: 0.8rem;
-  font-weight: 700;
+  margin-block: 0 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  color: var(--ink-muted);
 }
 
+.ai-output p:last-child { margin-block-end: 0; }
 .ai-output cite { font-style: normal; }
 
 .claim-marker {
   display: inline-block;
-  min-width: 1.6em;
-  padding: 0 0.35em;
-  margin-inline-end: 0.2em;
-  font-size: 0.82em;
-  font-weight: 700;
+  min-width: 1.5em;
+  height: 1.5em;
+  line-height: 1.5em;
+  margin-inline-end: 0.25em;
+  font-size: 0.78em;
+  font-weight: 800;
   text-align: center;
-  color: var(--text-on-dark);
-  background: var(--brand-gray);
-  border-radius: 3px;
-  text-decoration: none;
+  color: var(--ink-inverse);
+  background: var(--ink);
+  border-radius: 50%;
 }
-
-a.claim-marker:hover { background: var(--brand-scarlet); }
 
 /* --- Native disclosure. No custom accordion, ever. ---------------------- */
 
 details {
-  margin-block: 1.25rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  margin-block: 1.5rem;
   background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
 }
 
 details > summary {
-  padding: 0.75rem 1rem;
-  font-weight: 600;
+  padding: 1rem 1.4rem;
+  font-weight: 700;
   cursor: pointer;
-  border-radius: var(--radius);
 }
 
+details > summary:hover { background: var(--ground); }
 details[open] > summary { border-block-end: 1px solid var(--border); }
 
-details > :not(summary) { padding-inline: 1rem; }
-details > :last-child { padding-block-end: 0.85rem; }
+details > :not(summary) { padding-inline: 1.4rem; }
+details > :first-of-type:not(summary) { padding-block-start: 1.1rem; }
+details > :last-child { padding-block-end: 1.1rem; }
 
 /* ==========================================================================
-   Buttons
+   Buttons — pill shaped, borrowed from the reference
    ========================================================================== */
 
 .btn {
-  display: inline-block;
-  /* min-height 44px for touch (2.5.5 / 2.5.8) */
-  min-height: 44px;
-  padding: 0.6rem 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.7rem 1.75rem;
   font: inherit;
+  font-family: var(--font-display);
   font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.5;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.4;
   text-align: center;
   text-decoration: none;
-  color: var(--text-on-dark);
-  background: var(--brand-scarlet);
-  border: 2px solid var(--brand-scarlet);
-  border-radius: var(--radius);
+  color: var(--ink-inverse);
+  background: var(--scarlet);
+  border: 2px solid var(--scarlet);
+  border-radius: var(--radius-pill);
   cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+              transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.btn:hover { background: var(--link-hover); border-color: var(--link-hover); }
+.btn:hover {
+  background: var(--scarlet-deep);
+  border-color: var(--scarlet-deep);
+  color: var(--ink-inverse);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lift);
+}
+
+.btn:active { transform: translateY(0); }
 
 .btn--secondary {
-  color: var(--brand-scarlet);
+  color: var(--ink);
   background: var(--surface);
+  border-color: var(--border-strong);
 }
 
-.btn--secondary:hover { background: var(--surface-sunken); color: var(--link-hover); }
+.btn--secondary:hover {
+  background: var(--ground-deep);
+  color: var(--ink);
+  border-color: var(--ink);
+}
 
-.btn[aria-disabled="true"],
-.btn:disabled {
-  opacity: 0.55;
+.btn[aria-disabled="true"], .btn:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .btn-row {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-block: 1.5rem;
+  margin-block: 1.75rem;
 }
 
 /* ==========================================================================
@@ -510,37 +658,45 @@ details > :last-child { padding-block-end: 0.85rem; }
    ========================================================================== */
 
 .exercise {
-  margin-block: 2.25rem;
-  border: 2px solid var(--border-strong);
-  border-radius: var(--radius);
+  margin-block: 2.75rem;
   background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
 }
 
 .exercise__header {
-  padding: 0.85rem 1.25rem;
-  background: var(--surface-sunken);
-  border-block-end: 1px solid var(--border);
+  padding: 1.2rem 1.6rem;
+  background: var(--ink);
+  color: var(--ink-inverse);
 }
 
 .exercise__kicker {
   display: block;
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-size: 0.72rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--brand-scarlet);
+  letter-spacing: 0.12em;
+  opacity: 0.75;
+  margin-block-end: 0.25rem;
 }
 
-.exercise__title { margin: 0.15rem 0 0; font-size: 1.15rem; }
+.exercise__title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink-inverse);
+}
 
-.exercise__body { padding: 1.15rem 1.25rem; }
-
-.exercise__intro { margin-block-start: 0; }
+.exercise__body { padding: 1.5rem 1.6rem 1.6rem; }
+.exercise__intro { margin-block-start: 0; color: var(--ink-muted); }
 
 /* --- Question groups ---------------------------------------------------- */
 
 .q {
-  margin: 0 0 1.5rem;
+  margin: 0 0 2rem;
   padding: 0;
   border: 0;
 }
@@ -549,156 +705,166 @@ details > :last-child { padding-block-end: 0.85rem; }
 
 .q > legend {
   padding: 0;
-  font-size: 1.05rem;
-  font-weight: 600;
-  line-height: 1.45;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.012em;
 }
+
+.q > legend:focus { outline: none; }
+.q > legend:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
 
 .q__position {
   display: block;
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.72rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--text-muted);
-  margin-block-end: 0.3rem;
+  letter-spacing: 0.12em;
+  color: var(--scarlet);
+  margin-block-end: 0.4rem;
 }
 
 .q__hint {
-  margin-block: 0.4rem 0;
+  margin-block: 0.5rem 0;
   font-size: 0.92rem;
-  color: var(--text-muted);
+  color: var(--ink-muted);
 }
 
 .q__choices {
-  margin-block-start: 0.9rem;
+  margin-block-start: 1rem;
   display: grid;
-  gap: 0.5rem;
+  gap: 0.6rem;
 }
 
-/* Each choice is a label wrapping a real input. Clicking anywhere on the
-   row activates it, and the hit area clears 44px. */
+/* Each choice is a label wrapping a real input. The whole row is the hit
+   area and it clears 44px. */
 .choice {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 0.7rem;
+  gap: 0.8rem;
   align-items: start;
-  min-height: 44px;
-  padding: 0.7rem 0.85rem;
-  border: 2px solid var(--border);
+  min-height: 48px;
+  padding: 0.85rem 1rem;
+  background: var(--ground);
+  /* --border is only 1.38:1 against the card surface. A choice row is the
+     hit area for a form control, so its boundary must clear 3:1 (1.4.11). */
+  border: 2px solid var(--border-strong);
   border-radius: var(--radius);
   cursor: pointer;
+  transition: border-color 0.12s ease, background-color 0.12s ease;
 }
 
-.choice:hover { border-color: var(--border-strong); background: var(--surface-sunken); }
+.choice:hover {
+  border-color: var(--ink);
+  background: var(--ground-deep);
+}
 
 .choice input {
   /* Native control, scaled up for target size. Never replaced with a div. */
-  width: 1.15rem;
-  height: 1.15rem;
-  margin: 0.28rem 0 0;
-  accent-color: var(--brand-scarlet);
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0.3rem 0 0;
+  accent-color: var(--scarlet);
   flex: none;
 }
 
-/* Focus ring goes on the whole row so it's visible at 2px offset. */
+/* Ring goes on the whole row so it is visible at a 2px offset. */
 .choice:has(input:focus-visible) {
   outline: 3px solid var(--focus);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 .choice__text { display: block; }
 
-/* Graded states. Each is ALSO labelled in text by the JS, and carries an
+/* Graded states. Each is ALSO labelled in text by the JS and carries an
    icon — the border and tint are the third cue, never the only one. */
-.choice[data-state="correct"] {
-  border-color: var(--correct);
-  background: var(--correct-bg);
-}
-
-.choice[data-state="incorrect"] {
-  border-color: var(--incorrect);
-  background: var(--incorrect-bg);
-}
-
-.choice[data-state="missed"] {
-  border-color: var(--partial);
-  background: var(--partial-bg);
-  border-style: dashed;
-}
+.choice[data-state="correct"]   { border-color: var(--correct);   background: var(--correct-bg); }
+.choice[data-state="incorrect"] { border-color: var(--incorrect); background: var(--incorrect-bg); }
+.choice[data-state="missed"]    { border-color: var(--partial);   background: var(--partial-bg); border-style: dashed; }
+.choice[data-state="chosen"]    { border-color: var(--ink);       background: var(--surface); }
 
 .choice__mark {
   grid-column: 1 / -1;
   display: block;
-  margin-block-start: 0.35rem;
-  font-size: 0.9rem;
-  font-weight: 700;
+  margin-block-start: 0.4rem;
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.choice[data-state="correct"] .choice__mark { color: var(--correct); }
+.choice[data-state="correct"]   .choice__mark { color: var(--correct); }
 .choice[data-state="incorrect"] .choice__mark { color: var(--incorrect); }
-.choice[data-state="missed"] .choice__mark { color: var(--partial); }
+.choice[data-state="missed"]    .choice__mark { color: var(--partial); }
+.choice[data-state="chosen"]    .choice__mark { color: var(--ink-muted); }
 
 .choice__why {
   grid-column: 1 / -1;
-  margin-block: 0.3rem 0;
+  margin-block: 0.4rem 0;
   font-size: 0.95rem;
   line-height: 1.55;
 }
 
 /* --- Feedback region ----------------------------------------------------
    IMPORTANT: this element ships in the DOM empty on page load and is filled
-   on submit. Injecting a live region and its content simultaneously means
-   most screen readers announce nothing at all. Do not "optimize" it away.  */
+   on submit. It is NOT a live region — focus is moved to the verdict
+   instead, because a focused live region is announced twice. See
+   docs/ACCESSIBILITY.md before changing this. */
 
-.feedback:empty {
-  /* Collapse fully when empty so it never adds stray whitespace. */
-  display: none;
-}
+.feedback:empty { display: none; }
 
 .feedback {
-  margin-block-start: 1.25rem;
-  padding: 1rem 1.15rem;
+  margin-block-start: 1.4rem;
+  padding: 1.2rem 1.4rem;
+  background: var(--ground-deep);
+  border: 1px solid var(--border);
   border-inline-start: 5px solid var(--border-strong);
-  background: var(--surface-sunken);
-  border-radius: 0 var(--radius) var(--radius) 0;
+  border-radius: var(--radius) var(--radius-lg) var(--radius-lg) var(--radius);
 }
 
-.feedback[data-result="correct"] { border-inline-start-color: var(--correct); background: var(--correct-bg); }
+.feedback[data-result="correct"]   { border-inline-start-color: var(--correct);   background: var(--correct-bg); }
 .feedback[data-result="incorrect"] { border-inline-start-color: var(--incorrect); background: var(--incorrect-bg); }
-.feedback[data-result="partial"] { border-inline-start-color: var(--partial); background: var(--partial-bg); }
+.feedback[data-result="partial"]   { border-inline-start-color: var(--partial);   background: var(--partial-bg); }
 
 .feedback__verdict {
   /* tabindex="-1" target: focus lands here on submit. */
-  margin-block: 0 0.5rem;
-  font-size: 1.05rem;
-  font-weight: 700;
+  margin-block: 0 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
 }
 
 .feedback__verdict:focus { outline: none; }
-.feedback__verdict:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.feedback__verdict:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
 
-.feedback[data-result="correct"] .feedback__verdict { color: var(--correct); }
+.feedback[data-result="correct"]   .feedback__verdict { color: var(--correct); }
 .feedback[data-result="incorrect"] .feedback__verdict { color: var(--incorrect); }
-.feedback[data-result="partial"] .feedback__verdict { color: var(--partial); }
+.feedback[data-result="partial"]   .feedback__verdict { color: var(--partial); }
 
 .feedback p:last-child { margin-block-end: 0; }
-
-.feedback__icon { margin-inline-end: 0.4rem; }
+.feedback__icon { margin-inline-end: 0.45rem; }
 
 /* --- Error summary (3.3.1) — focused, not announced via role=alert ------- */
 
 .error-summary {
-  margin-block: 1.25rem;
-  padding: 1rem 1.15rem;
+  margin-block: 1.4rem;
+  padding: 1.2rem 1.4rem;
   border: 3px solid var(--incorrect);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   background: var(--incorrect-bg);
 }
 
 .error-summary:focus { outline: none; }
-.error-summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
-.error-summary h2, .error-summary h3 { margin-block: 0 0.5rem; font-size: 1.05rem; color: var(--incorrect); }
+.error-summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+
+.error-summary h2, .error-summary h3 {
+  margin-block: 0 0.5rem;
+  font-size: 1.05rem;
+  color: var(--incorrect);
+}
+
 .error-summary ul { margin-block-end: 0; }
 
 /* --- Content-load failure panel (the runtime substitute for build-time
@@ -706,163 +872,305 @@ details > :last-child { padding-block-end: 0.85rem; }
 
 .content-error {
   margin-block: 2rem;
-  padding: 1.15rem 1.3rem;
+  padding: 1.35rem 1.6rem;
   border: 3px solid var(--incorrect);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   background: var(--incorrect-bg);
 }
 
-.content-error h2 { margin-block: 0 0.5rem; font-size: 1.1rem; color: var(--incorrect); }
+.content-error h2 { margin-block: 0 0.5rem; font-size: 1.15rem; color: var(--incorrect); }
 .content-error code { background: var(--surface); }
 .content-error ul { margin-block-end: 0; }
 
 /* ==========================================================================
-   Quiz progress + results
+   Quiz progress and results
    ========================================================================== */
 
 .quiz-progress {
   margin-block: 0 1.5rem;
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-muted);
 }
 
-.results__score {
-  font-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.1rem);
-  font-weight: 700;
-  margin-block: 0.2em 0.3em;
+#quiz {
+  margin-block-start: 2rem;
+  padding: 1.75rem 1.6rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+#quiz .choice { background: var(--ground); }
+
+.results__heading {
+  margin-block-start: 0;
+  font-size: clamp(1.8rem, 1.4rem + 1.8vw, 2.4rem);
 }
 
 .results__heading:focus { outline: none; }
-.results__heading:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.results__heading:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
 
-.breakdown { margin-block: 1.75rem; }
+.results__score {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.15rem + 1.6vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--scarlet);
+  margin-block: 0.15em 0.5em;
+}
+
+.breakdown { margin-block: 2rem; }
 
 .breakdown__row {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 0.5rem 1rem;
   align-items: baseline;
-  padding-block: 0.6rem;
+  padding-block: 0.8rem;
   border-block-end: 1px solid var(--border);
 }
 
-.breakdown__score { font-variant-numeric: tabular-nums; font-weight: 700; }
+.breakdown__score {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: var(--ink-muted);
+}
 
 .breakdown__row[data-all-correct="true"] .breakdown__score { color: var(--correct); }
 
 /* --- Scenario consequence panels (no correct/incorrect by design) -------- */
 
-.consequences { margin-block-start: 1.25rem; display: grid; gap: 0.85rem; }
+.consequences { margin-block-start: 1.4rem; display: grid; gap: 1rem; }
 
 .consequence {
-  padding: 0.9rem 1.1rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  padding: 1.15rem 1.3rem;
   background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
 }
 
 .consequence[data-chosen="true"] {
-  border-color: var(--brand-scarlet);
+  border-color: var(--scarlet);
   border-width: 2px;
-  background: var(--surface-sunken);
+  box-shadow: var(--shadow-card);
 }
 
 .consequence__label {
-  margin-block: 0 0.5rem;
-  font-size: 0.8rem;
-  font-weight: 700;
+  margin-block: 0 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  color: var(--ink-muted);
 }
 
-.consequence[data-chosen="true"] .consequence__label { color: var(--brand-scarlet); }
+.consequence[data-chosen="true"] .consequence__label { color: var(--scarlet); }
 
-.consequence dl { margin: 0; display: grid; gap: 0.5rem; }
-.consequence dt { font-weight: 700; font-size: 0.93rem; }
-.consequence dd { margin: 0.1rem 0 0; font-size: 0.97rem; }
+.consequence dl { margin: 0.8rem 0 0; display: grid; gap: 0.7rem; }
+.consequence dt {
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+.consequence dd { margin: 0.15rem 0 0; font-size: 0.97rem; }
 
 /* ==========================================================================
-   Section navigation
+   Table of contents — cards rather than a list
    ========================================================================== */
 
-.toc { counter-reset: none; }
+.toc {
+  list-style: none;
+  padding: 0;
+  margin-block: 2rem;
+  display: grid;
+  gap: 0.75rem;
+  counter-reset: toc;
+}
 
 .toc__item {
-  padding-block: 0.85rem;
-  border-block-end: 1px solid var(--border);
+  counter-increment: toc;
+  position: relative;
+  padding: 1.15rem 1.4rem 1.15rem 3.9rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
-.toc__link { font-size: 1.1rem; font-weight: 600; }
-.toc__desc { margin-block: 0.25rem 0; font-size: 0.97rem; color: var(--text-muted); }
-.toc__time { font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; }
-
-.section-nav {
+.toc__item::before {
+  content: counter(toc);
+  position: absolute;
+  left: 1.3rem;
+  top: 1.15rem;
+  width: 1.9rem;
+  height: 1.9rem;
   display: grid;
-  gap: 0.85rem;
-  margin-block-start: 3rem;
-  padding-block-start: 1.5rem;
-  border-block-start: 1px solid var(--border);
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--ink-inverse);
+  background: var(--ink);
+  border-radius: 50%;
 }
 
-@media (min-width: 42rem) {
-  .section-nav { grid-template-columns: 1fr 1fr; }
-  .section-nav__next { text-align: end; }
+.toc__item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+  border-color: var(--border-strong);
 }
 
-.section-nav a {
+.toc__item:hover::before { background: var(--scarlet); }
+
+.page-body .toc__link,
+.toc__link {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 750;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* Make the whole card clickable without nesting interactive elements. */
+.toc__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+}
+
+.toc__item:hover .toc__link { color: var(--scarlet); }
+
+.toc__link:focus-visible { outline: none; }
+.toc__item:has(.toc__link:focus-visible) {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.toc__time {
   display: inline-block;
-  min-height: 44px;
-  padding-block: 0.5rem;
-  font-weight: 600;
+  margin-inline-start: 0.6rem;
+  padding: 0.12rem 0.6rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+  background: var(--ground-deep);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
 }
 
-.section-nav__dir {
-  display: block;
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--text-muted);
+.toc__desc {
+  margin-block: 0.4rem 0;
+  font-size: 0.96rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
 }
+
+/* ==========================================================================
+   Section furniture
+   ========================================================================== */
 
 .objectives {
-  margin-block: 1.5rem;
-  padding: 1rem 1.25rem 1rem 1.25rem;
-  background: var(--surface-sunken);
-  border-radius: var(--radius);
+  margin-block: 2rem;
+  padding: 1.35rem 1.6rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
 }
 
 .objectives h2 {
-  margin-block: 0 0.5rem;
-  font-size: 0.85rem;
+  margin-block: 0 0.7rem;
+  font-size: 0.76rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  color: var(--scarlet);
+  max-width: none;
 }
 
 .objectives ul { margin-block-end: 0; }
 
 .takeaways {
-  margin-block: 2.5rem;
-  padding: 1.15rem 1.35rem;
-  border: 2px solid var(--brand-scarlet);
-  border-radius: var(--radius);
+  margin-block: 3rem 2rem;
+  padding: 1.6rem 1.75rem;
+  background: var(--ink);
+  color: var(--ink-inverse);
+  border-radius: var(--radius-lg);
 }
 
-.takeaways h2 { margin-block: 0 0.6rem; font-size: 1.1rem; color: var(--brand-scarlet); }
-.takeaways ul:last-child { margin-block-end: 0; }
+.takeaways h2, .takeaways h3 {
+  margin-block: 0 0.8rem;
+  font-size: 1.25rem;
+  color: var(--ink-inverse);
+  max-width: none;
+}
+
+.takeaways a { color: var(--ink-inverse); }
+.takeaways li::marker { color: var(--scarlet-on-dark); }
+.takeaways ul:last-child, .takeaways p:last-child { margin-block-end: 0; }
+
+.section-nav {
+  display: grid;
+  gap: 0.75rem;
+  margin-block-start: 3.5rem;
+  padding-block-start: 2rem;
+  border-block-start: 1px solid var(--border);
+}
+
+@media (min-width: 44rem) {
+  .section-nav { grid-template-columns: 1fr 1fr; }
+  .section-nav__next { text-align: end; }
+}
+
+.section-nav a {
+  display: block;
+  min-height: 48px;
+  padding: 0.9rem 1.2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.section-nav a:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+  color: var(--scarlet);
+}
+
+.section-nav__dir {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-muted);
+  margin-block-end: 0.2rem;
+}
 
 /* ==========================================================================
    noscript
    ========================================================================== */
 
 .noscript-note {
-  margin-block: 1.75rem;
-  padding: 1rem 1.25rem;
+  margin-block: 2rem;
+  padding: 1.35rem 1.6rem;
   border: 3px solid var(--caution-border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   background: var(--caution-bg);
 }
 
@@ -871,21 +1179,31 @@ details > :last-child { padding-block-end: 0.85rem; }
 
 /* ==========================================================================
    Print — learners do print these, and the summary card is print-first.
+   Everything reverts to white paper and black ink.
    ========================================================================== */
 
 @media print {
-  :root { --surface: #fff; --surface-sunken: #fff; }
+  :root {
+    --ground: #fff; --ground-deep: #fff; --surface: #fff;
+    --ink: #000; --ink-muted: #333; --ink-inverse: #000;
+    --border: #999; --border-strong: #666;
+    --shadow-card: none; --shadow-lift: none;
+  }
 
-  body { font-size: 11.5pt; line-height: 1.45; }
+  body { font-size: 11.5pt; line-height: 1.45; background: #fff; }
 
-  .site-nav,
-  .skip-link,
-  .section-nav,
-  .btn,
-  .btn-row,
-  .no-print { display: none !important; }
+  .site-nav, .skip-link, .section-nav, .btn, .btn-row, .no-print { display: none !important; }
 
   .site-header { border-block-end: 2px solid #000; }
+
+  .exercise__header, .two-situations__title, .takeaways {
+    background: #fff !important;
+    color: #000 !important;
+    border: 1px solid #999;
+  }
+
+  .exercise__title, .takeaways h2, .takeaways h3 { color: #000 !important; }
+  .toc__item::before { background: #000 !important; color: #fff !important; }
 
   a { color: #000; text-decoration: underline; }
 
@@ -899,11 +1217,11 @@ details > :last-child { padding-block-end: 0.85rem; }
 
   details { border: 1px solid #999; }
   details[open] > summary { border-block-end: 1px solid #999; }
-  /* Print everything, including collapsed detail. */
-  details > *:not(summary) { display: block !important; }
+  details > *:not(summary) { display: block !important; }   /* print collapsed content too */
 
-  .exercise, .callout, .takeaways, .two-situations, .consequence {
+  .exercise, .callout, .takeaways, .two-situations, .consequence, .toc__item {
     border: 1px solid #999;
+    box-shadow: none;
     break-inside: avoid;
   }
 
