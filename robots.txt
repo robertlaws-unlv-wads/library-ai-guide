@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://robertlaws-unlv-wads.github.io/library-ai-guide/sitemap.xml
