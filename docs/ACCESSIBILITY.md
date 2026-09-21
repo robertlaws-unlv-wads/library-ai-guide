@@ -114,16 +114,32 @@ lightened again:
 Scarlet is unreadable on the dark `.takeaways` block (2.25:1). Accents there
 use `--scarlet-on-dark` (`#FFA39E`, 8.59:1).
 
-### No web fonts
+### Fonts are self-hosted, never fetched from a CDN
 
-UNLV's brand typeface is Roboto, but loading it from Google Fonts would be a
-third-party request, and the privacy claim on the About page has to be
-verifiable in the Network tab. The brand guide explicitly permits "Arial,
-Helvetica, Calibri, or other simple sans-serif typefaces" as alternatives, so
-the system stack is brand-compliant.
+Headings use **Outfit** (SIL Open Font License), served from
+`assets/fonts/`. Body copy stays on the system stack — a geometric display
+face is less readable at body size, and the system stack costs nothing to
+load.
 
-If true Roboto is wanted later, **self-host** the woff2 files (Apache 2.0,
-redistributable). Do not link to `fonts.googleapis.com`.
+Loading Outfit from `fonts.googleapis.com` would be a third-party request,
+and the privacy claim on the About page has to survive someone opening the
+Network tab. UNLV's brand typeface is Roboto, and the brand guide permits
+"Arial, Helvetica, Calibri, or other simple sans-serif typefaces" as
+alternatives, so the body stack is brand-compliant.
+
+One variable file covers weights 400–900 (31 KB); `unicode-range` means the
+latin-ext file (14 KB) is only fetched if a character outside Latin-1
+actually appears. Each page preloads the latin file so headings do not flash
+in the fallback face.
+
+Outfit has no ✓ ✗ → ◑ glyphs, which the quiz feedback uses. Those fall back
+per-glyph to the system stack. That is intended — **do not add an icon font
+for them**, and do not replace them with images; they sit alongside a text
+label in every case, so they are decorative and carry `aria-hidden="true"`.
+
+The OFL requires the licence ship with the fonts, so
+`assets/fonts/Outfit-OFL.txt` must stay. CI fails if the fonts are present
+and it is not.
 
 ### Progressive enhancement
 

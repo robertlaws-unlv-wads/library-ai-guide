@@ -50,13 +50,48 @@ jobs:
 
       - name: Confirm no third-party requests were introduced
         run: |
-          # The privacy claim on the About page says every file comes from this
-          # site. Keep it true: no CDN scripts, no Google Fonts, no pixels.
-          if grep -rnE '(src|href)="https?://' --include='*.html' . \
-             | grep -vE 'creativecommons\.org|library\.unlv\.edu|unlv\.edu|ala\.org|doi\.org|github\.com|guides\.library\.unlv\.edu|docs\.github\.com' \
-             | grep -E '\.(js|css|woff2?)"' ; then
-            echo "::error::A third-party asset was added. Self-host it instead --"
-            echo "::error::about.html promises zero third-party requests."
+          # about.html promises every file the page loads comes from this site,
+          # and that claim has to survive someone opening the Network tab.
+          #
+          # Check resource-loading contexts only. An <a href> to an external
+          # site is normal and fine; a <link>, <script src> or <img src> to
+          # one is a third-party request.
+          #
+          # Note this deliberately does NOT filter on file extension. An
+          # earlier version did, and it would have missed
+          # href="https://fonts.googleapis.com/css2?family=..." -- which has
+          # no .css on the end and is exactly the thing most likely to be
+          # pasted in by accident.
+          found=0
+
+          if grep -rnE '<link[^>]+href="https?://' --include='*.html' . ; then
+            echo "::error::A <link> to an external domain was added (stylesheet, preload or icon)."
+            found=1
+          fi
+
+          if grep -rnE '<(script|img|iframe|source|video|audio|embed|object)[^>]+(src|data)="https?://' --include='*.html' . ; then
+            echo "::error::An external script, image or embed was added."
+            found=1
+          fi
+
+          if grep -rnE '@import|url\(["'"'"']?https?://' --include='*.css' . ; then
+            echo "::error::A CSS @import or remote url() was added."
+            found=1
+          fi
+
+          if [ "$found" = "1" ]; then
+            echo "::error::Self-host the asset instead. See docs/EDITING.md."
             exit 1
           fi
-          echo "No third-party assets. Good."
+          echo "No third-party requests. Good."
+
+      - name: Confirm bundled fonts still ship their licence
+        run: |
+          # Outfit is under the SIL Open Font License, which requires the
+          # licence travel with the font files.
+          if ls assets/fonts/*.woff2 >/dev/null 2>&1 && [ ! -f assets/fonts/Outfit-OFL.txt ]; then
+            echo "::error::Font files are present but assets/fonts/Outfit-OFL.txt is missing."
+            echo "::error::The OFL requires the licence ship alongside the fonts."
+            exit 1
+          fi
+          echo "Font licence present. Good."

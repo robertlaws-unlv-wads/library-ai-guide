@@ -176,7 +176,10 @@ run automatically and you do not have to remember them.
   fails if one appears.
 - **Do not link to a script, stylesheet or font on another domain.** The About
   page promises zero third-party requests and that promise is checkable in the
-  browser's Network tab. Self-host it instead.
+  browser's Network tab. Self-host it instead — that is exactly what
+  `assets/fonts/` is for. Pasting in a `fonts.googleapis.com` link is the
+  most likely version of this mistake, and the pull request check is written
+  to catch it.
 - **Do not add analytics.** Same reason.
 - **Do not remove `.nojekyll`.** Without it GitHub runs Jekyll over the site
   and will try to interpret `{{ }}` wherever it appears.

@@ -46,8 +46,18 @@
 
     var q = questions[index];
 
-    var progress = el('p', 'quiz-progress',
-      'Question ' + (index + 1) + ' of ' + questions.length);
+    // A decorative progress bar, not a second copy of the position text.
+    // The legend already carries "Question 5 of 10" as part of the group's
+    // accessible name, so this is aria-hidden -- announcing it again would
+    // just be noise.
+    var progress = el('div', 'quiz-progress');
+    progress.setAttribute('aria-hidden', 'true');
+    for (var p = 0; p < questions.length; p++) {
+      var pip = el('span', 'quiz-progress__pip');
+      if (p < index) pip.setAttribute('data-state', 'done');
+      else if (p === index) pip.setAttribute('data-state', 'current');
+      progress.appendChild(pip);
+    }
     root.appendChild(progress);
 
     var fs = E.buildQuestion(q, q.kind, {

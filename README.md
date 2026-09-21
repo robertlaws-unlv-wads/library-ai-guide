@@ -27,6 +27,7 @@ requests, the Application tab shows no cookies and no stored data.
 | **Content** | Prose in the HTML; all quiz and exercise content in `content/*.json` |
 | **Validation** | `tools/*.mjs`, Node standard library only, run on every pull request |
 | **Accessibility** | WCAG 2.1 AA — see [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) |
+| **Type** | Headings in self-hosted [Outfit](https://github.com/Outfitio/Outfit-Fonts) (OFL, 31 KB); body on the system stack |
 
 ---
 
@@ -36,6 +37,7 @@ requests, the Application tab shows no cookies and no stored data.
 index.html  quiz.html  summary.html  about.html  404.html
 sections/         the seven lesson pages
 assets/css/       the only stylesheet
+assets/fonts/     self-hosted Outfit + its OFL licence
 assets/js/        schema.js (shared validation) + engine.js + exercises.js + quiz.js
 content/          quiz, checks and exercise content as JSON -- edit these, not the code
 templates/        copy-me starter for a new section

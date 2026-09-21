@@ -19,6 +19,48 @@
    (#B10202). The print value (#E31837) is only 4.72:1 and too weak for text.
    ========================================================================== */
 
+/* ==========================================================================
+   Display typeface — Outfit (SIL Open Font License 1.1)
+   https://github.com/Outfitio/Outfit-Fonts   Licence: assets/fonts/Outfit-OFL.txt
+
+   SELF-HOSTED, deliberately. Loading this from fonts.googleapis.com would be
+   a third-party request, and about.html promises that every file the page
+   loads comes from this site — a claim that has to survive the Network tab.
+   The CI check fails if a third-party font, script or stylesheet appears.
+
+   One variable file covers weights 400–900, so the whole display range costs
+   a single 31 KB request. The latin-ext file (14 KB) is only fetched if a
+   character outside Latin-1 actually appears, thanks to unicode-range.
+
+   Glyphs Outfit does not contain — the ✓ ✗ → ◑ marks used in quiz feedback —
+   fall back per-glyph to the system stack. That is normal and intended; do
+   not add an icon font for them.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('../fonts/outfit-latin-var.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+                 U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+                 U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
+                 U+FFFD;
+}
+
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('../fonts/outfit-latin-ext-var.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+                 U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF,
+                 U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+                 U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 :root {
   /* --- Ground and surfaces ----------------------------------------------
      The page is cream; cards are a warm near-white that lifts off it. The
@@ -79,11 +121,10 @@
      explicitly permits "Arial, Helvetica, Calibri, or other simple
      sans-serif typefaces" as alternatives.
 
-     --font-display is a SEPARATE TOKEN so a self-hosted display face can be
-     dropped in by changing one line. If you do that, self-host the woff2
-     (Roboto is Apache 2.0 and redistributable) — never link to
-     fonts.googleapis.com.                                                 */
-  --font-display: system-ui, -apple-system, "Segoe UI", Roboto,
+     Headings use self-hosted Outfit (see the @font-face block above).
+     Body copy stays on the system stack: a geometric display face is less
+     readable at body size, and the system stack costs nothing to load.    */
+  --font-display: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto,
                   "Helvetica Neue", Arial, sans-serif;
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto,
                "Helvetica Neue", Arial, sans-serif;
@@ -886,13 +927,29 @@ details > :last-child { padding-block-end: 1.1rem; }
    Quiz progress and results
    ========================================================================== */
 
+/* Decorative progress pips. The real position is in the legend, which is
+   what screen readers announce; this element is aria-hidden. */
 .quiz-progress {
-  margin-block: 0 1.5rem;
-  font-size: 0.76rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--ink-muted);
+  display: flex;
+  gap: 4px;
+  margin-block: 0 1.75rem;
+}
+
+.quiz-progress__pip {
+  flex: 1;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--border);
+}
+
+.quiz-progress__pip[data-state="done"] { background: var(--border-strong); }
+.quiz-progress__pip[data-state="current"] { background: var(--scarlet); }
+
+/* In forced-colors mode the background colours are discarded, so give the
+   pips a border that survives. */
+@media (forced-colors: active) {
+  .quiz-progress__pip { border: 1px solid CanvasText; }
+  .quiz-progress__pip[data-state="current"] { background: Highlight; }
 }
 
 #quiz {

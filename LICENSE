@@ -43,3 +43,25 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+================================================================================
+BUNDLED THIRD-PARTY FONT
+================================================================================
+This repository bundles the Outfit typeface, used for headings and other
+display text.
+
+  Outfit
+  Copyright 2021 The Outfit Project Authors
+  https://github.com/Outfitio/Outfit-Fonts
+  Licensed under the SIL Open Font License, Version 1.1
+
+  Files:   assets/fonts/outfit-latin-var.woff2
+           assets/fonts/outfit-latin-ext-var.woff2
+  Licence: assets/fonts/Outfit-OFL.txt
+
+The OFL requires that the licence travel with the font files. Do not remove
+assets/fonts/Outfit-OFL.txt. A CI check fails if the fonts are present and
+the licence is not.
+
+The font is self-hosted rather than loaded from Google Fonts, so that this
+site makes no third-party requests. See docs/ACCESSIBILITY.md.
