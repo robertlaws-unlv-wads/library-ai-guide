@@ -48,6 +48,25 @@ version numbers age in weeks. The existing prose follows this rule; keep it.
 
 ---
 
+## The design system
+
+Slab headlines on warm paper. Scarlet is the only saturated colour on the
+page; warmth comes from the ground (Bone `#F7F4EF` and Sand `#EDE7DE`)
+rather than a second hue, because the UNLV brand guide asks that gray stay
+an accent.
+
+Type follows the UNLV official faces: Roboto Slab 900/700 for display and
+headings, Roboto for interface and body at 17/27, Roboto Condensed for
+eyebrows and labels at 11px caps with .22em tracking. Grid is 1200px max
+with 32px gutters on an 8px spacing base; radius is 12px on cards, 999px on
+pills, and 0 on full-bleed colour blocks.
+
+Reading pages hold prose to a 68ch measure and centre it inside that frame.
+Landing sections use the full width in bands that alternate Bone and Sand.
+
+**Two palette values were corrected for contrast and must not be reverted** —
+see [ACCESSIBILITY.md](ACCESSIBILITY.md) for the measurements.
+
 ## Why there is no build step
 
 Deliberate, and worth defending when someone suggests adding a framework.

@@ -1,48 +1,46 @@
 /* ==========================================================================
-   AI Literacy Module — UNLV Libraries
+   AI Literacy Module — UNLV University Libraries
    The only stylesheet. No build step, no preprocessor, no third-party imports.
 
-   DESIGN NOTES
-   Warm cream ground rather than white, with content sitting on lighter cards.
-   Pure white at full-page scale is fatiguing over a 40-minute read and reads
-   as clinical; a warm ground is calmer and gives the cards something to sit
-   on. Display type is large, heavy and set tight (line-height ~1.02, negative
-   tracking) so hierarchy is obvious at a glance, against body copy that stays
-   modest and highly readable.
+   DESIGN SYSTEM
+   Slab headlines on warm paper. Scarlet is the only saturated colour on the
+   page; warmth comes from the ground (Bone and Sand) rather than a second
+   hue, because the UNLV brand guide asks that gray stay an accent. Structure
+   carries the energy so pages stay scannable.
 
-   COLOR TOKENS: every value was measured with `node tools/contrast.mjs`.
-   Ratios in the comments are against --ground unless stated.
-   If you change a color, RE-RUN THE CHECKER. Do not eyeball it.
+   COLOUR: every value measured with `node tools/contrast.mjs`. Ratios are in
+   the comments. If you change a colour, RE-RUN THE CHECKER — do not eyeball.
 
-   Brand source: https://www.unlv.edu/brand/colors ("Screen Standards")
-   UNLV publishes separate print and screen scarlets. We use the SCREEN value
-   (#B10202). The print value (#E31837) is only 4.72:1 and too weak for text.
+   TWO DELIBERATE DEVIATIONS from the palette as drawn, both for contrast:
+     · Gray Dark #6A737B is 4.40:1 on Bone — just under the 4.5:1 that body
+       and caption text needs. --ink-muted uses #5F676E (5.24:1) for text.
+       #6A737B is kept as --rule-strong for non-text roles, where it is fine.
+     · Scarlet Bright #E31837 is 3.84:1 on Rich Black, so it fails for the
+       small caps eyebrows used on dark blocks. --scarlet-on-dark uses
+       #F2445C (4.97:1). #E31837 still serves large display text and UI
+       accents on dark, where 3:1 is the bar.
    ========================================================================== */
 
 /* ==========================================================================
-   Display typeface — Outfit (SIL Open Font License 1.1)
-   https://github.com/Outfitio/Outfit-Fonts   Licence: assets/fonts/Outfit-OFL.txt
+   Typefaces — UNLV official: Roboto Slab, Roboto, Roboto Condensed
+   Apache License 2.0. Licence: assets/fonts/Roboto-Apache-License.txt
 
-   SELF-HOSTED, deliberately. Loading this from fonts.googleapis.com would be
-   a third-party request, and about.html promises that every file the page
+   SELF-HOSTED, deliberately. Loading these from fonts.googleapis.com would
+   be a third-party request, and about.html promises every file the page
    loads comes from this site — a claim that has to survive the Network tab.
-   The CI check fails if a third-party font, script or stylesheet appears.
+   CI fails if a third-party font, script or stylesheet appears.
 
-   One variable file covers weights 400–900, so the whole display range costs
-   a single 31 KB request. The latin-ext file (14 KB) is only fetched if a
-   character outside Latin-1 actually appears, thanks to unicode-range.
-
-   Glyphs Outfit does not contain — the ✓ ✗ → ◑ marks used in quiz feedback —
-   fall back per-glyph to the system stack. That is normal and intended; do
-   not add an icon font for them.
+   Roboto Condensed comes from the SAME file as Roboto via the width axis
+   (font-stretch: 75%), which saves 22 KB and a request over shipping it
+   separately. That is why the Roboto face declares font-stretch: 75% 100%.
    ========================================================================== */
 
 @font-face {
-  font-family: 'Outfit';
+  font-family: 'Roboto Slab';
   font-style: normal;
-  font-weight: 400 900;
+  font-weight: 100 900;
   font-display: swap;
-  src: url('../fonts/outfit-latin-var.woff2') format('woff2');
+  src: url('../fonts/roboto-slab-latin-var.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
                  U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
                  U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
@@ -50,95 +48,104 @@
 }
 
 @font-face {
-  font-family: 'Outfit';
+  font-family: 'Roboto';
   font-style: normal;
-  font-weight: 400 900;
+  font-weight: 100 900;
+  font-stretch: 75% 100%;      /* 75% is Roboto Condensed */
   font-display: swap;
-  src: url('../fonts/outfit-latin-ext-var.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
-                 U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF,
-                 U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
-                 U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: url('../fonts/roboto-latin-var.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+                 U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+                 U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
+                 U+FFFD;
 }
 
 :root {
-  /* --- Ground and surfaces ----------------------------------------------
-     The page is cream; cards are a warm near-white that lifts off it. The
-     two are only 1.12:1 apart, which is fine for a decorative distinction
-     but means cards also need a border to be reliably perceivable.        */
-  --ground: #f4f0e6;
-  --ground-deep: #ebe6d8;        /* recessed bands, table headers */
-  --surface: #fffdf8;            /* cards, exercises, callouts */
-  --border: #e0d9c7;
-  --border-strong: #847c6c;      /* 3.63:1 on ground, 4.07:1 on surface — meets 1.4.11 */
+  /* --- Paper ------------------------------------------------------------
+     Bone is the page; Sand is section ground and card fill. Warmer than
+     white, which is fatiguing across a 40-minute read.                    */
+  --bone: #f7f4ef;
+  --sand: #ede7de;
+  --white: #ffffff;
 
   /* --- Ink ---------------------------------------------------------------
-     A warm near-black rather than #000. Pure black on cream is harsh and
-     slightly vibrates; this sits in the paper.
-       --ink        14.43:1 on ground, 16.15:1 on surface   PASS
-       --ink-muted   6.59:1 on ground,  7.37:1 on surface   PASS          */
-  --ink: #221f1a;
-  --ink-muted: #5a544a;
-  --ink-inverse: #fffdf8;
+     --ink        16.51:1 on Bone, 14.74:1 on Sand   PASS
+     --ink-muted   5.24:1 on Bone,  4.68:1 on Sand   PASS  (see header note)
+     --ink-invert 16.51:1 on Rich Black              PASS                  */
+  --ink: #14161a;
+  --ink-muted: #5f676e;
+  --ink-invert: #f7f4ef;
 
-  /* --- Brand -------------------------------------------------------------
-     UNLV Scarlet, screen standard.  6.41:1 on ground, 7.18:1 on surface.
-     --scarlet-deep for hover/active.  8.26:1 on ground.
-     UNLV Gray Light (#9FA1A4) is 2.59:1 and is NOT used — it fails text
-     contrast and must never carry meaning.                                */
+  /* --- Scarlet -----------------------------------------------------------
+     --scarlet         6.65:1 on Bone, 5.93:1 on Sand, white on it 7.29:1
+     --scarlet-dark    7.10:1 reversed — depth, pressed states, footer
+     --scarlet-bright  3.84:1 on ink — LARGE text and UI accents only
+     --scarlet-on-dark 4.97:1 on ink — small caps eyebrows on dark blocks  */
   --scarlet: #b10202;
-  --scarlet-deep: #8c1515;
-  --scarlet-wash: #f7e9e4;       /* --ink on this: 13.6:1  PASS */
-  /* Scarlet is unreadable on the dark ink surface (2.25:1). This lighter
-     tint is for accents inside .takeaways only.  8.59:1 on --ink  PASS */
-  --scarlet-on-dark: #ffa39e;
+  --scarlet-dark: #a03123;
+  --scarlet-bright: #e31837;
+  --scarlet-on-dark: #f2445c;
+
+  /* --- Rules and dividers ------------------------------------------------
+     Decorative only. --rule is 2.36:1 and --rule-strong 4.40:1 on Bone, so
+     NEITHER may carry text or identify a control. Where a boundary has to
+     be perceivable (a form control), use --border-ui.                     */
+  --rule: #9fa1a4;
+  --rule-strong: #6a737b;
+  /* The big card ordinals are large text, so 3:1 applies (1.4.3). UNLV Gray
+     #9FA1A4 is only 2.59:1 on white. This keeps the de-emphasised look and
+     clears the bar: 3.48:1 on white, 3.17:1 on Bone. */
+  --numeral: #868a8e;
+  --rule-soft: #ded7cc;
+  --border-ui: #767d84;          /* 3.55:1 on Bone — meets 1.4.11 */
 
   /* --- Interactive ------------------------------------------------------ */
   --link: #b10202;
-  --focus: #0b5fff;              /* 4.6:1 on ground — >=3:1 required (2.4.7) */
+  --focus: #0b5fff;              /* 4.72:1 on Bone — >=3:1 required (2.4.7) */
 
   /* --- Feedback states ---------------------------------------------------
      Never used alone. Every state also carries a text label and an icon.  */
-  --correct: #10603a;            /* 7.3:1 on surface  PASS */
-  --correct-bg: #e6f2ea;
-  --incorrect: #a8200d;          /* 6.8:1 on surface  PASS */
-  --incorrect-bg: #fbe9e6;
-  --partial: #74520a;            /* 6.2:1 on surface  PASS */
-  --partial-bg: #fbf1dc;
+  --correct: #10603a;            /* 6.9:1 on its tint  PASS */
+  --correct-bg: #e4efe8;
+  --incorrect: #a8200d;          /* 6.5:1 on its tint  PASS */
+  --incorrect-bg: #f9e7e3;
+  --partial: #74520a;            /* 6.3:1 on its tint  PASS */
+  --partial-bg: #f8eeda;
 
   /* --- Callouts --------------------------------------------------------- */
-  --note-bg: #eaf0f7;
+  --note-bg: #e8eef6;
   --note-border: #2c5aa0;
-  --caution-bg: #fbf1dc;
+  --caution-bg: #f8eeda;
   --caution-border: #8a5a00;
-  --example-bg: #f1edf6;
+  --example-bg: #efebf4;
   --example-border: #5b4a7a;
 
-  /* --- Type -------------------------------------------------------------
-     UNLV's brand typeface is Roboto. We deliberately do NOT load it from
-     Google Fonts: that is a third-party request, and the privacy claim on
-     the About page must be verifiable in the Network tab. The brand guide
-     explicitly permits "Arial, Helvetica, Calibri, or other simple
-     sans-serif typefaces" as alternatives.
-
-     Headings use self-hosted Outfit (see the @font-face block above).
-     Body copy stays on the system stack: a geometric display face is less
-     readable at body size, and the system stack costs nothing to load.    */
-  --font-display: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto,
-                  "Helvetica Neue", Arial, sans-serif;
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto,
-               "Helvetica Neue", Arial, sans-serif;
+  /* --- Type --------------------------------------------------------------
+     Slab for display and headings. Roboto for interface and body. Roboto
+     Condensed (the same file at font-stretch: 75%) for eyebrows and labels. */
+  --font-slab: 'Roboto Slab', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Roboto', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --measure: 66ch;
-  --radius: 10px;
-  --radius-lg: 20px;             /* cards — borrowed proportion */
-  --radius-pill: 100px;
+  /* --- Grid --------------------------------------------------------------
+     1200px max, 32px gutters, 8px spacing base. Prose is held to a reading
+     measure inside that, because 1200px of 17px text is unreadable.       */
+  --max: 1200px;
+  --measure: 68ch;
+  --gutter: 2rem;
 
-  --shadow-card: 0 1px 2px rgba(34, 31, 26, 0.04),
-                 0 6px 18px rgba(34, 31, 26, 0.05);
-  --shadow-lift: 0 2px 4px rgba(34, 31, 26, 0.06),
-                 0 12px 32px rgba(34, 31, 26, 0.08);
+  /* 8px spacing base */
+  --s1: 0.5rem;  --s2: 1rem;    --s3: 1.5rem;  --s4: 2rem;
+  --s5: 3rem;    --s6: 4rem;
+
+  /* --- Radius ------------------------------------------------------------
+     12px on cards, 999px on pills, 0 on full-bleed colour blocks.         */
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 1px 2px rgba(20, 22, 26, 0.04),
+                 0 8px 24px rgba(20, 22, 26, 0.06);
 }
 
 /* ==========================================================================
@@ -147,10 +154,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html {
-  -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
-}
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -164,15 +168,15 @@ html {
 body {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: 1.125rem;
-  line-height: 1.65;
+  font-size: 1.0625rem;          /* 17px, per the scale */
+  line-height: 1.6;              /* 17/27 */
   color: var(--ink);
-  background: var(--ground);
+  background: var(--bone);
   -webkit-font-smoothing: antialiased;
 }
 
 /* ==========================================================================
-   Skip link — first focusable element on every page (2.4.1)
+   Skip link (2.4.1)
    ========================================================================== */
 
 .skip-link {
@@ -181,7 +185,7 @@ body {
   top: 0;
   z-index: 100;
   padding: 0.75rem 1.5rem;
-  background: var(--surface);
+  background: var(--white);
   color: var(--link);
   font-weight: 700;
   border: 3px solid var(--focus);
@@ -194,13 +198,16 @@ body {
    Focus — never removed, never colour-only
    ========================================================================== */
 
-:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 3px;
-  border-radius: 3px;
-}
-
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 3px; }
 :focus:not(:focus-visible) { outline: none; }
+
+/* On dark blocks the blue ring loses contrast; use paper instead. */
+.utility-bar :focus-visible,
+.stats-bar :focus-visible,
+.site-footer :focus-visible,
+.cta-block :focus-visible,
+.exercise__header :focus-visible,
+.takeaways :focus-visible { outline-color: var(--bone); }
 
 /* ==========================================================================
    Layout
@@ -208,72 +215,179 @@ body {
 
 .wrap {
   width: 100%;
-  max-width: 76ch;
+  max-width: var(--max);
   margin-inline: auto;
   padding-inline: 1rem;          /* holds at 320px with no h-scroll (1.4.10) */
 }
 
-@media (min-width: 40rem) {
-  .wrap { padding-inline: 2rem; }
-}
+@media (min-width: 40rem) { .wrap { padding-inline: var(--gutter); } }
 
 main { display: block; }
 main:focus { outline: none; }
 
-.page-body { padding-block: 1rem 2rem; }
+/* Reading pages hold prose to a measure inside the 1200px frame, and centre
+   that column. Left-aligning a 68ch column inside 1200px leaves a dead strip
+   down the right of every lesson page. */
+.page-body { padding-block: var(--s4) var(--s5); }
 .page-body > * + * { margin-block-start: 1.15em; }
+
+/* As a page-level container, the reading column centres in the 1200px
+   frame. As a modifier on a block inside a wide band, it only limits the
+   measure -- centring it there would misalign it under a left-aligned
+   heading. */
 .prose { max-width: var(--measure); }
+.page-body.prose { margin-inline: auto; }
+
+/* Full-width children of a prose page break out of the reading measure —
+   used for the wide exercise cards and the two-situations block. */
+.prose > .bleed {
+  max-width: min(100%, 52rem);
+  margin-inline: auto;
+}
+
+/* Full-bleed bands sit outside .wrap and carry their own ground. */
+.band { padding-block: var(--s6); }
+.band--sand { background: var(--sand); }
+.band--bone { background: var(--bone); }
 
 /* ==========================================================================
-   Site header
+   Eyebrow — Roboto Condensed, all caps, .22em tracking, never below 11px
+   ========================================================================== */
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;          /* 11px */
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--scarlet);
+  margin-block-end: var(--s2);
+}
+
+.eyebrow--muted { color: var(--ink-muted); }
+.eyebrow--invert { color: var(--scarlet-on-dark); }
+
+/* ==========================================================================
+   Utility bar — the university strip above the site header
+   ========================================================================== */
+
+.utility-bar {
+  background: var(--ink);
+  color: var(--ink-invert);
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.utility-bar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 34px;
+  padding-block: 0.3rem;
+}
+
+.utility-bar a { color: var(--ink-invert); text-decoration: none; }
+.utility-bar a:hover { color: var(--scarlet-on-dark); text-decoration: underline; }
+
+.utility-bar ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.utility-bar li + li { margin-block-start: 0; }
+
+/* ==========================================================================
+   Site header — mark + wordmark, nav, CTA
    ========================================================================== */
 
 .site-header {
-  background: var(--ground);
-  border-block-end: 1px solid var(--border);
+  background: var(--bone);
+  border-block-end: 1px solid var(--rule-soft);
 }
 
 .site-header__inner {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 2rem;
+  gap: var(--s2) var(--s4);
   align-items: center;
   justify-content: space-between;
-  padding-block: 1.1rem;
+  padding-block: var(--s2);
 }
 
-.site-title { margin: 0; line-height: 1.2; }
+/* --- Lockup: question mark on a scarlet tile, under the wordmark -------- */
 
-.site-title__org {
-  display: block;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--scarlet);
-  margin-block-end: 0.15rem;
-}
-
-.site-title a {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--ink);
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
   text-decoration: none;
+  color: var(--ink);
 }
 
-.site-title a:hover { color: var(--scarlet); }
+.lockup__mark {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  background: var(--scarlet);
+  color: var(--white);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-slab);
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.lockup__org {
+  display: block;
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--ink-muted);
+  margin-block-end: 0.22rem;
+}
+
+.lockup__name {
+  display: block;
+  font-family: var(--font-slab);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.lockup:hover .lockup__name { color: var(--scarlet); }
+.lockup:hover .lockup__mark { background: var(--scarlet-dark); }
+
+/* --- Nav ---------------------------------------------------------------- */
+
+.site-nav { margin-inline-start: auto; }
 
 .site-nav ul {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.15rem;
+  gap: 0.15rem 0.35rem;
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.95rem;
 }
 
 /* Spacing here is the flex gap. Cancel the prose rhythm, which would
@@ -282,115 +396,101 @@ main:focus { outline: none; }
 
 .site-nav a {
   display: inline-block;
-  padding: 0.6rem 0.9rem;        /* clears 44px with line-height */
-  border-radius: var(--radius-pill);
-  font-weight: 600;
-  color: var(--ink-muted);
+  padding: 0.65rem 0.7rem;       /* clears 44px with line-height */
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--ink);
   text-decoration: none;
+  border-radius: var(--radius-sm);
 }
 
-.site-nav a:hover {
-  background: var(--surface);
-  color: var(--ink);
-}
+.site-nav a:hover { color: var(--scarlet); background: var(--sand); }
 
 .site-nav a[aria-current="page"] {
-  background: var(--ink);
-  color: var(--ink-inverse);
-}
-
-/* At phone widths the nav has to share a row with the wordmark, so tighten
-   it rather than letting a single item wrap onto a line of its own. Targets
-   stay at 44px via the vertical padding. */
-@media (max-width: 30rem) {
-  .site-header__inner { gap: 0.35rem 1rem; }
-  .site-nav { margin-inline-start: -0.55rem; }
-  .site-nav ul { gap: 0; font-size: 0.88rem; }
-  .site-nav a { padding: 0.65rem 0.55rem; }
+  font-weight: 700;
+  color: var(--ink);
+  box-shadow: inset 0 -3px 0 var(--scarlet);
+  border-radius: 0;
 }
 
 /* ==========================================================================
-   Footer
-   ========================================================================== */
-
-.site-footer {
-  margin-block-start: 5rem;
-  padding-block: 2.5rem 3rem;
-  border-block-start: 1px solid var(--border);
-  font-size: 0.95rem;
-  color: var(--ink-muted);
-}
-
-.site-footer p { margin-block: 0.45em; }
-.site-footer a { color: var(--link); }
-
-/* ==========================================================================
-   Typography — the main lever on "look and feel"
+   Typography — the scale from the system
    ========================================================================== */
 
 h1, h2, h3, h4 {
-  font-family: var(--font-display);
+  font-family: var(--font-slab);
   color: var(--ink);
   text-wrap: balance;
 }
 
+/* Display 68/66 · H1 48/52 · both Slab 900, tracking -2.5% at large sizes */
 h1 {
-  font-size: clamp(2.4rem, 1.5rem + 4.2vw, 4rem);
-  font-weight: 800;
-  line-height: 1.02;             /* very tight — the jamm move */
-  letter-spacing: -0.035em;
-  margin-block: 1.5rem 0.6em;
-  max-width: 18ch;               /* forces the 2–3 line stack that reads well */
-}
-
-h2 {
-  font-size: clamp(1.6rem, 1.25rem + 1.6vw, 2.2rem);
-  font-weight: 800;
-  line-height: 1.1;
+  font-size: clamp(2.25rem, 1.55rem + 3.1vw, 3rem);   /* 36 → 48 */
+  font-weight: 900;
+  line-height: 1.08;
   letter-spacing: -0.025em;
-  margin-block: 2.4em 0.5em;
-  max-width: 24ch;
+  margin-block: var(--s3) 0.5em;
+  max-width: 20ch;
 }
 
+.display {
+  font-size: clamp(2.6rem, 1.6rem + 4.6vw, 4.25rem);  /* 42 → 68 */
+  line-height: 0.97;
+  letter-spacing: -0.03em;
+  max-width: 15ch;
+}
+
+/* H2 Slab 700 32/38 */
+h2 {
+  font-size: clamp(1.6rem, 1.35rem + 1.1vw, 2rem);
+  font-weight: 700;
+  line-height: 1.19;
+  letter-spacing: -0.018em;
+  margin-block: 2.2em 0.5em;
+  max-width: 26ch;
+}
+
+/* H3 Slab 700 21/27 */
 h3 {
-  font-size: 1.3rem;
-  font-weight: 750;
-  line-height: 1.25;
-  letter-spacing: -0.015em;
-  margin-block: 2em 0.4em;
+  font-size: 1.3125rem;
+  font-weight: 700;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  margin-block: 1.9em 0.4em;
 }
 
 h4 {
-  font-size: 1.05rem;
+  font-family: var(--font-slab);
+  font-size: 1.0625rem;
   font-weight: 700;
   line-height: 1.3;
-  margin-block: 1.6em 0.3em;
+  margin-block: 1.5em 0.3em;
 }
 
 /* The measure limit on h1/h2 is for display headings in prose. Component
    headings are labels and must not inherit it. */
-.callout__title,
-.two-situations__title,
-.exercise__title,
-.objectives h2,
-.takeaways h2,
-.takeaways h3,
-.results__heading,
-.error-summary h2,
-.error-summary h3,
-.content-error h2,
-.noscript-note h2 { max-width: none; }
+.callout__title, .two-situations__title, .exercise__title, .objectives h2,
+.takeaways h2, .takeaways h3, .results__heading, .error-summary h2,
+.error-summary h3, .content-error h2, .noscript-note h2, .cta-block h2,
+.unit-card h3, .lead-block h2 { max-width: none; }
 
-/* First heading in a container should not push off the top. */
-.page-body > h1:first-child,
-.callout > :first-child,
-.takeaways > :first-child,
-.exercise__body > :first-child { margin-block-start: 0; }
+.page-body > h1:first-child, .callout > :first-child,
+.takeaways > :first-child, .exercise__body > :first-child { margin-block-start: 0; }
 
 p { margin-block: 0 1.1em; }
 
+/* Roboto Light 20–21px carries intros and pull quotes */
+.lede {
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--ink);
+  max-width: 46ch;
+  margin-block-end: var(--s4);
+}
+
 a { color: var(--link); text-underline-offset: 3px; }
-a:hover { color: var(--scarlet-deep); }
+a:hover { color: var(--scarlet-dark); }
 
 /* Body links always underlined — colour alone is not a cue (1.4.1). */
 .prose a, .page-body a, .feedback a, .consequence a { text-decoration: underline; }
@@ -401,19 +501,17 @@ ul, ol { padding-inline-start: 1.4rem; }
 li::marker { color: var(--ink-muted); }
 
 /* Vertical rhythm for PROSE lists only. Any list used as a layout container
-   sets its own spacing with flex/gap or grid/gap, and this margin fights it:
-   it pushed every nav item after the first down by 0.45em (misaligning them
-   against the active pill) and made the first gap in the table of contents
-   smaller than the rest. If you add another layout list, reset it the same
-   way — the resets live with their components, .site-nav and .toc below. */
+   sets its own spacing with flex/gap or grid/gap, and this margin fights it.
+   If you add another layout list, reset it the same way — the resets live
+   with their components. */
 li + li { margin-block-start: 0.45em; }
 
 blockquote {
   margin-inline: 0;
-  margin-block: 1.75rem;
-  padding: 1rem 1.4rem;
+  margin-block: var(--s3);
+  padding: var(--s2) var(--s3);
   border-inline-start: 4px solid var(--scarlet);
-  background: var(--surface);
+  background: var(--white);
   border-radius: 0 var(--radius) var(--radius) 0;
 }
 
@@ -422,16 +520,12 @@ blockquote p:last-child { margin-block-end: 0; }
 code, kbd, samp {
   font-family: var(--font-mono);
   font-size: 0.9em;
-  background: var(--ground-deep);
+  background: var(--sand);
   padding: 0.14em 0.4em;
   border-radius: 4px;
 }
 
-hr {
-  border: 0;
-  border-block-start: 1px solid var(--border);
-  margin-block: 3rem;
-}
+hr { border: 0; border-block-start: 1px solid var(--rule-soft); margin-block: var(--s5); }
 
 /* --- Tables ------------------------------------------------------------- */
 
@@ -439,39 +533,44 @@ table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: 0.97rem;
-  margin-block: 2rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  font-size: 1rem;
+  margin-block: var(--s4);
+  background: var(--white);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
 caption {
   text-align: start;
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
   font-weight: 700;
-  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
   color: var(--ink-muted);
-  padding-block-end: 0.6rem;
+  padding-block-end: var(--s1);
 }
 
 th, td {
   text-align: start;
   vertical-align: top;
   padding: 0.85rem 1rem;
-  border-block-end: 1px solid var(--border);
+  border-block-end: 1px solid var(--rule-soft);
 }
 
 thead th {
-  background: var(--ground-deep);
-  font-size: 0.82rem;
+  background: var(--sand);
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.16em;
 }
 
-tbody tr:last-child th,
-tbody tr:last-child td { border-block-end: 0; }
-
+tbody tr:last-child th, tbody tr:last-child td { border-block-end: 0; }
 tbody th[scope="row"] { font-weight: 700; }
 
 /* ==========================================================================
@@ -489,29 +588,452 @@ tbody th[scope="row"] { font-weight: 700; }
   border: 0;
 }
 
-.lede {
-  font-size: clamp(1.2rem, 1.08rem + 0.5vw, 1.4rem);
-  line-height: 1.5;
+.meta {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.57;
   color: var(--ink-muted);
-  max-width: 44ch;
-  margin-block-end: 2rem;
 }
 
-.meta { font-size: 0.88rem; color: var(--ink-muted); }
+.scarlet-dot { color: var(--scarlet); }
 
 /* ==========================================================================
-   Cards — the structural idea borrowed from the reference: content sits on
-   raised surfaces floating on the warm ground, rather than running edge to
-   edge on a white page.
+   Chips and pills
+   ========================================================================== */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  border-radius: var(--radius-pill);
+  background: var(--sand);
+  color: var(--ink);
+}
+
+.chip--dark { background: var(--ink); color: var(--ink-invert); }
+.chip--outline { background: transparent; border: 1px solid var(--rule-strong); }
+.chip--scarlet { background: var(--scarlet); color: var(--white); }
+
+/* ==========================================================================
+   Buttons — 999px pills
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  min-height: 48px;
+  padding: 0.75rem 1.6rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  text-decoration: none;
+  color: var(--white);
+  background: var(--scarlet);
+  border: 2px solid var(--scarlet);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+              transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover {
+  background: var(--scarlet-dark);
+  border-color: var(--scarlet-dark);
+  color: var(--white);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card);
+}
+
+.btn:active { transform: translateY(0); }
+
+.btn--dark { background: var(--ink); border-color: var(--ink); }
+.btn--dark:hover { background: var(--scarlet-bright); border-color: var(--scarlet-bright); }
+
+.btn--outline { background: var(--white); border-color: var(--ink); color: var(--ink); }
+.btn--outline:hover { background: var(--sand); border-color: var(--ink); color: var(--ink); }
+
+/* On a scarlet block the primary button inverts. */
+.btn--invert { background: var(--white); border-color: var(--white); color: var(--scarlet); }
+.btn--invert:hover { background: var(--bone); border-color: var(--bone); color: var(--scarlet-dark); }
+
+/* The "| 45 MIN" suffix inside a button. */
+.btn__suffix {
+  padding-inline-start: 0.7rem;
+  border-inline-start: 1px solid currentColor;
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  opacity: 0.85;
+}
+
+.btn[aria-disabled="true"], .btn:disabled {
+  opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none;
+}
+
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-block: var(--s3); }
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.hero { padding-block: var(--s6) var(--s5); }
+
+.hero__chip { margin-block-end: var(--s3); }
+
+.hero .display { margin-block: 0 var(--s3); }
+
+.hero__lede {
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.5;
+  max-width: 46ch;
+  margin-block-end: var(--s4);
+}
+
+/* ==========================================================================
+   Stats bar — the dark strip under the hero
+   ========================================================================== */
+
+.stats-bar {
+  background: var(--ink);
+  color: var(--ink-invert);
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.stats-bar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem var(--s4);
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1.1rem;
+}
+
+.stats-bar__steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem var(--s3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stats-bar__steps li { display: flex; align-items: center; gap: var(--s3); }
+.stats-bar__steps li + li { margin-block-start: 0; }
+
+/* The separating dot between steps. Decorative, and arguably exempt from
+   1.4.3 -- but --rule-strong lands at 3.75:1 on this dark ground and it is
+   cheaper to clear the bar than to defend the exemption. --rule is 6.99:1. */
+.stats-bar__steps li + li::before {
+  content: "\00B7";
+  color: var(--rule);
+}
+
+/* ==========================================================================
+   Lead block — big slab statement beside a numbered list
+   ========================================================================== */
+
+.lead-block { display: grid; gap: var(--s4); align-items: start; }
+
+@media (min-width: 62rem) {
+  .lead-block { grid-template-columns: 5fr 7fr; gap: var(--s6); }
+}
+
+.lead-block__statement h2 {
+  font-size: clamp(1.7rem, 1.2rem + 1.9vw, 2.3rem);
+  line-height: 1.16;
+  margin-block: 0 0.6em;
+  max-width: 18ch;
+}
+
+.lead-block__statement p:last-child { margin-block-end: 0; }
+
+/* --- Numbered unit cards ------------------------------------------------ */
+
+.unit-list { display: grid; gap: var(--s2); margin: 0; padding: 0; list-style: none; }
+.unit-list > li + li { margin-block-start: 0; }
+
+.unit-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 var(--s3);
+  padding: var(--s3);
+  background: var(--white);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease,
+              transform 0.15s ease;
+}
+
+.unit-card:hover {
+  border-color: var(--scarlet);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.unit-card__num {
+  font-family: var(--font-slab);
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--numeral);
+  font-variant-numeric: tabular-nums;
+}
+
+.unit-card:hover .unit-card__num { color: var(--scarlet); }
+
+.unit-card h3 { margin-block: 0 0.35em; font-size: 1.1875rem; }
+.unit-card p { margin-block-end: 0; }
+
+.unit-card__body { grid-column: 2; }
+
+.unit-card__meta {
+  grid-column: 2;
+  margin-block-start: var(--s2);
+  padding-block-start: var(--s2);
+  border-block-start: 1px solid var(--rule-soft);
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--ink-muted);
+}
+
+/* ==========================================================================
+   Table of contents — unit cards that are links
+   ========================================================================== */
+
+.toc {
+  list-style: none;
+  padding: 0;
+  margin-block: var(--s4);
+  display: grid;
+  gap: var(--s2);
+  counter-reset: toc;
+}
+
+/* Spacing here is the grid gap. Cancel the prose rhythm. */
+.toc__item + .toc__item { margin-block-start: 0; }
+
+.toc__item {
+  counter-increment: toc;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 var(--s3);
+  padding: var(--s3);
+  background: var(--white);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease,
+              transform 0.15s ease;
+}
+
+.toc__item::before {
+  content: counter(toc, decimal-leading-zero);
+  font-family: var(--font-slab);
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--numeral);
+  font-variant-numeric: tabular-nums;
+}
+
+.toc__item:hover {
+  border-color: var(--scarlet);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.toc__item:hover::before { color: var(--scarlet); }
+
+.page-body .toc__link,
+.toc__link {
+  font-family: var(--font-slab);
+  font-size: 1.1875rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* Make the whole card clickable without nesting interactive elements. */
+.toc__link::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius); }
+
+.toc__item:hover .toc__link { color: var(--scarlet); }
+.toc__link:focus-visible { outline: none; }
+.toc__item:has(.toc__link:focus-visible) { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+.toc__time {
+  display: inline-block;
+  margin-inline-start: 0.6rem;
+  padding: 0.18rem 0.6rem;
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--ink-muted);
+  background: var(--sand);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  vertical-align: 0.15em;
+}
+
+.toc__desc {
+  margin-block: 0.4rem 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.toc__item > :not(::before) { grid-column: 2; }
+
+/* ==========================================================================
+   Three ways in — audience cards
+   ========================================================================== */
+
+.ways { display: grid; gap: var(--s3); margin-block: var(--s4); }
+
+@media (min-width: 52rem) { .ways { grid-template-columns: repeat(3, 1fr); } }
+
+.way {
+  display: flex;
+  flex-direction: column;
+  padding: var(--s3);
+  background: var(--white);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
+}
+
+.way h3 { margin-block: 0 0.4em; }
+.way p { color: var(--ink-muted); }
+
+.way__link {
+  margin-block-start: auto;
+  padding-block-start: var(--s2);
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--scarlet);
+}
+
+/* ==========================================================================
+   Full-bleed scarlet call to action
+   ========================================================================== */
+
+.cta-block { background: var(--scarlet); color: var(--white); padding-block: var(--s6); }
+
+.cta-block__inner {
+  display: grid;
+  gap: var(--s3);
+  align-items: center;
+}
+
+@media (min-width: 52rem) {
+  .cta-block__inner { grid-template-columns: 1fr auto; gap: var(--s5); }
+}
+
+.cta-block h2 {
+  margin-block: 0 0.4em;
+  color: var(--white);
+  font-size: clamp(1.7rem, 1.2rem + 1.9vw, 2.3rem);
+  max-width: 22ch;
+}
+
+.cta-block p { margin-block-end: 0; max-width: 48ch; }
+.cta-block a:not(.btn) { color: var(--white); }
+
+/* ==========================================================================
+   Footer — dark, columned
+   ========================================================================== */
+
+.site-footer {
+  margin-block-start: 0;
+  padding-block: var(--s5) var(--s4);
+  background: var(--ink);
+  color: var(--ink-invert);
+  font-size: 0.9375rem;
+}
+
+.site-footer__grid { display: grid; gap: var(--s4); }
+
+@media (min-width: 52rem) {
+  .site-footer__grid { grid-template-columns: 2fr 1fr 1fr 1fr; gap: var(--s5); }
+}
+
+.site-footer a { color: var(--ink-invert); text-decoration: none; }
+.site-footer a:hover { color: var(--scarlet-on-dark); text-decoration: underline; }
+
+.site-footer .lockup__name { color: var(--ink-invert); }
+.site-footer .lockup__org { color: var(--rule); }
+.site-footer .lockup:hover .lockup__name { color: var(--scarlet-on-dark); }
+
+.site-footer h2 {
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--scarlet-on-dark);
+  margin-block: 0 var(--s2);
+  max-width: none;
+}
+
+.site-footer ul { margin: 0; padding: 0; list-style: none; }
+.site-footer li { margin-block-start: 0.55em; }
+.site-footer li:first-child { margin-block-start: 0; }
+
+.site-footer__address { color: var(--rule); margin-block-start: var(--s2); }
+
+.site-footer__base {
+  margin-block-start: var(--s4);
+  padding-block-start: var(--s3);
+  border-block-start: 1px solid rgba(247, 244, 239, 0.18);
+  font-size: 0.875rem;
+  color: var(--rule);
+}
+
+.site-footer__base a { color: var(--rule); text-decoration: underline; }
+.site-footer__base a:hover { color: var(--ink-invert); }
+.site-footer__base p { margin-block: 0.35em; }
+
+/* ==========================================================================
+   Content components
    ========================================================================== */
 
 .callout {
-  margin-block: 2rem;
-  padding: 1.35rem 1.6rem;
+  margin-block: var(--s4);
+  padding: var(--s3);
   background: var(--note-bg);
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule-soft);
   border-inline-start: 5px solid var(--note-border);
-  border-radius: var(--radius) var(--radius-lg) var(--radius-lg) var(--radius);
+  border-radius: var(--radius-sm) var(--radius) var(--radius) var(--radius-sm);
 }
 
 .callout > :first-child { margin-block-start: 0; }
@@ -520,11 +1042,13 @@ tbody th[scope="row"] { font-weight: 700; }
 /* Every callout REQUIRES a visible heading. Colour never carries meaning
    on its own (1.4.1) — the heading text is the actual signal. */
 .callout__title {
-  margin-block: 0 0.6rem;
-  font-size: 0.78rem;
-  font-weight: 800;
+  margin-block: 0 var(--s1);
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.22em;
   color: var(--note-border);
 }
 
@@ -536,67 +1060,70 @@ tbody th[scope="row"] { font-weight: 700; }
 /* --- Two situations ----------------------------------------------------- */
 
 .two-situations {
-  margin-block: 2.75rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
+  margin-block: var(--s5);
+  background: var(--white);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
 .two-situations__title {
   margin: 0;
-  padding: 0.85rem 1.5rem;
-  font-size: 0.78rem;
-  font-weight: 800;
+  padding: 0.85rem var(--s3);
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.22em;
   background: var(--ink);
-  color: var(--ink-inverse);
+  color: var(--ink-invert);
 }
 
-.two-situations__grid {
-  display: grid;
-  gap: 1px;
-  background: var(--border);
-}
+.two-situations__grid { display: grid; gap: 1px; background: var(--rule-soft); }
 
-@media (min-width: 44rem) {
-  .two-situations__grid { grid-template-columns: 1fr 1fr; }
-}
+@media (min-width: 44rem) { .two-situations__grid { grid-template-columns: 1fr 1fr; } }
 
-.two-situations__case {
-  padding: 1.35rem 1.5rem;
-  background: var(--surface);
-}
+.two-situations__case { padding: var(--s3); background: var(--white); }
 
 .two-situations__case h4 {
   margin-block: 0 0.45em;
-  font-size: 0.82rem;
-  font-weight: 800;
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.16em;
   color: var(--scarlet);
 }
 
 .two-situations__case p:last-child { margin-block-end: 0; }
 
-/* --- AI output panel: canned, curated output the learner examines -------- */
+/* --- AI output panel ---------------------------------------------------- */
 
 .ai-output {
-  margin-block: 2rem;
-  padding: 1.4rem 1.6rem;
-  background: var(--ground-deep);
-  border: 2px dashed var(--border-strong);
-  border-radius: var(--radius-lg);
+  /* A block the learner has to read closely, so it keeps a measure even
+     inside a full-width band. On section pages the prose column already
+     limits it and this is a no-op. */
+  max-width: 46rem;
+  margin-block: var(--s4);
+  padding: var(--s3);
+  background: var(--sand);
+  border: 2px dashed var(--rule-strong);
+  border-radius: var(--radius);
 }
 
+/* Inside a sand band the panel needs to separate from its ground. */
+.band--sand .ai-output { background: var(--white); }
+
 .ai-output__label {
-  margin-block: 0 0.85rem;
-  font-size: 0.72rem;
-  font-weight: 800;
+  margin-block: 0 var(--s2);
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.22em;
   color: var(--ink-muted);
 }
 
@@ -609,10 +1136,11 @@ tbody th[scope="row"] { font-weight: 700; }
   height: 1.5em;
   line-height: 1.5em;
   margin-inline-end: 0.25em;
-  font-size: 0.78em;
-  font-weight: 800;
+  font-family: var(--font-sans);
+  font-size: 0.75em;
+  font-weight: 700;
   text-align: center;
-  color: var(--ink-inverse);
+  color: var(--white);
   background: var(--ink);
   border-radius: 50%;
 }
@@ -620,88 +1148,112 @@ tbody th[scope="row"] { font-weight: 700; }
 /* --- Native disclosure. No custom accordion, ever. ---------------------- */
 
 details {
-  margin-block: 1.5rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
+  margin-block: var(--s3);
+  background: var(--white);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
-details > summary {
-  padding: 1rem 1.4rem;
-  font-weight: 700;
-  cursor: pointer;
+details > summary { padding: var(--s2) var(--s3); font-weight: 700; cursor: pointer; }
+details > summary:hover { background: var(--sand); }
+details[open] > summary { border-block-end: 1px solid var(--rule-soft); }
+details > :not(summary) { padding-inline: var(--s3); }
+details > :first-of-type:not(summary) { padding-block-start: var(--s2); }
+details > :last-child { padding-block-end: var(--s2); }
+
+/* --- Objectives and takeaways ------------------------------------------ */
+
+.objectives {
+  margin-block: var(--s4);
+  padding: var(--s3);
+  background: var(--white);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
 }
 
-details > summary:hover { background: var(--ground); }
-details[open] > summary { border-block-end: 1px solid var(--border); }
+.objectives h2 {
+  margin-block: 0 var(--s2);
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--scarlet);
+}
 
-details > :not(summary) { padding-inline: 1.4rem; }
-details > :first-of-type:not(summary) { padding-block-start: 1.1rem; }
-details > :last-child { padding-block-end: 1.1rem; }
+.objectives ul { margin-block-end: 0; }
 
-/* ==========================================================================
-   Buttons — pill shaped, borrowed from the reference
-   ========================================================================== */
+.takeaways {
+  margin-block: var(--s5) var(--s4);
+  padding: var(--s4);
+  background: var(--ink);
+  color: var(--ink-invert);
+  border-radius: var(--radius);
+}
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.takeaways h2, .takeaways h3 {
+  margin-block: 0 var(--s2);
+  font-size: 1.3125rem;
+  color: var(--ink-invert);
+}
+
+.takeaways a { color: var(--ink-invert); }
+.takeaways li::marker { color: var(--scarlet-on-dark); }
+
+/* --ink-muted is a dark grey and disappears on this block (3.15:1).
+   --rule reads as a muted tone against the dark ground at 6.99:1. */
+.takeaways .meta { color: var(--rule); }
+.takeaways ul:last-child, .takeaways p:last-child { margin-block-end: 0; }
+
+/* --- Section navigation -------------------------------------------------- */
+
+.section-nav {
+  display: grid;
+  gap: var(--s2);
+  margin-block-start: var(--s5);
+  padding-block-start: var(--s4);
+  border-block-start: 1px solid var(--rule-soft);
+}
+
+@media (min-width: 44rem) {
+  .section-nav { grid-template-columns: 1fr 1fr; }
+  .section-nav__next { text-align: end; }
+}
+
+.section-nav a {
+  display: block;
   min-height: 48px;
-  padding: 0.7rem 1.75rem;
-  font: inherit;
-  font-family: var(--font-display);
-  font-size: 1rem;
+  padding: var(--s2) var(--s3);
+  background: var(--white);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
+  font-family: var(--font-slab);
   font-weight: 700;
-  letter-spacing: -0.005em;
-  line-height: 1.4;
-  text-align: center;
+  letter-spacing: -0.01em;
+  color: var(--ink);
   text-decoration: none;
-  color: var(--ink-inverse);
-  background: var(--scarlet);
-  border: 2px solid var(--scarlet);
-  border-radius: var(--radius-pill);
-  cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease,
-              transform 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.btn:hover {
-  background: var(--scarlet-deep);
-  border-color: var(--scarlet-deep);
-  color: var(--ink-inverse);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-lift);
+.section-nav a:hover {
+  border-color: var(--scarlet);
+  color: var(--scarlet);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
 }
 
-.btn:active { transform: translateY(0); }
-
-.btn--secondary {
-  color: var(--ink);
-  background: var(--surface);
-  border-color: var(--border-strong);
-}
-
-.btn--secondary:hover {
-  background: var(--ground-deep);
-  color: var(--ink);
-  border-color: var(--ink);
-}
-
-.btn[aria-disabled="true"], .btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.btn-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-block: 1.75rem;
+.section-nav__dir {
+  display: block;
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--ink-muted);
+  margin-block-end: 0.25rem;
 }
 
 /* ==========================================================================
@@ -711,58 +1263,59 @@ details > :last-child { padding-block-end: 1.1rem; }
    ========================================================================== */
 
 .exercise {
-  margin-block: 2.75rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
+  margin-block: var(--s5);
+  background: var(--white);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
-.exercise__header {
-  padding: 1.2rem 1.6rem;
-  background: var(--ink);
-  color: var(--ink-inverse);
-}
+.exercise__header { padding: var(--s3); background: var(--ink); color: var(--ink-invert); }
 
 .exercise__kicker {
   display: block;
-  font-size: 0.72rem;
-  font-weight: 800;
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  opacity: 0.75;
-  margin-block-end: 0.25rem;
+  letter-spacing: 0.22em;
+  color: var(--scarlet-on-dark);
+  margin-block-end: 0.35rem;
 }
 
 .exercise__title {
   margin: 0;
-  font-size: 1.35rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--ink-inverse);
+  font-family: var(--font-slab);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--ink-invert);
 }
 
-.exercise__body { padding: 1.5rem 1.6rem 1.6rem; }
+.exercise__body { padding: var(--s3); }
 .exercise__intro { margin-block-start: 0; color: var(--ink-muted); }
 
 /* --- Question groups ---------------------------------------------------- */
 
 .q {
-  margin: 0 0 2rem;
+  margin: 0 0 var(--s4);
   padding: 0;
   border: 0;
+  /* Browsers default a fieldset to min-width: min-content, which makes it
+     refuse to shrink below its longest unbreakable content and overflow a
+     narrow viewport. Long option text would trigger this at 320px. */
+  min-width: 0;
 }
-
 .q:last-of-type { margin-block-end: 0; }
 
 .q > legend {
   padding: 0;
-  font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-family: var(--font-slab);
+  font-size: 1.125rem;
   font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: -0.012em;
+  line-height: 1.38;
+  letter-spacing: -0.01em;
 }
 
 .q > legend:focus { outline: none; }
@@ -770,25 +1323,19 @@ details > :last-child { padding-block-end: 1.1rem; }
 
 .q__position {
   display: block;
-  font-size: 0.72rem;
-  font-weight: 800;
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.22em;
   color: var(--scarlet);
-  margin-block-end: 0.4rem;
+  margin-block-end: 0.45rem;
 }
 
-.q__hint {
-  margin-block: 0.5rem 0;
-  font-size: 0.92rem;
-  color: var(--ink-muted);
-}
+.q__hint { margin-block: 0.5rem 0; font-size: 0.9375rem; color: var(--ink-muted); }
 
-.q__choices {
-  margin-block-start: 1rem;
-  display: grid;
-  gap: 0.6rem;
-}
+.q__choices { margin-block-start: var(--s2); display: grid; gap: 0.6rem; }
 
 /* Each choice is a label wrapping a real input. The whole row is the hit
    area and it clears 44px. */
@@ -799,34 +1346,26 @@ details > :last-child { padding-block-end: 1.1rem; }
   align-items: start;
   min-height: 48px;
   padding: 0.85rem 1rem;
-  background: var(--ground);
-  /* --border is only 1.38:1 against the card surface. A choice row is the
-     hit area for a form control, so its boundary must clear 3:1 (1.4.11). */
-  border: 2px solid var(--border-strong);
-  border-radius: var(--radius);
+  background: var(--bone);
+  /* --rule-soft is only 1.3:1 against the card. A choice row is the hit area
+     for a form control, so its boundary must clear 3:1 (1.4.11). */
+  border: 2px solid var(--border-ui);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: border-color 0.12s ease, background-color 0.12s ease;
 }
 
-.choice:hover {
-  border-color: var(--ink);
-  background: var(--ground-deep);
-}
+.choice:hover { border-color: var(--ink); background: var(--sand); }
 
 .choice input {
   /* Native control, scaled up for target size. Never replaced with a div. */
-  width: 1.2rem;
-  height: 1.2rem;
-  margin: 0.3rem 0 0;
+  width: 1.2rem; height: 1.2rem; margin: 0.28rem 0 0;
   accent-color: var(--scarlet);
   flex: none;
 }
 
-/* Ring goes on the whole row so it is visible at a 2px offset. */
-.choice:has(input:focus-visible) {
-  outline: 3px solid var(--focus);
-  outline-offset: 3px;
-}
+/* Ring goes on the whole row so it is visible at a 3px offset. */
+.choice:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 3px; }
 
 .choice__text { display: block; }
 
@@ -835,16 +1374,18 @@ details > :last-child { padding-block-end: 1.1rem; }
 .choice[data-state="correct"]   { border-color: var(--correct);   background: var(--correct-bg); }
 .choice[data-state="incorrect"] { border-color: var(--incorrect); background: var(--incorrect-bg); }
 .choice[data-state="missed"]    { border-color: var(--partial);   background: var(--partial-bg); border-style: dashed; }
-.choice[data-state="chosen"]    { border-color: var(--ink);       background: var(--surface); }
+.choice[data-state="chosen"]    { border-color: var(--ink);       background: var(--white); }
 
 .choice__mark {
   grid-column: 1 / -1;
   display: block;
   margin-block-start: 0.4rem;
-  font-size: 0.86rem;
-  font-weight: 800;
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.16em;
 }
 
 .choice[data-state="correct"]   .choice__mark { color: var(--correct); }
@@ -852,28 +1393,22 @@ details > :last-child { padding-block-end: 1.1rem; }
 .choice[data-state="missed"]    .choice__mark { color: var(--partial); }
 .choice[data-state="chosen"]    .choice__mark { color: var(--ink-muted); }
 
-.choice__why {
-  grid-column: 1 / -1;
-  margin-block: 0.4rem 0;
-  font-size: 0.95rem;
-  line-height: 1.55;
-}
+.choice__why { grid-column: 1 / -1; margin-block: 0.4rem 0; font-size: 0.9375rem; line-height: 1.55; }
 
 /* --- Feedback region ----------------------------------------------------
-   IMPORTANT: this element ships in the DOM empty on page load and is filled
-   on submit. It is NOT a live region — focus is moved to the verdict
-   instead, because a focused live region is announced twice. See
-   docs/ACCESSIBILITY.md before changing this. */
+   IMPORTANT: ships in the DOM empty and is filled on submit. NOT a live
+   region — focus is moved to the verdict instead, because a focused live
+   region is announced twice. See docs/ACCESSIBILITY.md. */
 
 .feedback:empty { display: none; }
 
 .feedback {
-  margin-block-start: 1.4rem;
-  padding: 1.2rem 1.4rem;
-  background: var(--ground-deep);
-  border: 1px solid var(--border);
-  border-inline-start: 5px solid var(--border-strong);
-  border-radius: var(--radius) var(--radius-lg) var(--radius-lg) var(--radius);
+  margin-block-start: var(--s3);
+  padding: var(--s3);
+  background: var(--sand);
+  border: 1px solid var(--rule-soft);
+  border-inline-start: 5px solid var(--rule-strong);
+  border-radius: var(--radius-sm) var(--radius) var(--radius) var(--radius-sm);
 }
 
 .feedback[data-result="correct"]   { border-inline-start-color: var(--correct);   background: var(--correct-bg); }
@@ -881,12 +1416,11 @@ details > :last-child { padding-block-end: 1.1rem; }
 .feedback[data-result="partial"]   { border-inline-start-color: var(--partial);   background: var(--partial-bg); }
 
 .feedback__verdict {
-  /* tabindex="-1" target: focus lands here on submit. */
-  margin-block: 0 0.6rem;
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 800;
-  letter-spacing: -0.015em;
+  margin-block: 0 var(--s1);
+  font-family: var(--font-slab);
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .feedback__verdict:focus { outline: none; }
@@ -902,37 +1436,30 @@ details > :last-child { padding-block-end: 1.1rem; }
 /* --- Error summary (3.3.1) — focused, not announced via role=alert ------- */
 
 .error-summary {
-  margin-block: 1.4rem;
-  padding: 1.2rem 1.4rem;
+  margin-block: var(--s3);
+  padding: var(--s3);
   border: 3px solid var(--incorrect);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius);
   background: var(--incorrect-bg);
 }
 
 .error-summary:focus { outline: none; }
 .error-summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
-
-.error-summary h2, .error-summary h3 {
-  margin-block: 0 0.5rem;
-  font-size: 1.05rem;
-  color: var(--incorrect);
-}
-
+.error-summary h2, .error-summary h3 { margin-block: 0 var(--s1); font-size: 1.0625rem; color: var(--incorrect); }
 .error-summary ul { margin-block-end: 0; }
 
-/* --- Content-load failure panel (the runtime substitute for build-time
-       schema validation). Must be readable by whoever broke the JSON. ----- */
+/* --- Content-load failure panel ----------------------------------------- */
 
 .content-error {
-  margin-block: 2rem;
-  padding: 1.35rem 1.6rem;
+  margin-block: var(--s4);
+  padding: var(--s3);
   border: 3px solid var(--incorrect);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius);
   background: var(--incorrect-bg);
 }
 
-.content-error h2 { margin-block: 0 0.5rem; font-size: 1.15rem; color: var(--incorrect); }
-.content-error code { background: var(--surface); }
+.content-error h2 { margin-block: 0 var(--s1); font-size: 1.1875rem; color: var(--incorrect); }
+.content-error code { background: var(--white); }
 .content-error ul { margin-block-end: 0; }
 
 /* ==========================================================================
@@ -941,73 +1468,54 @@ details > :last-child { padding-block-end: 1.1rem; }
 
 /* Decorative progress pips. The real position is in the legend, which is
    what screen readers announce; this element is aria-hidden. */
-.quiz-progress {
-  display: flex;
-  gap: 4px;
-  margin-block: 0 1.75rem;
-}
+.quiz-progress { display: flex; gap: 4px; margin-block: 0 var(--s3); }
 
-.quiz-progress__pip {
-  flex: 1;
-  height: 5px;
-  border-radius: var(--radius-pill);
-  background: var(--border);
-}
-
-.quiz-progress__pip[data-state="done"] { background: var(--border-strong); }
+.quiz-progress__pip { flex: 1; height: 5px; border-radius: var(--radius-pill); background: var(--rule-soft); }
+.quiz-progress__pip[data-state="done"] { background: var(--rule-strong); }
 .quiz-progress__pip[data-state="current"] { background: var(--scarlet); }
 
-/* In forced-colors mode the background colours are discarded, so give the
-   pips a border that survives. */
 @media (forced-colors: active) {
   .quiz-progress__pip { border: 1px solid CanvasText; }
   .quiz-progress__pip[data-state="current"] { background: Highlight; }
 }
 
 #quiz {
-  margin-block-start: 2rem;
-  padding: 1.75rem 1.6rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
+  margin-block-start: var(--s4);
+  padding: var(--s4) var(--s3);
+  background: var(--white);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
 }
 
-#quiz .choice { background: var(--ground); }
-
-.results__heading {
-  margin-block-start: 0;
-  font-size: clamp(1.8rem, 1.4rem + 1.8vw, 2.4rem);
-}
-
+.results__heading { margin-block-start: 0; font-size: clamp(1.7rem, 1.35rem + 1.6vw, 2.2rem); }
 .results__heading:focus { outline: none; }
 .results__heading:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
 
 .results__score {
-  font-family: var(--font-display);
+  font-family: var(--font-slab);
   font-size: clamp(1.5rem, 1.15rem + 1.6vw, 2rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-weight: 900;
+  letter-spacing: -0.025em;
   line-height: 1.15;
   color: var(--scarlet);
   margin-block: 0.15em 0.5em;
 }
 
-.breakdown { margin-block: 2rem; }
+.breakdown { margin-block: var(--s4); }
 
 .breakdown__row {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 0.5rem 1rem;
+  gap: var(--s1) var(--s2);
   align-items: baseline;
   padding-block: 0.8rem;
-  border-block-end: 1px solid var(--border);
+  border-block-end: 1px solid var(--rule-soft);
 }
 
 .breakdown__score {
-  font-family: var(--font-display);
+  font-family: var(--font-slab);
   font-variant-numeric: tabular-nums;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--ink-muted);
 }
 
@@ -1015,235 +1523,53 @@ details > :last-child { padding-block-end: 1.1rem; }
 
 /* --- Scenario consequence panels (no correct/incorrect by design) -------- */
 
-.consequences { margin-block-start: 1.4rem; display: grid; gap: 1rem; }
+.consequences { margin-block-start: var(--s3); display: grid; gap: var(--s2); }
 
 .consequence {
-  padding: 1.15rem 1.3rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  padding: var(--s3);
+  background: var(--white);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
 }
 
-.consequence[data-chosen="true"] {
-  border-color: var(--scarlet);
-  border-width: 2px;
-  box-shadow: var(--shadow-card);
-}
+.consequence[data-chosen="true"] { border-color: var(--scarlet); border-width: 2px; }
 
 .consequence__label {
-  margin-block: 0 0.55rem;
-  font-size: 0.72rem;
-  font-weight: 800;
+  margin-block: 0 var(--s1);
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.22em;
   color: var(--ink-muted);
 }
 
 .consequence[data-chosen="true"] .consequence__label { color: var(--scarlet); }
 
-.consequence dl { margin: 0.8rem 0 0; display: grid; gap: 0.7rem; }
+.consequence dl { margin: var(--s2) 0 0; display: grid; gap: 0.7rem; }
+
 .consequence dt {
-  font-size: 0.76rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--ink-muted);
-}
-.consequence dd { margin: 0.15rem 0 0; font-size: 0.97rem; }
-
-/* ==========================================================================
-   Table of contents — cards rather than a list
-   ========================================================================== */
-
-.toc {
-  list-style: none;
-  padding: 0;
-  margin-block: 2rem;
-  display: grid;
-  gap: 0.85rem;
-  counter-reset: toc;
-}
-
-/* Spacing here is the grid gap. Cancel the prose rhythm, which would
-   otherwise make the first gap smaller than all the others. */
-.toc__item + .toc__item { margin-block-start: 0; }
-
-.toc__item {
-  counter-increment: toc;
-  position: relative;
-  padding: 1.15rem 1.4rem 1.15rem 3.9rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-}
-
-.toc__item::before {
-  content: counter(toc);
-  position: absolute;
-  left: 1.3rem;
-  top: 1.15rem;
-  width: 1.9rem;
-  height: 1.9rem;
-  display: grid;
-  place-items: center;
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 800;
-  color: var(--ink-inverse);
-  background: var(--ink);
-  border-radius: 50%;
-}
-
-.toc__item:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lift);
-  border-color: var(--border-strong);
-}
-
-.toc__item:hover::before { background: var(--scarlet); }
-
-.page-body .toc__link,
-.toc__link {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 750;
-  letter-spacing: -0.018em;
-  color: var(--ink);
-  text-decoration: none;
-}
-
-/* Make the whole card clickable without nesting interactive elements. */
-.toc__link::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-lg);
-}
-
-.toc__item:hover .toc__link { color: var(--scarlet); }
-
-.toc__link:focus-visible { outline: none; }
-.toc__item:has(.toc__link:focus-visible) {
-  outline: 3px solid var(--focus);
-  outline-offset: 3px;
-}
-
-.toc__time {
-  display: inline-block;
-  margin-inline-start: 0.6rem;
-  padding: 0.12rem 0.6rem;
-  font-size: 0.74rem;
+  font-family: var(--font-sans);
+  font-stretch: 75%;
+  font-size: 0.6875rem;
   font-weight: 700;
-  color: var(--ink-muted);
-  background: var(--ground-deep);
-  border-radius: var(--radius-pill);
-  white-space: nowrap;
-}
-
-.toc__desc {
-  margin-block: 0.4rem 0;
-  font-size: 0.96rem;
-  line-height: 1.5;
-  color: var(--ink-muted);
-}
-
-/* ==========================================================================
-   Section furniture
-   ========================================================================== */
-
-.objectives {
-  margin-block: 2rem;
-  padding: 1.35rem 1.6rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-}
-
-.objectives h2 {
-  margin-block: 0 0.7rem;
-  font-size: 0.76rem;
-  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--scarlet);
-  max-width: none;
-}
-
-.objectives ul { margin-block-end: 0; }
-
-.takeaways {
-  margin-block: 3rem 2rem;
-  padding: 1.6rem 1.75rem;
-  background: var(--ink);
-  color: var(--ink-inverse);
-  border-radius: var(--radius-lg);
-}
-
-.takeaways h2, .takeaways h3 {
-  margin-block: 0 0.8rem;
-  font-size: 1.25rem;
-  color: var(--ink-inverse);
-  max-width: none;
-}
-
-.takeaways a { color: var(--ink-inverse); }
-.takeaways li::marker { color: var(--scarlet-on-dark); }
-.takeaways ul:last-child, .takeaways p:last-child { margin-block-end: 0; }
-
-.section-nav {
-  display: grid;
-  gap: 0.75rem;
-  margin-block-start: 3.5rem;
-  padding-block-start: 2rem;
-  border-block-start: 1px solid var(--border);
-}
-
-@media (min-width: 44rem) {
-  .section-nav { grid-template-columns: 1fr 1fr; }
-  .section-nav__next { text-align: end; }
-}
-
-.section-nav a {
-  display: block;
-  min-height: 48px;
-  padding: 0.9rem 1.2rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.section-nav a:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lift);
-  color: var(--scarlet);
-}
-
-.section-nav__dir {
-  display: block;
-  font-size: 0.7rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   color: var(--ink-muted);
-  margin-block-end: 0.2rem;
 }
+
+.consequence dd { margin: 0.15rem 0 0; font-size: 1rem; }
 
 /* ==========================================================================
    noscript
    ========================================================================== */
 
 .noscript-note {
-  margin-block: 2rem;
-  padding: 1.35rem 1.6rem;
+  margin-block: var(--s4);
+  padding: var(--s3);
   border: 3px solid var(--caution-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius);
   background: var(--caution-bg);
 }
 
@@ -1251,52 +1577,46 @@ details > :last-child { padding-block-end: 1.1rem; }
 .noscript-note > :last-child { margin-block-end: 0; }
 
 /* ==========================================================================
-   Print — learners do print these, and the summary card is print-first.
-   Everything reverts to white paper and black ink.
+   Print — white paper, black ink.
    ========================================================================== */
 
 @media print {
   :root {
-    --ground: #fff; --ground-deep: #fff; --surface: #fff;
-    --ink: #000; --ink-muted: #333; --ink-inverse: #000;
-    --border: #999; --border-strong: #666;
-    --shadow-card: none; --shadow-lift: none;
+    --bone: #fff; --sand: #fff; --white: #fff;
+    --ink: #000; --ink-muted: #333; --ink-invert: #000;
+    --rule-soft: #999; --rule-strong: #666; --border-ui: #666;
+    --shadow-card: none;
   }
 
-  body { font-size: 11.5pt; line-height: 1.45; background: #fff; }
+  body { font-size: 11pt; line-height: 1.45; background: #fff; }
 
-  .site-nav, .skip-link, .section-nav, .btn, .btn-row, .no-print { display: none !important; }
+  .utility-bar, .site-nav, .skip-link, .section-nav, .stats-bar,
+  .btn, .btn-row, .cta-block, .no-print { display: none !important; }
 
   .site-header { border-block-end: 2px solid #000; }
 
-  .exercise__header, .two-situations__title, .takeaways {
-    background: #fff !important;
-    color: #000 !important;
-    border: 1px solid #999;
+  .exercise__header, .two-situations__title, .takeaways, .site-footer {
+    background: #fff !important; color: #000 !important; border: 1px solid #999;
   }
 
-  .exercise__title, .takeaways h2, .takeaways h3 { color: #000 !important; }
-  .toc__item::before { background: #000 !important; color: #fff !important; }
+  .exercise__title, .takeaways h2, .takeaways h3, .site-footer h2 { color: #000 !important; }
+  .lockup__mark { background: #000 !important; color: #fff !important; }
+  .toc__item::before, .unit-card__num { color: #000 !important; }
 
   a { color: #000; text-decoration: underline; }
 
   /* Expose destinations the reader can no longer click. */
   .prose a[href^="http"]::after,
   .page-body a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-size: 0.85em;
-    word-break: break-all;
+    content: " (" attr(href) ")"; font-size: 0.85em; word-break: break-all;
   }
 
   details { border: 1px solid #999; }
   details[open] > summary { border-block-end: 1px solid #999; }
-  details > *:not(summary) { display: block !important; }   /* print collapsed content too */
+  details > *:not(summary) { display: block !important; }
 
-  .exercise, .callout, .takeaways, .two-situations, .consequence, .toc__item {
-    border: 1px solid #999;
-    box-shadow: none;
-    break-inside: avoid;
-  }
+  .exercise, .callout, .takeaways, .two-situations, .consequence,
+  .toc__item, .unit-card, .way { border: 1px solid #999; box-shadow: none; break-inside: avoid; }
 
   h1, h2, h3 { break-after: avoid; }
 }

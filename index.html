@@ -5,19 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Literacy Module — UNLV University Libraries</title>
 <meta name="description" content="A self-paced module on using generative AI carefully: how it works, how it fails, what not to share, and how to decide when to use it. For UNLV students and staff. About 40 minutes.">
-<link rel="preload" href="assets/fonts/outfit-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/roboto-slab-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/roboto-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body>
+<body data-root="">
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
+<div class="utility-bar">
+  <div class="wrap utility-bar__inner">
+    <span>University of Nevada, Las Vegas</span>
+    <ul>
+      <li><a href="https://www.unlv.edu/students">Students</a></li>
+      <li><a href="https://www.unlv.edu/faculty">Faculty/Staff</a></li>
+      <li><a href="https://www.library.unlv.edu/">Libraries</a></li>
+      <li><a href="https://my.unlv.edu/">MyUNLV</a></li>
+    </ul>
+  </div>
+</div>
+
 <header class="site-header">
   <div class="wrap site-header__inner">
-    <p class="site-title">
-      <span class="site-title__org">UNLV University Libraries</span>
-      <a href="index.html">AI Literacy Module</a>
-    </p>
+    <a class="lockup" href="index.html">
+      <span class="lockup__mark" aria-hidden="true">?</span>
+      <span>
+        <span class="lockup__org">UNLV University Libraries</span>
+        <span class="lockup__name">AI Literacy Module</span>
+      </span>
+    </a>
     <nav class="site-nav" aria-label="Main">
       <ul>
         <li><a href="index.html" aria-current="page">Start here</a></li>
@@ -30,176 +46,305 @@
 </header>
 
 <main id="main" tabindex="-1">
-<div class="wrap page-body">
 
-  <h1>Working with AI, carefully</h1>
+  <section class="wrap hero">
+    <p class="hero__chip"><span class="chip">Free · Self-paced · Open to all Rebels</span></p>
+    <h1 class="display">Ask better questions<span class="scarlet-dot">.</span></h1>
+    <p class="hero__lede">AI is already in your coursework, your research and your
+    job. This module from UNLV University Libraries teaches you how it works,
+    where it fails, and what the university expects of you.</p>
+    <div class="btn-row">
+      <a class="btn" href="sections/1-what-youre-talking-to.html">Start Section 01<span class="btn__suffix">6 min</span></a>
+      <a class="btn btn--outline" href="quiz.html">Skip to the quiz</a>
+    </div>
+  </section>
 
-  <p class="lede">A self-paced module for UNLV students and staff on what generative
-  AI is actually doing, where it breaks, and how to make good decisions about
-  using it. About 40 minutes. You can stop and come back at any point.</p>
-
-  <h2>Before we start, here is something to look at</h2>
-
-  <p>Someone asked an AI research assistant a straightforward question:
-  <em>what does the research say about how first-year students evaluate sources?</em>
-  This is part of what came back.</p>
-
-  <div class="ai-output">
-    <p class="ai-output__label">AI-generated response</p>
-    <p>Research on first-year students' source evaluation has grown considerably
-    over the past decade. Nguyen (2021) found that students who received embedded
-    library instruction were substantially more likely to consult peer-reviewed
-    sources than those who did not <cite>(College &amp; Research Libraries, 82(3),
-    411&ndash;428)</cite>. This aligns with broader findings that roughly 68% of
-    first-year students cannot reliably distinguish a scholarly article from a
-    popular one. Wineburg and McGrew (2019) demonstrated that lateral reading
-    &mdash; leaving a page to check what other sources say about it &mdash; is a
-    markedly more effective strategy than close reading of the page itself. As
-    Head and Eisenberg's Project Information Literacy work established, students
-    who use library databases go on to earn higher course grades. A 2024
-    meta-analysis in the <cite>Journal of Academic Librarianship</cite>
-    synthesised 340 studies on information literacy instruction
-    <cite>(doi:10.1016/j.acalib.2024.102847)</cite>.</p>
+  <div class="stats-bar">
+    <div class="wrap stats-bar__inner">
+      <span>Seven sections · About 40 minutes · Nothing recorded</span>
+      <ul class="stats-bar__steps">
+        <li>Understand</li>
+        <li>Verify</li>
+        <li>Decide</li>
+        <li>Disclose</li>
+      </ul>
+    </div>
   </div>
 
-  <p>It reads well. The citations are formatted correctly. Five claims are being
-  made here, and only one of them is sound. One cites a paper that does not
-  exist. One gives a number with no source at all. One points at real, correctly
-  cited research that says something different. And one has a DOI that resolves
-  to a different article entirely.</p>
+  <section class="band band--bone">
+    <div class="wrap">
+      <div class="lead-block">
+        <div class="lead-block__statement">
+          <p class="eyebrow">What you will learn</p>
+          <h2>This module is for UNLV students and staff who want to use these
+          tools without getting caught out by them.</h2>
+          <p>Not a tool catalogue. AI literacy here is the judgment to know what
+          a system can do, where it fails, and what the university expects of
+          you. The Libraries have always taught source evaluation — this is the
+          same skill, applied to a new kind of source.</p>
+        </div>
+        <ul class="unit-list">
+          <li class="unit-card">
+            <span class="unit-card__num" aria-hidden="true">01</span>
+            <div class="unit-card__body">
+              <h3>Understand what you are talking to</h3>
+              <p>Why these systems produce fluent text rather than looked-up
+              facts, and why a confident answer is not a more reliable one.</p>
+            </div>
+          </li>
+          <li class="unit-card">
+            <span class="unit-card__num" aria-hidden="true">02</span>
+            <div class="unit-card__body">
+              <h3>Verify what it tells you</h3>
+              <p>Five named checks you can actually remember, built for the
+              failure that matters now: real sources described wrongly.</p>
+            </div>
+          </li>
+          <li class="unit-card">
+            <span class="unit-card__num" aria-hidden="true">03</span>
+            <div class="unit-card__body">
+              <h3>Decide what is safe to share</h3>
+              <p>One question to ask before you paste anything, and what changes
+              when the tool is one UNLV holds a contract for.</p>
+            </div>
+          </li>
+          <li class="unit-card">
+            <span class="unit-card__num" aria-hidden="true">04</span>
+            <div class="unit-card__body">
+              <h3>Say what you did</h3>
+              <p>Permission, disclosure and citation are three separate
+              obligations. Most confusion comes from treating them as one.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-  <p>Spotting which is which is a skill, and it is a skill you can learn in
-  about ten minutes. That is roughly what this module is for. We will come
-  back to this passage in Section&nbsp;2 and take it apart line by line.</p>
+  <section class="band band--sand">
+    <div class="wrap">
+      <p class="eyebrow">Before we start</p>
+      <h2>Here is something to look at</h2>
+      <p class="prose">Someone asked an AI research assistant a straightforward
+      question: <em>what does the research say about how first-year students
+      evaluate sources?</em> This is part of what came back.</p>
 
-  <div class="callout">
-    <h2 class="callout__title">Nothing here is recorded</h2>
-    <p>There is no login, no account, and no tracking. Your answers are worked
-    out in your own browser and are never sent anywhere — not to the Libraries,
-    not to your instructor, not to your supervisor. Nothing is saved between
-    visits, which also means closing a tab loses your place in the quiz.</p>
-    <p>We are asking you to think carefully about where your data goes, so it
-    would be strange not to tell you where yours goes here. If you would like to
-    confirm it rather than take our word for it, open your browser's developer
-    tools: the Network tab shows no third-party requests, and Application shows
-    no cookies and no stored data. That is deliberate.</p>
+      <div class="ai-output">
+        <p class="ai-output__label">AI-generated response</p>
+        <p>Research on first-year students' source evaluation has grown considerably
+        over the past decade. Nguyen (2021) found that students who received embedded
+        library instruction were substantially more likely to consult peer-reviewed
+        sources than those who did not <cite>(College &amp; Research Libraries, 82(3),
+        411&ndash;428)</cite>. This aligns with broader findings that roughly 68% of
+        first-year students cannot reliably distinguish a scholarly article from a
+        popular one. Wineburg and McGrew (2019) demonstrated that lateral reading
+        &mdash; leaving a page to check what other sources say about it &mdash; is a
+        markedly more effective strategy than close reading of the page itself. As
+        Head and Eisenberg's Project Information Literacy work established, students
+        who use library databases go on to earn higher course grades. A 2024
+        meta-analysis in the <cite>Journal of Academic Librarianship</cite>
+        synthesised 340 studies on information literacy instruction
+        <cite>(doi:10.1016/j.acalib.2024.102847)</cite>.</p>
+      </div>
+
+      <p class="prose">It reads well and the citations are formatted correctly.
+      Five claims are being made, and only one of them is sound. One cites a
+      paper that does not exist. One gives a number with no source. One points
+      at real, correctly cited research that says something different. And one
+      has a DOI that resolves to a different article entirely.</p>
+
+      <p class="prose">Spotting which is which is a skill, and it takes about ten
+      minutes to learn. We take this passage apart line by line in Section 02.</p>
+    </div>
+  </section>
+
+  <section class="band band--bone">
+    <div class="wrap">
+      <p class="eyebrow">Start where you are</p>
+      <h2>Three ways in</h2>
+      <p class="prose">Same module, different entry point. Students and staff take
+      one shared path — the situations differ, the judgment does not — and each
+      section ends with the same principle shown from both sides.</p>
+
+      <div class="ways">
+        <div class="way">
+          <h3>Students</h3>
+          <p>What counts as help and what counts as cheating. How to check an
+          answer before you hand it in, and what to do if a detector accuses you.</p>
+          <p class="way__link"><a href="sections/5-using-it-honestly.html">Permission and disclosure →</a></p>
+        </div>
+        <div class="way">
+          <h3>Staff</h3>
+          <p>Which tools are approved for university data, what never goes into a
+          chat window, and how to help at the desk without adjudicating integrity.</p>
+          <p class="way__link"><a href="sections/4-what-not-to-paste.html">What not to paste →</a></p>
+        </div>
+        <div class="way">
+          <h3>Not sure yet</h3>
+          <p>Start at the beginning. Seven sections, about forty minutes, and you
+          can stop and come back at any point.</p>
+          <p class="way__link"><a href="sections/1-what-youre-talking-to.html">Start Section 01 →</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--sand">
+    <div class="wrap">
+      <p class="eyebrow">The module</p>
+      <h2>Seven sections</h2>
+
+      <ol class="toc">
+        <li class="toc__item">
+          <a class="toc__link" href="sections/1-what-youre-talking-to.html">What you're actually talking to</a>
+          <span class="toc__time">6 min</span>
+          <p class="toc__desc">Why these systems produce fluent text rather than looked-up
+          facts, and why the chatbot and the model behind it are not the same thing.</p>
+        </li>
+        <li class="toc__item">
+          <a class="toc__link" href="sections/2-when-it-makes-things-up.html">When it makes things up</a>
+          <span class="toc__time">8 min</span>
+          <p class="toc__desc">Fabricated sources, real sources misused, and five
+          verification moves you can actually remember. Includes the passage above.</p>
+        </li>
+        <li class="toc__item">
+          <a class="toc__link" href="sections/3-whose-world.html">Whose world does it describe?</a>
+          <span class="toc__time">5 min</span>
+          <p class="toc__desc">How bias gets into these systems, who it lands on, and
+          why AI writing detectors are a live problem at this university.</p>
+        </li>
+        <li class="toc__item">
+          <a class="toc__link" href="sections/4-what-not-to-paste.html">What not to paste</a>
+          <span class="toc__time">6 min</span>
+          <p class="toc__desc">One question to ask before you paste anything, and what
+          changes when you are using a tool UNLV holds a contract for.</p>
+        </li>
+        <li class="toc__item">
+          <a class="toc__link" href="sections/5-using-it-honestly.html">Using it honestly</a>
+          <span class="toc__time">6 min</span>
+          <p class="toc__desc">Permission, disclosure, and citation are three separate
+          things. Plus what to do when someone is accused by a detector.</p>
+        </li>
+        <li class="toc__item">
+          <a class="toc__link" href="sections/6-deciding-when-to-use-it.html">Deciding when to use it</a>
+          <span class="toc__time">6 min</span>
+          <p class="toc__desc">Four questions that work on situations nobody has
+          written a rule for yet, tested against three real scenarios.</p>
+        </li>
+        <li class="toc__item">
+          <a class="toc__link" href="sections/7-getting-better-output.html">Getting better output</a>
+          <span class="toc__time">4 min</span>
+          <p class="toc__desc">What actually improves results, and which popular
+          prompting advice is superstition.</p>
+        </li>
+        <li class="toc__item">
+          <a class="toc__link" href="quiz.html">Quiz</a>
+          <span class="toc__time">8 min</span>
+          <p class="toc__desc">Ten situations rather than ten definitions. Every answer
+          is explained, including the wrong ones.</p>
+        </li>
+        <li class="toc__item">
+          <a class="toc__link" href="summary.html">What to take with you</a>
+          <span class="toc__time">2 min</span>
+          <p class="toc__desc">A one-page summary built to be printed and kept.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band band--bone">
+    <div class="wrap prose">
+      <div class="callout">
+        <h2 class="callout__title">Nothing here is recorded</h2>
+        <p>There is no login, no account, and no tracking. Your answers are worked
+        out in your own browser and are never sent anywhere — not to the Libraries,
+        not to your instructor, not to your supervisor. Nothing is saved between
+        visits, which also means closing a tab loses your place in the quiz.</p>
+        <p>We are asking you to think carefully about where your data goes, so it
+        would be strange not to tell you where yours goes here. If you would like to
+        confirm it rather than take our word for it, open your browser's developer
+        tools: the Network tab shows no third-party requests, and Application shows
+        no cookies and no stored data. That is deliberate.</p>
+      </div>
+
+      <div class="callout callout--caution">
+        <h2 class="callout__title">What this module does not cover</h2>
+        <p>AI for writing code, research data management, IRB and human-subjects
+        questions, grant writing, and accessibility accommodations are all out of
+        scope. This module also does not override your syllabus, your instructor,
+        or your supervisor — where a local rule exists, it wins.</p>
+      </div>
+
+      <h2>How this relates to the Libraries' other AI guide</h2>
+
+      <p>The Libraries already publishes
+      <a href="https://guides.library.unlv.edu/ai-basics">AI 101</a>, an introductory
+      guide covering foundational concepts, machine learning, ethics, and current
+      issues. If you want the conceptual grounding — what machine learning <em>is</em>,
+      how the field got here — start there. This module is the applied companion:
+      shorter, hands-on, and built around practice rather than explanation. You do
+      not need to have read AI 101 first.</p>
+
+      <p class="meta">Last reviewed: September 2026.</p>
+    </div>
+  </section>
+
+  <div class="cta-block">
+    <div class="wrap cta-block__inner">
+      <div>
+        <h2>Still have a question no page answers?</h2>
+        <p>Book a consultation with a subject librarian. Bring an assignment, a
+        dataset, or a policy question.</p>
+      </div>
+      <p><a class="btn btn--invert" href="https://www.library.unlv.edu/ask">Ask a Librarian</a></p>
+    </div>
   </div>
 
-  <div class="objectives">
-    <h2>By the end, you should be able to</h2>
-    <ul>
-      <li>Explain, in your own words, why a fluent and confident answer can still be wrong.</li>
-      <li>Take a specific AI-generated claim and describe how you would verify it.</li>
-      <li>Decide whether a given piece of information is safe to put into a given tool.</li>
-      <li>Tell the difference between being <em>permitted</em> to use AI, <em>disclosing</em> that you used it, and <em>citing</em> it.</li>
-      <li>Work through an unfamiliar situation where the right answer is not obvious.</li>
-    </ul>
-  </div>
-
-  <h2>What is in the module</h2>
-
-  <ol class="toc">
-    <li class="toc__item">
-      <a class="toc__link" href="sections/1-what-youre-talking-to.html">What you're actually talking to</a>
-      <span class="toc__time">6 min</span>
-      <p class="toc__desc">Why these systems produce fluent text rather than looked-up
-      facts, and why the chatbot and the model behind it are not the same thing.</p>
-    </li>
-    <li class="toc__item">
-      <a class="toc__link" href="sections/2-when-it-makes-things-up.html">When it makes things up</a>
-      <span class="toc__time">8 min</span>
-      <p class="toc__desc">Fabricated sources, real sources misused, and five
-      verification moves you can actually remember. Includes the passage above.</p>
-    </li>
-    <li class="toc__item">
-      <a class="toc__link" href="sections/3-whose-world.html">Whose world does it describe?</a>
-      <span class="toc__time">5 min</span>
-      <p class="toc__desc">How bias gets into these systems, who it lands on, and
-      why AI writing detectors are a live problem at this university.</p>
-    </li>
-    <li class="toc__item">
-      <a class="toc__link" href="sections/4-what-not-to-paste.html">What not to paste</a>
-      <span class="toc__time">6 min</span>
-      <p class="toc__desc">One question to ask before you paste anything, and what
-      changes when you are using a tool UNLV holds a contract for.</p>
-    </li>
-    <li class="toc__item">
-      <a class="toc__link" href="sections/5-using-it-honestly.html">Using it honestly</a>
-      <span class="toc__time">6 min</span>
-      <p class="toc__desc">Permission, disclosure, and citation are three separate
-      things. Plus what to do when someone is accused by a detector.</p>
-    </li>
-    <li class="toc__item">
-      <a class="toc__link" href="sections/6-deciding-when-to-use-it.html">Deciding when to use it</a>
-      <span class="toc__time">6 min</span>
-      <p class="toc__desc">Four questions that work on situations nobody has
-      written a rule for yet, tested against three real scenarios.</p>
-    </li>
-    <li class="toc__item">
-      <a class="toc__link" href="sections/7-getting-better-output.html">Getting better output</a>
-      <span class="toc__time">4 min</span>
-      <p class="toc__desc">What actually improves results, and which popular
-      prompting advice is superstition.</p>
-    </li>
-    <li class="toc__item">
-      <a class="toc__link" href="quiz.html">Quiz</a>
-      <span class="toc__time">8 min</span>
-      <p class="toc__desc">Ten situations rather than ten definitions. Every answer
-      is explained, including the wrong ones.</p>
-    </li>
-    <li class="toc__item">
-      <a class="toc__link" href="summary.html">What to take with you</a>
-      <span class="toc__time">2 min</span>
-      <p class="toc__desc">A one-page summary built to be printed and kept.</p>
-    </li>
-  </ol>
-
-  <div class="btn-row">
-    <a class="btn" href="sections/1-what-youre-talking-to.html">Start Section 1</a>
-    <a class="btn btn--secondary" href="quiz.html">Skip to the quiz</a>
-  </div>
-
-  <h2>Who this is for</h2>
-
-  <p>Students and staff, in the same module. That is a deliberate choice. The
-  situations differ — one of you is worried about a syllabus, the other about a
-  patron at a service desk — but the underlying judgment is the same, and each
-  group benefits from seeing the other's position. Staff get asked these
-  questions at the desk. Students are the ones being accused by detectors. Each
-  section ends with the same principle shown from both sides.</p>
-
-  <p>No prior technical knowledge is assumed, and nothing here assumes you are
-  either a novice or an expert on account of your age or your job title.</p>
-
-  <h2>How this relates to the Libraries' other AI guide</h2>
-
-  <p>The Libraries already publishes
-  <a href="https://guides.library.unlv.edu/ai-basics">AI 101</a>, an introductory
-  guide covering foundational concepts, machine learning, ethics, and current
-  issues. If you want the conceptual grounding — what machine learning <em>is</em>,
-  how the field got here — start there. This module is the applied companion:
-  shorter, hands-on, and built around practice rather than explanation. You do
-  not need to have read AI 101 first.</p>
-
-  <div class="callout callout--caution">
-    <h2 class="callout__title">What this module does not cover</h2>
-    <p>AI for writing code, research data management, IRB and human-subjects
-    questions, grant writing, and accessibility accommodations are all out of
-    scope. This module also does not override your syllabus, your instructor,
-    or your supervisor — where a local rule exists, it wins. Ask a librarian if
-    you need a pointer to the right person.</p>
-  </div>
-
-  <p class="meta">Last reviewed: September 2026.</p>
-
-</div>
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p><strong>AI Literacy Module</strong> — University Libraries, University of Nevada, Las Vegas.</p>
-    <p>Content licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC&nbsp;BY&nbsp;4.0</a>.
-    <a href="about.html">About this module, and how to report an accessibility barrier</a>.</p>
+    <div class="site-footer__grid">
+      <div>
+        <a class="lockup" href="index.html">
+          <span class="lockup__mark" aria-hidden="true">?</span>
+          <span>
+            <span class="lockup__org">UNLV University Libraries</span>
+            <span class="lockup__name">AI Literacy Module</span>
+          </span>
+        </a>
+        <p class="site-footer__address">University Libraries<br>
+        4505 S. Maryland Pkwy, Las Vegas, NV 89154</p>
+      </div>
+      <nav aria-labelledby="foot-learn">
+        <h2 id="foot-learn">Learn</h2>
+        <ul>
+          <li><a href="index.html">All seven sections</a></li>
+          <li><a href="quiz.html">Quiz</a></li>
+          <li><a href="summary.html">Printable summary</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="foot-univ">
+        <h2 id="foot-univ">University</h2>
+        <ul>
+          <li><a href="https://www.it.unlv.edu/ai-technology">AI tools at UNLV</a></li>
+          <li><a href="https://www.unlv.edu/osrr/academic-integrity/policy">Academic integrity</a></li>
+          <li><a href="https://guides.library.unlv.edu/ai-basics">AI 101 guide</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="foot-help">
+        <h2 id="foot-help">Get help</h2>
+        <ul>
+          <li><a href="https://www.library.unlv.edu/ask">Ask a Librarian</a></li>
+          <li><a href="about.html">About this module</a></li>
+          <li><a href="about.html">Accessibility</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="site-footer__base">
+      <p>Content licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC&nbsp;BY&nbsp;4.0</a>. Code MIT. <a href="https://github.com/robertlaws-unlv-wads/library-ai-guide">Source on GitHub</a>.</p>
+      <p>Nothing on this site is tracked, stored or transmitted. <a href="about.html">How we handle your data</a>.</p>
+    </div>
   </div>
 </footer>
 

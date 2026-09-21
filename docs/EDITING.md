@@ -129,6 +129,24 @@ optional:
 </table>
 ```
 
+**An eyebrow** — the small scarlet caps label above a heading. Roboto
+Condensed, 11px, never smaller:
+
+```html
+<p class="eyebrow">What you will learn</p>
+```
+
+**A full-width band** — used on the landing page to alternate grounds.
+Goes outside `.wrap`, never inside it:
+
+```html
+<section class="band band--sand">
+  <div class="wrap">…</div>
+</section>
+```
+
+Variants: `band--bone` (page ground) and `band--sand` (recessed).
+
 **An exercise** — see [CONTENT-AUTHORING.md](CONTENT-AUTHORING.md):
 
 ```html
@@ -183,3 +201,8 @@ run automatically and you do not have to remember them.
 - **Do not add analytics.** Same reason.
 - **Do not remove `.nojekyll`.** Without it GitHub runs Jekyll over the site
   and will try to interpret `{{ }}` wherever it appears.
+- **Do not use `--rule` (`#9FA1A4`) for text.** It is 2.36:1 on Bone. The
+  brand guide restricts it to rules, dividers and disabled states, and
+  [ACCESSIBILITY.md](ACCESSIBILITY.md) records why. Use `--ink-muted`.
+- **Do not set an eyebrow below 11px.** That is the floor in the type spec,
+  and below it the caps become unreadable as well as non-conformant.

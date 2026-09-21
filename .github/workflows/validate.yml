@@ -87,11 +87,11 @@ jobs:
 
       - name: Confirm bundled fonts still ship their licence
         run: |
-          # Outfit is under the SIL Open Font License, which requires the
-          # licence travel with the font files.
-          if ls assets/fonts/*.woff2 >/dev/null 2>&1 && [ ! -f assets/fonts/Outfit-OFL.txt ]; then
-            echo "::error::Font files are present but assets/fonts/Outfit-OFL.txt is missing."
-            echo "::error::The OFL requires the licence ship alongside the fonts."
+          # Roboto Slab and Roboto are Apache 2.0, which requires the licence
+          # travel with the redistributed files.
+          if ls assets/fonts/*.woff2 >/dev/null 2>&1 && [ ! -f assets/fonts/Roboto-Apache-License.txt ]; then
+            echo "::error::Font files are present but assets/fonts/Roboto-Apache-License.txt is missing."
+            echo "::error::Apache 2.0 requires the licence ship alongside the fonts."
             exit 1
           fi
           echo "Font licence present. Good."

@@ -50,6 +50,7 @@ function extract(html, startTag, endTag) {
 }
 
 const pages = htmlFiles(repoRoot).sort();
+const bars = new Map();
 const headers = new Map();
 const footers = new Map();
 const problems = [];
@@ -58,17 +59,22 @@ for (const page of pages) {
   const rel = relative(repoRoot, page);
   const html = readFileSync(page, 'utf8');
 
+  const bar = extract(html, '<div class="utility-bar">', '</div>\n</div>');
   const header = extract(html, '<header class="site-header">', '</header>');
   const footer = extract(html, '<footer class="site-footer">', '</footer>');
 
+  if (!bar) { problems.push(`${rel}: no university utility bar found.`); continue; }
   if (!header) { problems.push(`${rel}: no site header found.`); continue; }
   if (!footer) { problems.push(`${rel}: no site footer found.`); continue; }
 
+  const bKey = normalise(bar);
   const hKey = normalise(header);
   const fKey = normalise(footer);
 
+  if (!bars.has(bKey)) bars.set(bKey, []);
   if (!headers.has(hKey)) headers.set(hKey, []);
   if (!footers.has(fKey)) footers.set(fKey, []);
+  bars.get(bKey).push(rel);
   headers.get(hKey).push(rel);
   footers.get(fKey).push(rel);
 }
@@ -86,6 +92,7 @@ function report(map, label) {
   }
 }
 
+report(bars, 'University utility bar');
 report(headers, 'Site header');
 report(footers, 'Site footer');
 
@@ -99,4 +106,4 @@ if (problems.length) {
   process.exit(1);
 }
 
-console.log(`Passed — header and footer are consistent across ${pages.length} pages.\n`);
+console.log(`Passed — utility bar, header and footer are consistent across ${pages.length} pages.\n`);

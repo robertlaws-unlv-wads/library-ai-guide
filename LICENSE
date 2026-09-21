@@ -45,23 +45,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ================================================================================
-BUNDLED THIRD-PARTY FONT
+BUNDLED THIRD-PARTY FONTS
 ================================================================================
-This repository bundles the Outfit typeface, used for headings and other
-display text.
+This repository bundles the Roboto Slab and Roboto typefaces, which are the
+University of Nevada, Las Vegas official typefaces.
 
-  Outfit
-  Copyright 2021 The Outfit Project Authors
-  https://github.com/Outfitio/Outfit-Fonts
-  Licensed under the SIL Open Font License, Version 1.1
+  Roboto Slab and Roboto
+  Copyright the Roboto Project Authors (https://github.com/googlefonts/roboto)
+  Licensed under the Apache License, Version 2.0
 
-  Files:   assets/fonts/outfit-latin-var.woff2
-           assets/fonts/outfit-latin-ext-var.woff2
-  Licence: assets/fonts/Outfit-OFL.txt
+  Files:   assets/fonts/roboto-slab-latin-var.woff2
+           assets/fonts/roboto-latin-var.woff2
+  Licence: assets/fonts/Roboto-Apache-License.txt
 
-The OFL requires that the licence travel with the font files. Do not remove
-assets/fonts/Outfit-OFL.txt. A CI check fails if the fonts are present and
-the licence is not.
+Roboto Condensed is not a separate file: the bundled Roboto is a variable
+font with a width axis, and `font-stretch: 75%` renders the condensed width
+from it. That saves 22 KB and one request.
 
-The font is self-hosted rather than loaded from Google Fonts, so that this
+Do not remove assets/fonts/Roboto-Apache-License.txt. A CI check fails if
+the fonts are present and the licence is not.
+
+The fonts are self-hosted rather than loaded from Google Fonts, so that this
 site makes no third-party requests. See docs/ACCESSIBILITY.md.

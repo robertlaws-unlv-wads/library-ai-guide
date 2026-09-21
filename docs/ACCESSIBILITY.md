@@ -87,59 +87,56 @@ Every colour in `assets/css/site.css` has its contrast ratio in a comment
 beside it. Re-measure after any change:
 
 ```bash
-node tools/contrast.mjs "#b10202" "#ffffff"
+node tools/contrast.mjs "#b10202" "#f7f4ef"
 ```
 
-Brand note: UNLV publishes separate print and screen scarlets. We use the
-**screen** value `#B10202` — 6.41:1 on the cream ground, 7.18:1 on the card
-surface. The print value `#E31837` reaches only 4.72:1 and is too marginal
-for body text. `#9FA1A4` (UNLV Gray Light) is 2.59:1 and is **not used
-anywhere** — it fails both the text and the UI threshold.
+`node tools/check-css.mjs` separately verifies that every `var(--x)` has a
+definition — an undefined custom property silently drops the whole rule.
 
-The page ground is a warm cream (`#F4F0E6`) rather than white, with content
-on a lighter card surface (`#FFFDF8`). Pure white at full-page scale is
-fatiguing across a 40-minute read. The two surfaces are only 1.12:1 apart,
-so **cards must also carry a border** — the tint alone is not a perceivable
-boundary.
+**The brand palette as issued contains two contrast failures.** Both are
+corrected here, and the corrections must not be reverted:
 
-Two boundary values were tightened after measurement and should not be
-lightened again:
+| Brand swatch | Measured | Problem | Used instead |
+|---|---|---|---|
+| Gray Dark `#6A737B` | 4.40:1 on Bone | Assigned to eyebrows, metadata and captions — all normal-size text needing 4.5:1 | `--ink-muted` `#5F676E` (5.24:1). `#6A737B` kept as `--rule-strong` for non-text roles, where it is fine. |
+| Scarlet Bright `#E31837` | 3.84:1 on Rich Black | Assigned as "accent on dark", but the eyebrows it sits on are 11px caps | `--scarlet-on-dark` `#F2445C` (4.97:1). `#E31837` still serves large display text and UI accents on dark, where 3:1 is the bar. |
 
-- `--border-strong` is `#847C6C` (3.63:1 on ground, 4.07:1 on surface). An
-  earlier `#9C9482` measured 2.65:1 and failed 1.4.11.
-- A `.choice` row is the hit area for a form control, so its border uses
-  `--border-strong`, not the decorative `--border` (`#E0D9C7`, only 1.38:1
-  against the card).
+Two further values were derived rather than taken from the palette:
 
-Scarlet is unreadable on the dark `.takeaways` block (2.25:1). Accents there
-use `--scarlet-on-dark` (`#FFA39E`, 8.59:1).
+- `--numeral` `#868A8E` for the large card ordinals. UNLV Gray `#9FA1A4` is
+  2.59:1 and those numerals are large text, so 3:1 applies.
+- `--border-ui` `#767D84` for form-control boundaries. `--rule-soft` is only
+  1.3:1 against a card, and a `.choice` row is the hit area for a control.
+
+`--rule` `#9FA1A4` is 2.36:1 on Bone and may **only** be used for decorative
+rules, dividers and disabled states, exactly as the brand guide specifies. It
+must never carry text or identify a control.
 
 ### Fonts are self-hosted, never fetched from a CDN
 
-Headings use **Outfit** (SIL Open Font License), served from
-`assets/fonts/`. Body copy stays on the system stack — a geometric display
-face is less readable at body size, and the system stack costs nothing to
-load.
+Roboto Slab (display and headings) and Roboto (interface and body) are the
+UNLV official typefaces, Apache 2.0, served from `assets/fonts/`.
 
-Loading Outfit from `fonts.googleapis.com` would be a third-party request,
-and the privacy claim on the About page has to survive someone opening the
-Network tab. UNLV's brand typeface is Roboto, and the brand guide permits
-"Arial, Helvetica, Calibri, or other simple sans-serif typefaces" as
-alternatives, so the body stack is brand-compliant.
+Loading them from `fonts.googleapis.com` would be a third-party request, and
+the privacy claim on the About page has to survive someone opening the
+Network tab.
 
-One variable file covers weights 400–900 (31 KB); `unicode-range` means the
-latin-ext file (14 KB) is only fetched if a character outside Latin-1
-actually appears. Each page preloads the latin file so headings do not flash
-in the fallback face.
+Roboto Condensed — used for eyebrows and labels — is **not a third file**.
+The bundled Roboto is a variable font with a width axis, so `font-stretch:
+75%` renders the condensed width from it, saving 22 KB and a request. That
+is why the `@font-face` declares `font-stretch: 75% 100%`.
 
-Outfit has no ✓ ✗ → ◑ glyphs, which the quiz feedback uses. Those fall back
+Eyebrows are 11px and must never go below that, per the type spec. At that
+size they are normal text and need the full 4.5:1.
+
+Roboto has no ✓ ✗ → ◑ glyphs, which the quiz feedback uses. Those fall back
 per-glyph to the system stack. That is intended — **do not add an icon font
-for them**, and do not replace them with images; they sit alongside a text
-label in every case, so they are decorative and carry `aria-hidden="true"`.
+for them**; they sit alongside a text label in every case and carry
+`aria-hidden="true"`.
 
-The OFL requires the licence ship with the fonts, so
-`assets/fonts/Outfit-OFL.txt` must stay. CI fails if the fonts are present
-and it is not.
+Apache 2.0 requires the licence ship with the fonts, so
+`assets/fonts/Roboto-Apache-License.txt` must stay. CI fails if the fonts are
+present and it is not.
 
 ### Progressive enhancement
 
@@ -155,6 +152,11 @@ pointing at the summary. Instruction is never behind a script.
 Run before launch, after any significant change, and at each six-month review.
 
 ### Automated
+- [ ] `node tools/check-css.mjs` — every custom property resolves.
+- [ ] Contrast sweep across all 12 pages, including `::before`/`::after`
+      generated content. The last full run was clean; the four card ordinals
+      and three stats-bar separators it caught are fixed. Re-run after any
+      colour change.
 - [ ] axe DevTools: zero violations on `index.html`, one section, and
       `quiz.html` — **checked both before and after submitting an answer**,
       since the graded state is different markup.
