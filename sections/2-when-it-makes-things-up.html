@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>When it makes things up — AI Literacy Module — UNLV University Libraries</title>
+<meta name="description" content="Why AI systems fabricate sources, how the problem changed once tools began citing real documents, and five verification moves worth remembering.">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-root="../">
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <p class="site-title">
+      <span class="site-title__org">UNLV University Libraries</span>
+      <a href="../index.html">AI Literacy Module</a>
+    </p>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../index.html">Start here</a></li>
+        <li><a href="../quiz.html">Quiz</a></li>
+        <li><a href="../summary.html">Summary</a></li>
+        <li><a href="../about.html">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<div class="wrap page-body prose">
+  <h1>When it makes things up</h1>
+
+  <p class="lede">The advice you have probably heard is &ldquo;check that the
+  source exists.&rdquo; That was the right advice in 2023. It is now the
+  advice most likely to get you into trouble, because it will clear a citation
+  that is real, correctly formatted, and completely misused.</p>
+
+  <div class="objectives">
+    <h2>In this section</h2>
+    <ul>
+      <li>Why fabrication follows directly from how these systems work.</li>
+      <li>How the problem changed once tools started citing real sources.</li>
+      <li>Five verification moves, and which one people skip.</li>
+    </ul>
+  </div>
+
+  <h2>First, a guess</h2>
+
+  <div class="exercise-mount" data-exercise="s2-pre"></div>
+
+  <h2>Why it invents things</h2>
+
+  <p>This follows straight from Section 1. Asked for a source, the system
+  produces the text most likely to follow — and what follows a request for a
+  citation is something that looks like a citation. A real journal name. A
+  real author who works in the field. A volume number consistent with the
+  year. Page numbers in a normal range.</p>
+
+  <p>Every component is drawn from patterns in real citations, which is
+  exactly why the result is convincing. It is not a corrupted memory of a real
+  article. It is a well-formed citation-shaped object, assembled because
+  citation-shaped objects are what follow that kind of request.</p>
+
+  <p>The word you will see for this is &ldquo;hallucination.&rdquo; It is
+  worth knowing because it is everywhere, but it is a poor description:
+  it suggests a perceptual glitch, something going briefly wrong in a system
+  that otherwise perceives correctly. Nothing went wrong. The system did the
+  only thing it does. <strong>Confabulation</strong> is closer — producing a
+  fluent, confident account with no underlying record behind it — and
+  plainest of all is simply saying it made it up.</p>
+
+  <h2>What changed, and why the old advice fails</h2>
+
+  <p>Most tools now search the web, retrieve documents, and show sources.
+  This genuinely helped: wholesale invention of citations is much less common
+  than it was.</p>
+
+  <p>But it moved the problem rather than solving it. The failure now is a
+  <strong>real source, correctly cited, that does not say what the answer
+  claims it says</strong>. A paper gets cited for a finding it never reported.
+  A modest result gets stretched into a sweeping one. A study of one
+  population is presented as a general fact.</p>
+
+  <p>This is harder to catch than invention was, for a reason worth sitting
+  with: everything looks right. The link works. The journal is prestigious.
+  The authors are real. The citation survives every check except the one that
+  matters — and the presence of a working link actively discourages people
+  from running it. Retrieval made sources checkable. It did not make them
+  checked.</p>
+
+  <h2>Take the passage apart</h2>
+
+  <p>Here is the passage from the start page again, with each claim numbered.
+  Work through it before reading the answers — the point is the categories,
+  not the score.</p>
+
+  <div class="ai-output">
+    <p class="ai-output__label">AI-generated response</p>
+    <p>Research on first-year students' source evaluation has grown
+    considerably over the past decade.
+    <span class="claim-marker" aria-hidden="true">1</span> Nguyen (2021) found
+    that students who received embedded library instruction were substantially
+    more likely to consult peer-reviewed sources than those who did not
+    <cite>(College &amp; Research Libraries, 82(3), 411&ndash;428)</cite>.
+    <span class="claim-marker" aria-hidden="true">2</span> This aligns with
+    broader findings that roughly 68% of first-year students cannot reliably
+    distinguish a scholarly article from a popular one.
+    <span class="claim-marker" aria-hidden="true">3</span> Wineburg and McGrew
+    (2019) demonstrated that lateral reading &mdash; leaving a page to check what
+    other sources say about it &mdash; is a markedly more effective strategy than
+    close reading of the page itself.
+    <span class="claim-marker" aria-hidden="true">4</span> As Head and
+    Eisenberg's Project Information Literacy work established, students who use
+    library databases go on to earn higher course grades.
+    <span class="claim-marker" aria-hidden="true">5</span> A 2024 meta-analysis
+    in the <cite>Journal of Academic Librarianship</cite> synthesised 340
+    studies on information literacy instruction
+    <cite>(doi:10.1016/j.acalib.2024.102847)</cite>.</p>
+  </div>
+
+  <div class="exercise-mount" data-exercise="spot-the-confabulation"></div>
+
+  <h2>Five moves that actually work</h2>
+
+  <p>Named, because a named move is one you can remember at 11pm.</p>
+
+  <ol>
+    <li><strong>Go to the container, not the citation.</strong> Do not try to
+    verify the citation as a unit — every part of it will check out. Open the
+    journal issue and look at what is actually on those pages.</li>
+
+    <li><strong>Resolve the DOI.</strong> Paste it into
+    <a href="https://doi.org">doi.org</a>. Ten seconds, and it catches the
+    common case of a real identifier attached to the wrong article.</li>
+
+    <li><strong>Read what the source says.</strong> The highest-value move and
+    the one almost everyone skips. Open it and find the sentence that supports
+    the claim. If you cannot find it, that is your answer.</li>
+
+    <li><strong>Read laterally.</strong> Do not just interrogate the source in
+    front of you — leave it and see what others say about the same claim. This
+    is the Wineburg and McGrew finding in claim 3, which is real.</li>
+
+    <li><strong>Use the Libraries as ground truth.</strong> Our databases are
+    curated records of what was actually published. That is a different kind
+    of thing from a generated answer, and it is the thing to check against.
+    <a href="https://www.library.unlv.edu/ask">Ask a librarian</a> if you are
+    stuck.</li>
+  </ol>
+
+  <div class="callout callout--example">
+    <h2 class="callout__title">Try one for real</h2>
+    <p>Optional, and worth the two minutes. Take claim 5's DOI —
+    <code>10.1016/j.acalib.2024.102847</code> — and paste it into
+    <a href="https://doi.org">doi.org</a> in a new tab. Note what happens, and
+    note how long it took. That is the entire cost of the check people skip.</p>
+  </div>
+
+  <div class="two-situations">
+    <h2 class="two-situations__title">Two situations, one principle</h2>
+    <div class="two-situations__grid">
+      <div class="two-situations__case">
+        <h4>Writing a paper</h4>
+        <p>You have five citations and a deadline. Checking all five properly
+        takes about ten minutes. Not checking them can cost you the assignment
+        and a conversation you very much do not want to have.</p>
+      </div>
+      <div class="two-situations__case">
+        <h4>At a service desk</h4>
+        <p>Someone brings you citations that do not resolve. The useful thing
+        is not only finding real sources — it is one sentence explaining that
+        the tool does this, so they are not left thinking they did something
+        wrong.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="takeaways">
+    <h2>Key takeaways</h2>
+    <ul>
+      <li>Fabricated citations are assembled from real parts, so checking any single part confirms them.</li>
+      <li>The current failure is real sources misrepresented, not invented ones.</li>
+      <li>&ldquo;Does it exist?&rdquo; is no longer enough. &ldquo;Does it say this?&rdquo; is the question.</li>
+      <li>One correct claim in five: the goal is calibration, not blanket suspicion.</li>
+    </ul>
+  </div>
+
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav__prev">
+      <a href="1-what-youre-talking-to.html"><span class="section-nav__dir">Previous</span>What you're actually talking to</a>
+    </div>
+    <div class="section-nav__next">
+      <a href="3-whose-world.html"><span class="section-nav__dir">Next</span>Whose world does it describe?</a>
+    </div>
+  </nav>
+
+  <p class="meta">Last reviewed: September 2026.</p>
+
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>AI Literacy Module</strong> — University Libraries, University of Nevada, Las Vegas.</p>
+    <p>Content licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC&nbsp;BY&nbsp;4.0</a>.
+    <a href="../about.html">About this module, and how to report an accessibility barrier</a>.</p>
+  </div>
+</footer>
+
+<script src="../assets/js/schema.js"></script>
+<script src="../assets/js/engine.js"></script>
+<script src="../assets/js/exercises.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What you're actually talking to — AI Literacy Module — UNLV University Libraries</title>
+<meta name="description" content="How large language models produce text, why confidence is not evidence of accuracy, and why the model and the product around it fail in different ways.">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-root="../">
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <p class="site-title">
+      <span class="site-title__org">UNLV University Libraries</span>
+      <a href="../index.html">AI Literacy Module</a>
+    </p>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../index.html">Start here</a></li>
+        <li><a href="../quiz.html">Quiz</a></li>
+        <li><a href="../summary.html">Summary</a></li>
+        <li><a href="../about.html">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<div class="wrap page-body prose">
+  <h1>What you're actually talking to</h1>
+
+  <p class="lede">Almost everything that goes wrong with these tools follows
+  from one fact about how they work. It takes about five minutes to
+  understand, and it makes the rest of this module mostly common sense.</p>
+
+  <div class="objectives">
+    <h2>In this section</h2>
+    <ul>
+      <li>Why these systems produce fluent text rather than looked-up facts.</li>
+      <li>Why confidence tells you nothing about accuracy.</li>
+      <li>Why the chatbot you use and the model inside it are not the same thing.</li>
+    </ul>
+  </div>
+
+  <h2>It is predicting, not looking up</h2>
+
+  <p>A large language model is trained by being shown an enormous amount of
+  text and repeatedly asked to predict what comes next. Over billions of
+  these attempts it gets extremely good at producing continuations that fit
+  the patterns of the text it learned from.</p>
+
+  <p>That is the whole mechanism. When you ask a question, it is not
+  consulting a store of facts and returning the matching one. It is
+  generating the text most likely to follow your question, given everything
+  it absorbed during training.</p>
+
+  <p>This explains something people find genuinely puzzling: why a system can
+  be brilliant on one question and confidently wrong on the next, with no
+  change in tone. If a fact appears constantly and consistently in written
+  text — the capital of Nevada, the plot of a famous novel — then the likely
+  continuation and the true one are the same thing, and you get a reliable
+  answer. If a topic is obscure, contested, or very recent, likely and true
+  come apart. The output looks identical either way, because it was produced
+  the same way either way.</p>
+
+  <div class="callout">
+    <h2 class="callout__title">The part worth remembering</h2>
+    <p>Fluency and accuracy are produced by the same process, so neither one
+    is evidence of the other. A confident, well-organised, beautifully written
+    answer is not more likely to be true than a hesitant one. It is just
+    better-formed text.</p>
+  </div>
+
+  <h2>The model and the product are different things</h2>
+
+  <p>This distinction matters more every year, and most confusion about
+  &ldquo;is AI reliable?&rdquo; comes from collapsing it.</p>
+
+  <p>The <strong>model</strong> is the thing described above: it answers from
+  patterns learned during training, and its knowledge stops wherever its
+  training data stopped. The <strong>product</strong> is everything built
+  around that model — a search tool that fetches current web pages, a
+  retrieval system that reads your uploaded documents, code that runs
+  calculations, an interface that shows sources.</p>
+
+  <p>These fail in different ways, and knowing which you are using changes
+  what you should check:</p>
+
+  <table>
+    <caption>Two different systems, two different failure modes</caption>
+    <thead>
+      <tr><th scope="col">If it is answering from training alone</th>
+          <th scope="col">If it is searching and retrieving</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>It may invent a source that does not exist, because a plausible
+        citation is a plausible continuation.</td>
+        <td>The sources are usually real and really were retrieved.</td>
+      </tr>
+      <tr>
+        <td>It has no access to anything after its training cutoff.</td>
+        <td>It can be current, but may lean on whatever ranked highly today.</td>
+      </tr>
+      <tr>
+        <td>Check whether the thing it cited exists at all.</td>
+        <td>Check whether the real source it cited actually says this.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Section 2 is mostly about that second column, because it is the one people
+  are least prepared for.</p>
+
+  <h2>&ldquo;Thinking&rdquo; is also generated text</h2>
+
+  <p>Many tools now show their working — a visible chain of intermediate
+  steps, often labelled reasoning or thinking. This genuinely does improve
+  results on problems with several steps, and it is useful to see.</p>
+
+  <p>But those steps are generated the same way the answer is. They are not a
+  proof, and they are not a log of an internal process you are being shown a
+  window into. A chain of steps can look meticulous and still arrive somewhere
+  wrong, and a plausible-looking chain is exactly as easy to produce as a
+  plausible-looking citation. Read it as a useful indication of where the
+  reasoning might be weak, not as verification.</p>
+
+  <div class="callout callout--caution">
+    <h2 class="callout__title">Where the training data came from</h2>
+    <p>Worth knowing, because it is part of what you are using. These models
+    were trained on very large amounts of text scraped from the web and from
+    published works, much of it copyrighted, and the legal questions about
+    that are still being argued in court. The training process also depends on
+    substantial human labour — people reviewing and rating output, often
+    low-paid and frequently exposed to distressing material. And training and
+    running these systems consumes meaningful amounts of electricity and
+    water, which is why data centre siting has become a live issue in Nevada
+    in particular.</p>
+    <p>None of this means you should not use these tools. It does mean the
+    costs are real and fall on people other than the user, which is worth
+    holding in mind rather than discovering later.</p>
+  </div>
+
+  <h2>Check yourself</h2>
+
+  <div class="exercise-mount" data-exercise="s1-check"></div>
+
+  <div class="two-situations">
+    <h2 class="two-situations__title">Two situations, one principle</h2>
+    <div class="two-situations__grid">
+      <div class="two-situations__case">
+        <h4>Writing a paper</h4>
+        <p>You ask for an explanation of a theory from your course. It comes
+        back clear and confident. It is clear and confident about the parts it
+        has wrong too — and those are likelier to be the specific details your
+        instructor cares about than the general outline.</p>
+      </div>
+      <div class="two-situations__case">
+        <h4>At a service desk</h4>
+        <p>A patron shows you an AI answer about library policy and asks if it
+        is right. The answer sounds authoritative because it is well-written,
+        not because anyone checked. Policy is local, specific, and changes —
+        exactly the conditions where likely and true come apart.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="takeaways">
+    <h2>Key takeaways</h2>
+    <ul>
+      <li>It predicts likely text. It does not look up facts.</li>
+      <li>Confidence and accuracy come from the same process, so one is no evidence of the other.</li>
+      <li>Find out whether your tool is searching or answering from training — they need different checks.</li>
+      <li>Visible &ldquo;reasoning&rdquo; is generated text, not proof.</li>
+    </ul>
+  </div>
+
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav__prev">
+      <a href="../index.html"><span class="section-nav__dir">Previous</span>Start here</a>
+    </div>
+    <div class="section-nav__next">
+      <a href="2-when-it-makes-things-up.html"><span class="section-nav__dir">Next</span>When it makes things up</a>
+    </div>
+  </nav>
+
+  <p class="meta">Last reviewed: September 2026.</p>
+
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>AI Literacy Module</strong> — University Libraries, University of Nevada, Las Vegas.</p>
+    <p>Content licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC&nbsp;BY&nbsp;4.0</a>.
+    <a href="../about.html">About this module, and how to report an accessibility barrier</a>.</p>
+  </div>
+</footer>
+
+<script src="../assets/js/schema.js"></script>
+<script src="../assets/js/engine.js"></script>
+<script src="../assets/js/exercises.js"></script>
+
+</body>
+</html>

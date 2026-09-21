@@ -1,0 +1,341 @@
+{
+  "_comment": "The four major exercises. Kinds: matrix (shared options across several items, all shown at once), deck (same shape, one card at a time), scenario (two steps, consequence panels, deliberately no right answer), multiple (one multi-select question). Run `node tools/validate-content.mjs` after editing.",
+  "exercises": [
+    {
+      "id": "spot-the-confabulation",
+      "kind": "matrix",
+      "section": "2",
+      "kicker": "Exercise",
+      "title": "Spot the confabulation",
+      "intro": "Here is the passage from the start page again, with each claim numbered. Four of the five have something wrong. Work out what kind of wrong each one is — the category matters more than the verdict, because each category calls for a different check.",
+      "options": [
+        { "id": "ok", "text": "Checks out" },
+        { "id": "nosource", "text": "No source is given at all" },
+        { "id": "notfound", "text": "The source does not exist" },
+        { "id": "misused", "text": "The source is real, but does not say this" }
+      ],
+      "items": [
+        {
+          "id": "c1",
+          "text": "Claim 1 — “Nguyen (2021) found that students who received embedded library instruction were substantially more likely to consult peer-reviewed sources.” Cited as College & Research Libraries, 82(3), 411–428.",
+          "correct": "notfound",
+          "why": "The journal is real. Volume 82 really is 2021. Pages 411–428 are plausible. Every component is right, which is exactly what makes it convincing — a fabricated citation is assembled from real parts. The check: go to the container, not the citation. Open volume 82, issue 3 and read the table of contents. Something else is on those pages."
+        },
+        {
+          "id": "c2",
+          "text": "Claim 2 — “Roughly 68% of first-year students cannot reliably distinguish a scholarly article from a popular one.”",
+          "correct": "nosource",
+          "why": "Notice how easy this one is to skim past. It sits between two properly cited sentences and borrows their credibility. A specific-sounding number with no attribution is doing rhetorical work, not evidential work. The check is the simplest one there is: ask where a number came from, and treat 'nowhere' as an answer."
+        },
+        {
+          "id": "c3",
+          "text": "Claim 3 — “Wineburg and McGrew (2019) demonstrated that lateral reading is a markedly more effective strategy than close reading of the page itself.”",
+          "correct": "ok",
+          "why": "This one is sound. The researchers are real, the paper is real, and the finding is fairly represented. This matters as much as the errors: if you leave here believing everything an AI cites is suspect, you have learned to dismiss rather than to check. The goal is calibration, not refusal."
+        },
+        {
+          "id": "c4",
+          "text": "Claim 4 — “As Head and Eisenberg's Project Information Literacy work established, students who use library databases go on to earn higher course grades.”",
+          "correct": "misused",
+          "why": "Project Information Literacy is real and widely cited, and Head and Eisenberg really did lead it. But their research described how students look for information — it did not measure grades, and it made no causal claim of this kind. This is the failure that citing tools have not fixed and in some ways made worse: everything is checkable, so nobody checks. The check is the one people skip — open the source and read what it actually says."
+        },
+        {
+          "id": "c5",
+          "text": "Claim 5 — “A 2024 meta-analysis in the Journal of Academic Librarianship synthesised 340 studies on information literacy instruction (doi:10.1016/j.acalib.2024.102847).”",
+          "correct": "notfound",
+          "why": "A DOI feels like proof, because it looks machine-verifiable. It is — which is why it takes ten seconds to check. Paste any DOI into doi.org. This one either fails to resolve or lands on a different article entirely. A DOI is only evidence once you have actually followed it."
+        }
+      ],
+      "closing": "Four different problems, four different checks, and only one of them is 'does this exist?'. That question was enough in 2023, when tools invented citations wholesale. It is not enough now that they retrieve real documents and still describe them wrongly. The habit worth building is narrower and more useful: trace the claim to the source, then read what the source actually says."
+    },
+
+    {
+      "id": "would-you-paste",
+      "kind": "deck",
+      "section": "4",
+      "kicker": "Exercise",
+      "title": "Would you put this in a prompt?",
+      "intro": "Nine things you might be tempted to paste. For each one, decide where it can go. UNLV provides Rebel Spark AI (Claude) free to students, faculty and staff with Enhanced Data Protection, meaning conversations are not used to train models — that is what “a UNLV tool” means below. Not every campus tool has that protection: Microsoft 365 Copilot Chat, for instance, does not.",
+      "options": [
+        { "id": "safe", "text": "Fine in any AI tool, including a personal account" },
+        { "id": "approved", "text": "Only in a UNLV tool with Enhanced Data Protection" },
+        { "id": "never", "text": "Not into any AI tool" }
+      ],
+      "items": [
+        {
+          "id": "p1",
+          "text": "A paragraph from a LibGuide you wrote, already published on the library website.",
+          "correct": "safe",
+          "why": "Your own work, already public. There is no confidentiality left to protect and nothing to lose by sharing it again."
+        },
+        {
+          "id": "p2",
+          "text": "A student's email about a library fine, including their name and NSHE ID.",
+          "correct": "never",
+          "why": "A student's name attached to an account matter is an education record under FERPA. UNLV's own guidance also says not to enter identifiers like ID numbers into any AI tool, including the licensed ones. Enhanced Data Protection reduces the risk that a conversation trains a model; it does not make you the owner of someone else's record. Strip the identifiers, or handle it without AI."
+        },
+        {
+          "id": "p3",
+          "text": "A reference question from a patron, with the name and contact details removed, that you want help rewording.",
+          "correct": "approved",
+          "why": "Reasonable people land differently on this one, and it is worth saying so. Removing names is the right instinct. What tips it toward a protected tool is that de-identification is harder than it looks on one campus: ‘the graduate student researching the 1980 MGM Grand fire for a thesis’ may be exactly one person. Library patron records are confidential under Article III of the ALA Code of Ethics, so the safer default is a tool the university controls."
+        },
+        {
+          "id": "p4",
+          "text": "An unpublished conference paper a colleague asked you to read and comment on.",
+          "correct": "never",
+          "why": "It is not yours to share. Someone handed you unpublished work in confidence, and the question of which tool has which protections never arises — the problem is the permission, not the plumbing. If you want AI help with your comments, write your own notes and work from those."
+        },
+        {
+          "id": "p5",
+          "text": "Five pages of a licensed ebook you want summarised.",
+          "correct": "never",
+          "why": "Database and ebook licences restrict how much you may extract and where you may send it. Uploading substantial portions to a third party can put the agreement at risk for the entire campus, not just for you. This one surprises people because it feels like a research task rather than a data-sharing one. It is both."
+        },
+        {
+          "id": "p6",
+          "text": "A draft of your own essay that you want feedback on.",
+          "correct": "safe",
+          "why": "Your work, your call. Whether you are permitted to use AI feedback on that assignment is a separate question for your syllabus — but as a data question, sharing your own draft is yours to decide."
+        },
+        {
+          "id": "p7",
+          "text": "A classmate's draft that they shared with you for peer review.",
+          "correct": "never",
+          "why": "Same principle as the unpublished paper, and the fact that it is a classmate rather than a colleague changes nothing. They chose to share it with you, not with a company. If you want help giving better feedback, describe the problem in your own words instead of pasting their text."
+        },
+        {
+          "id": "p8",
+          "text": "Last month's circulation statistics — totals by collection, no personal data.",
+          "correct": "approved",
+          "why": "There is no patron data here, so this is not a privacy problem in the way the others are. It is still internal institutional data, and internal data belongs in a tool the institution has an agreement with. The reasoning is contractual rather than ethical, but the answer is the same."
+        },
+        {
+          "id": "p9",
+          "text": "Your own symptoms, because you are trying to work out whether to see a doctor.",
+          "correct": "approved",
+          "why": "The genuinely uncomfortable one. It is your information, so nobody else's rights are at stake and you are entitled to share it. But health information is the category people most regret putting into a consumer account years later, and a personal chatbot account has no obligations to you at all. If you are going to do this, a tool with Enhanced Data Protection is the better home for it. Reasonable people call this one differently, and that is fine."
+        }
+      ],
+      "closing": "Notice what did the work. Not a list of banned words — one question, asked nine times: who else could end up seeing this, and is it mine to share? Three of these were off-limits because the information belonged to someone else. Two were fine because it was yours and already public. The rest turned on which tool, which is the part that changes as the university signs and ends contracts."
+    },
+
+    {
+      "id": "scenario-desk",
+      "kind": "scenario",
+      "section": "6",
+      "kicker": "Scenario 1 of 3",
+      "title": "The citations do not exist",
+      "situation": "A student comes to the reference desk with five citations from an AI research assistant. You check the first two and neither exists. Their paper is due at midnight. They are close to tears and say their professor will think they made them up.",
+      "lensPrompt": "Which of the four questions actually bear on this situation?",
+      "lenses": [
+        { "id": "check", "text": "Can I check it?" },
+        { "id": "judgment", "text": "Does the judgment belong to me?" },
+        { "id": "input", "text": "Is the input mine to share?" },
+        { "id": "allowed", "text": "Am I allowed, and will I say so?" }
+      ],
+      "lensNote": "The first and fourth are doing most of the work here. The student could not check the citations and did not know they needed to, and whether their use was permitted is a question for their syllabus and their instructor — not for you. Notice that the data question barely applies, which is a useful reminder that not every AI situation is a privacy situation.",
+      "choicePrompt": "What do you do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Explain that the citations are fabricated, show them how to verify one, and help them find real sources on the same topic in the time remaining.",
+          "consequences": {
+            "gets": "Solves tonight's problem and teaches the check. They leave with real sources and with a habit. This is the reference interview you already know how to do — the AI part is incidental.",
+            "risks": "You may not have time to do this well at a busy desk, and a rushed version can feel like being lectured at the worst possible moment. Time-box it and be explicit: sources first, explanation second.",
+            "pushback": "Very little. A colleague might note that you have not addressed whether the student is in academic-integrity trouble, which they will likely still be worrying about as they walk away."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Tell them this is an academic integrity matter and they need to talk to their professor before you can help.",
+          "consequences": {
+            "gets": "Keeps you clear of a judgment that is genuinely not yours to make, and it is true that the instructor decides.",
+            "risks": "Turns a research problem into a disciplinary one on your say-so. Using AI badly is not the same as cheating, and a student who was honestly misled has now been told by a library staff member that they are in trouble. They may not come back.",
+            "pushback": "A colleague would likely push back hard. Referring someone to a disciplinary conversation is a significant act, and this student has not done anything you actually know to be prohibited."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Help them find real sources quickly and say nothing about why the citations failed — they are stressed and out of time.",
+          "consequences": {
+            "gets": "Kindest in the moment, genuinely responsive to the deadline, and they leave with what they came for.",
+            "risks": "They will do this again next semester, and next time you may not be there. You also leave them without the one sentence that would protect them: their tool does this, and it will do it again.",
+            "pushback": "A colleague might well defend this choice at 11pm on a deadline. The stronger objection is that it costs about fifteen seconds to say 'this happens because of how the tool works' while you search."
+          }
+        },
+        {
+          "id": "d",
+          "text": "Show them how to verify all five themselves and let them work through it while you help the next person.",
+          "consequences": {
+            "gets": "Maximum learning, and it scales — you can help someone else while they work.",
+            "risks": "Reads as abandonment to someone who is already distressed and on a deadline. Teaching someone to fish is the right instinct on a Tuesday afternoon and the wrong one four hours before submission.",
+            "pushback": "A colleague would probably say you read the pedagogy correctly and the person wrongly. The emotional state is information about what will actually work."
+          }
+        }
+      ],
+      "leaning": "We would lean toward the first option, with a deliberate order: sources first, explanation second, and one clear sentence that this is a known behaviour of the tool rather than a mistake they made. The reason is that the student's two problems are not equally urgent — the deadline is tonight, the habit is for the rest of their degree — but the second one costs almost nothing to address while you are already helping with the first. The third option is a defensible read of the same situation and we would not argue with a colleague who chose it under pressure. The second is the one to avoid: deciding someone is an integrity case is not a reference-desk call, and getting it wrong is expensive for them and for the Libraries."
+    },
+
+    {
+      "id": "scenario-outline",
+      "kind": "scenario",
+      "section": "6",
+      "kicker": "Scenario 2 of 3",
+      "title": "The syllabus says nothing",
+      "situation": "You have read three articles for a paper, you understand them, and you are stuck on how to organise the argument. You are thinking of pasting your own outline into an AI tool and asking for two alternative structures. Your syllabus does not mention AI at all.",
+      "lensPrompt": "Which of the four questions actually bear on this situation?",
+      "lenses": [
+        { "id": "check", "text": "Can I check it?" },
+        { "id": "judgment", "text": "Does the judgment belong to me?" },
+        { "id": "input", "text": "Is the input mine to share?" },
+        { "id": "allowed", "text": "Am I allowed, and will I say so?" }
+      ],
+      "lensNote": "All four apply cleanly, and three of them resolve immediately: you can evaluate the suggestions because you know the material, you are still the one choosing the structure, and the outline is your own work. Only the fourth is genuinely open, because the syllabus is silent.",
+      "choicePrompt": "What do you do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Go ahead, and add a brief acknowledgment when you submit.",
+          "consequences": {
+            "gets": "You get the help, you keep the judgment, and the acknowledgment means nothing can be held against you later. Silence in a syllabus is not a prohibition, and this use is about as low-risk as AI use gets.",
+            "risks": "A small chance your instructor holds an unstated blanket objection. The acknowledgment is precisely what protects you here — an undisclosed use is what turns a disagreement into an accusation.",
+            "pushback": "Some colleagues read silence as 'ask first'. That is a defensible position, and it is mostly an argument about how much friction is reasonable."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Email your instructor to ask whether it is allowed, and wait.",
+          "consequences": {
+            "gets": "Completely safe, and it gives your instructor useful information about what students are actually facing.",
+            "risks": "You may not get an answer before the paper is due, and there is a real cost to treating every ordinary decision as needing permission. You are allowed to exercise judgment.",
+            "pushback": "Few people would criticise this. Some would point out that if every student did it for every low-stakes decision, the policy gap would still not close and nobody's inbox would survive."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Do not use it. Silence in a syllabus means you should not.",
+          "consequences": {
+            "gets": "Zero risk of running afoul of an unstated rule, and you will certainly do your own thinking.",
+            "risks": "Over-correction has costs too, and they are invisible. You forgo legitimate help, and you train yourself toward a rule nobody actually set. If the honest answer is 'my instructor would be fine with this', declining is not integrity — it is just friction.",
+            "pushback": "A colleague might say you are being harder on yourself than the institution is, and that blanket avoidance is not the safe default people assume it is."
+          }
+        }
+      ],
+      "leaning": "We would lean toward the first option, and we want to be direct that this scenario resolves as ‘this is fine’. That is deliberate. A module that answers every question with caution teaches you to tune it out, and over-correction is a real cost even though it never shows up as an incident. Here you understand the material, you are choosing among suggestions rather than accepting one, the input is yours, and you are prepared to say what you did. That is a good use. The second option is never wrong, just slow. The third is the one worth examining, because it feels responsible and mostly is not."
+    },
+
+    {
+      "id": "scenario-complaints",
+      "kind": "scenario",
+      "section": "6",
+      "kicker": "Scenario 3 of 3",
+      "title": "Summarise these complaints by Friday",
+      "situation": "Your supervisor forwards eleven months of patron complaint emails and asks for a themed summary by Friday. The emails include names, contact details, and in several cases detailed accounts of problems people had in the building. Your supervisor suggests using AI, since it is a lot of text.",
+      "lensPrompt": "Which of the four questions actually bear on this situation?",
+      "lenses": [
+        { "id": "check", "text": "Can I check it?" },
+        { "id": "judgment", "text": "Does the judgment belong to me?" },
+        { "id": "input", "text": "Is the input mine to share?" },
+        { "id": "allowed", "text": "Am I allowed, and will I say so?" }
+      ],
+      "lensNote": "The third question dominates and effectively settles it before the others get a hearing. These are other people's words, given to the Libraries in confidence, and a supervisor's suggestion does not transfer that permission. Worth noticing: being told to do something is not the same as being allowed to.",
+      "choicePrompt": "What do you do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Paste them in batches into your personal chatbot account — your supervisor suggested it, so it is authorised.",
+          "consequences": {
+            "gets": "Fastest path to a summary, and you can tell yourself you were told to.",
+            "risks": "Patron confidentiality is not your supervisor's to waive, and a personal account is the worst possible destination — no institutional agreement, no data protection, and eleven months of identifiable complaints now sitting in a company's logs. This is the option with genuine consequences.",
+            "pushback": "Any colleague who knows the ALA Code of Ethics would stop you. 'I was asked to' does not survive the question 'by someone with the authority to permit it?'."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Strip names and contact details first, then use a UNLV tool with Enhanced Data Protection.",
+          "consequences": {
+            "gets": "Most of the speed, most of the safety, and a defensible record of what you did. For routine complaints this is likely a sound answer.",
+            "risks": "De-identification is harder than find-and-replace. A complaint that narrates a specific incident on a specific date can identify someone with every name removed. You need to actually read them to strip them, which removes much of the time saving.",
+            "pushback": "A colleague might ask how carefully you checked the residual identifiability, and that is a fair question rather than an objection."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Go back to your supervisor, explain the confidentiality problem, and propose the de-identified approach — or a longer timeline without AI.",
+          "consequences": {
+            "gets": "Solves the actual problem, which is that your supervisor has not thought about the data. Puts the decision with the person who owns it, and creates a precedent for the next eleven months of emails.",
+            "risks": "Costs a conversation, and if your supervisor is under pressure it may land as obstruction. Bring the alternative with you rather than just the objection.",
+            "pushback": "Almost none, provided you arrive with a proposal. Raising a problem without a path forward is what makes this read as obstruction."
+          }
+        },
+        {
+          "id": "d",
+          "text": "Do it by hand over the week and say nothing about AI.",
+          "consequences": {
+            "gets": "No data leaves anywhere, and you will know the complaints thoroughly, which has real value for a themed summary.",
+            "risks": "Costs days you may not have, and leaves the underlying misunderstanding in place. Your supervisor still thinks this was a reasonable thing to ask, and will ask again.",
+            "pushback": "A colleague might say quietly absorbing the cost of someone else's misunderstanding is a habit worth breaking, particularly if it happens repeatedly."
+          }
+        }
+      ],
+      "leaning": "We would lean toward the third option, then the second once your supervisor agrees — they work together rather than competing. The reasoning is that the confidentiality problem is not really yours to solve alone: your supervisor asked for something they had not fully considered, and the durable fix is that they consider it, not that you quietly work around it. Going straight to the second option is defensible and many people would, but it leaves your supervisor believing the original request was fine. The first option is the one with real consequences, and 'I was asked to' is not a defence, because patron confidentiality was never your supervisor's to waive."
+    },
+
+    {
+      "id": "prompt-diagnosis",
+      "kind": "multiple",
+      "section": "7",
+      "kicker": "Exercise",
+      "title": "Which of these would actually help?",
+      "prompt": "Someone asks a chatbot: “Write about social media and mental health.” The result is four paragraphs of generic, sourceless prose that could have been written about anything. Select every change that would genuinely improve the result.",
+      "hint": "Select all that apply. Two of these are popular advice that does nothing.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Say who it is for and what form it should take — a 300-word summary for a first-year seminar, say.",
+          "why": "Yes. Audience and format are the two constraints that change the output most, and they are the two most often left out. ‘Write about X’ gives the model no way to choose a register, a depth, or a length, so it averages across all of them."
+        },
+        {
+          "id": "b",
+          "text": "Add “be accurate and do not make anything up” to the prompt.",
+          "why": "This is folklore, and it is the single most widespread piece of prompting advice that does nothing. The model is not withholding accuracy pending a request. Fabrication is a property of how the output is produced, not a setting you can ask it to turn off. Asking for accuracy mostly produces text that sounds more confident — which is worse."
+        },
+        {
+          "id": "c",
+          "text": "State what you already know and what you are actually stuck on.",
+          "why": "Yes, and this is the most underrated one. It stops the model explaining what you already understand and narrows the response to the part you need. It also gives it something concrete to work against instead of the topic in the abstract."
+        },
+        {
+          "id": "d",
+          "text": "Offer the model a tip, or tell it your career depends on the answer.",
+          "why": "Folklore. This circulated widely on the back of some early informal experiments, and it does not hold up. You are adding noise to the prompt and, if it has any effect at all, encouraging a more emphatic tone rather than a better answer. It is worth knowing this is superstition, because a lot of prompting advice you will encounter is of exactly this kind."
+        },
+        {
+          "id": "e",
+          "text": "Give an example of the kind of output you want.",
+          "why": "Yes. A single example communicates structure, tone and depth more efficiently than a paragraph of description, and it gives you something concrete to point at when the result is not right."
+        },
+        {
+          "id": "f",
+          "text": "Narrow the question — which platforms, which age group, which outcome, over what period.",
+          "why": "Yes. ‘Social media and mental health’ is not a question, it is a subject heading. The generic answer is a faithful response to a generic prompt."
+        },
+        {
+          "id": "g",
+          "text": "Ask it to flag which parts it is least confident about.",
+          "why": "Yes, with a caveat worth holding onto. Its self-assessed confidence is generated text like everything else and is not a reliable measure. But it does usefully surface where the claims are thin, which tells you where to aim your own checking. Treat it as a pointer, not a verdict."
+        },
+        {
+          "id": "h",
+          "text": "Ask for sources you can check, then check them.",
+          "why": "Yes — and the second half is the part that matters. Asking for sources is easy and makes the output look more rigorous whether or not it is. The value is entirely in following them, which is what Section 2 was about."
+        }
+      ],
+      "correct": ["a", "c", "e", "f", "g", "h"],
+      "explanation": "Six of these work, and they have something in common: every one of them gives the model information it did not have, or gives you something you can verify. The two that fail are both attempts to improve the output by changing its attitude rather than its inputs. That is a useful filter for the prompting advice you will run into — if a technique does not add information or create something checkable, be sceptical of it.",
+      "reviewHref": "sections/7-getting-better-output.html",
+      "reviewLabel": "Back to Section 7"
+    }
+  ]
+}

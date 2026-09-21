@@ -1,0 +1,126 @@
+{
+  "_comment": "Inline knowledge checks and pre-questions. Never scored, never gate progress. See docs/CONTENT-AUTHORING.md before editing. Run `node tools/validate-content.mjs` after any change.",
+  "checks": [
+    {
+      "id": "s1-check",
+      "kind": "single",
+      "section": "1",
+      "prompt": "A chatbot tells you the capital of Nevada is Carson City. That is correct. What is the most accurate description of how it produced that answer?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "It looked up Nevada in a database of facts and returned the matching entry.",
+          "why": "There is no fact table being consulted. Nothing inside the model is organised as 'Nevada → capital → Carson City' the way a database row would be. That is exactly why it can be wrong with the same confidence it is right."
+        },
+        {
+          "id": "b",
+          "text": "It generated the continuation that its training made most likely, and that continuation happens to be true.",
+          "why": "Right. The sentence 'the capital of Nevada is Carson City' appeared often enough in what it learned from that reproducing it is overwhelmingly likely. Being true and being likely line up here. They do not always."
+        },
+        {
+          "id": "c",
+          "text": "It reasoned from geographical principles to work out which city must be the capital.",
+          "why": "No reasoning step of that kind happens, and none is needed. This is a fact that appears constantly in text, so it comes back reliably without anything resembling deduction."
+        },
+        {
+          "id": "d",
+          "text": "It searched the web and summarised what it found.",
+          "why": "Some products do search the web, and those are a different case worth keeping separate. But a plain model with no search attached still answers this one correctly, from training alone."
+        }
+      ],
+      "correct": ["b"],
+      "explanation": "This is the whole idea in one example. The model is producing likely text, not retrieving stored facts. When something is written down often and consistently, likely and true line up and you get a reliable answer. When it is obscure, contested, or very recent, they come apart — and nothing in the output looks any different."
+    },
+    {
+      "id": "s2-pre",
+      "kind": "poll",
+      "section": "2",
+      "prompt": "Take a guess before you read on. In the AI passage from the start page, how many of the four claims have something wrong with them?",
+      "hint": "There is no wrong answer here. Commit to a number, then find out.",
+      "choices": [
+        { "id": "n0", "text": "None — it looked fine to me" },
+        { "id": "n1", "text": "One" },
+        { "id": "n2", "text": "Two" },
+        { "id": "n3", "text": "Three" },
+        { "id": "n4", "text": "All four" }
+      ]
+    },
+    {
+      "id": "s3-check",
+      "kind": "single",
+      "section": "3",
+      "prompt": "A library is considering an AI tool that ranks search results by predicted relevance. The vendor says the model was trained on twenty years of real search behaviour from academic libraries. What is the most likely way bias shows up here?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "The tool will favour material that was already being found and used, making less-visited work harder to surface.",
+          "why": "Yes. Training on past behaviour teaches the system to reproduce past behaviour. Material that was historically under-discovered — smaller presses, non-English scholarship, newer or interdisciplinary work — generated fewer clicks, so the model learns it is less relevant. The bias is in what the data recorded, not in anyone's intent."
+        },
+        {
+          "id": "b",
+          "text": "The vendor's engineers will have inserted their own political views into the ranking.",
+          "why": "This is the version of bias people expect, and it is mostly not what happens. Deliberate ideological tampering is rare and detectable. Bias absorbed from patterns in ordinary historical data is common, hard to see, and usually nobody's decision."
+        },
+        {
+          "id": "c",
+          "text": "Twenty years is not enough data for the model to work properly.",
+          "why": "That is a question about accuracy, not bias, and twenty years is a lot of data. A model can be highly accurate at predicting past behaviour and for that exact reason entrench it."
+        },
+        {
+          "id": "d",
+          "text": "There is no real bias risk, because search behaviour is objective data about what users actually wanted.",
+          "why": "Search behaviour records what users could find and were shown, which is not the same as what they wanted. If a work never surfaced on page one, nobody clicked it, and the absence of clicks now becomes evidence against it. The measurement and the outcome are tangled together."
+        }
+      ],
+      "correct": ["a"],
+      "explanation": "Bias mostly enters through data that faithfully records an unequal past, not through someone's opinions. A system trained to predict what happened before will reproduce it, and it will do so with the authority of a neutral-looking number. That is why 'the data is objective' is not a defence.",
+      "reviewHref": "sections/3-whose-world.html",
+      "reviewLabel": "Back to Section 3"
+    },
+    {
+      "id": "s4-pre",
+      "kind": "poll",
+      "section": "4",
+      "prompt": "Before the list of rules: when you paste something into a chatbot, what do you think actually happens to it?",
+      "hint": "No wrong answer. Pick the one closest to your current understanding.",
+      "choices": [
+        { "id": "a", "text": "It is processed and immediately discarded" },
+        { "id": "b", "text": "It is stored, and may be reviewed by people or used to improve the system" },
+        { "id": "c", "text": "It depends entirely on which tool and which account you are using" },
+        { "id": "d", "text": "I genuinely have no idea" }
+      ]
+    },
+    {
+      "id": "s5-check",
+      "kind": "single",
+      "section": "5",
+      "prompt": "Your syllabus says: \"You may use AI tools for brainstorming and outlining. Any use must be acknowledged.\" You used a chatbot to suggest three possible counterarguments, rejected all three, and wrote the paper without them. What should you do?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Nothing — you did not use any of its suggestions, so there is nothing to acknowledge.",
+          "why": "This is the most common misreading, and it is understandable. But the syllabus asks you to acknowledge use, not adoption. You used the tool. Whether its output survived into the final draft is a different question."
+        },
+        {
+          "id": "b",
+          "text": "Add a one-line acknowledgment saying you used AI to generate counterarguments during planning.",
+          "why": "Correct, and one line genuinely is enough. Something like: 'I used an AI assistant to suggest possible counterarguments while outlining; none were used in the final paper.' It is accurate, it takes ten seconds, and it removes any question later."
+        },
+        {
+          "id": "c",
+          "text": "Add a full citation for the chatbot in your references list.",
+          "why": "Over-correcting, and it misunderstands what citation is for. You cite a source you drew content from. You disclose a tool you used in your process. Nothing from the chatbot appears in the paper, so there is nothing to cite — but there is still something to disclose."
+        },
+        {
+          "id": "d",
+          "text": "Rewrite the section without AI input so the question does not come up.",
+          "why": "You already did write it yourself. Redoing permitted work to avoid mentioning it treats an allowed activity as if it were shameful, which is the opposite of what the disclosure requirement is for."
+        }
+      ],
+      "correct": ["b"],
+      "explanation": "Disclosure and citation are different obligations and they get conflated constantly. Citation attributes content you used. Disclosure describes what a tool did in your process. This syllabus asks for disclosure, and a single honest sentence satisfies it — even when nothing the tool produced made it into the final work.",
+      "reviewHref": "sections/5-using-it-honestly.html",
+      "reviewLabel": "Back to Section 5"
+    }
+  ]
+}

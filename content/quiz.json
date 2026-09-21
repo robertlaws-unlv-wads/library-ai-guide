@@ -1,0 +1,346 @@
+{
+  "_comment": "Final quiz. Every question is a situation, not a definition. Every wrong option must carry a `why` naming the misconception it represents -- the validator enforces this. Fixed order, no shuffling. Run `node tools/validate-content.mjs` after editing.",
+  "sections": {
+    "1": "What you're actually talking to",
+    "2": "When it makes things up",
+    "3": "Whose world does it describe?",
+    "4": "What not to paste",
+    "5": "Using it honestly",
+    "6": "Deciding when to use it",
+    "7": "Getting better output"
+  },
+  "questions": [
+    {
+      "id": "q1-mechanism",
+      "kind": "single",
+      "section": "1",
+      "prompt": "You ask a chatbot about a very obscure local history topic. It gives you a detailed, confident, entirely wrong answer. Why did it not simply say it did not know?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "It has no stored record of what it does and does not know, so there is nothing to check before answering.",
+          "why": ""
+        },
+        {
+          "id": "b",
+          "text": "It was designed to always give an answer rather than admit uncertainty.",
+          "why": "Closer to a description of the behaviour than an explanation of it, and it implies a deliberate design decision to bluff. The real situation is more basic: there is no internal list of known facts to compare a question against, so 'I don't know' would itself have to be generated as the likely continuation — and for a question that sounds answerable, it usually is not."
+        },
+        {
+          "id": "c",
+          "text": "Its training data ran out before it reached that topic, and it has no way to signal a gap.",
+          "why": "The gap is real, but the second half is where this goes wrong: it suggests the model can perceive its own boundary and merely lacks a way to report it. It cannot perceive the boundary. Obscurity produces a thinner basis for prediction, not a warning light."
+        },
+        {
+          "id": "d",
+          "text": "It confused your question with a similar one about a better-documented topic.",
+          "why": "This describes something like a retrieval mix-up, which is not what happened. Nothing was looked up and mistaken for something else. It generated a plausible continuation for a question about local history, and plausible is all it was optimising for."
+        }
+      ],
+      "correct": ["a"],
+      "explanation": "Confidence and accuracy are produced by the same process, so they carry no information about each other. A fluent answer about something well documented and a fluent answer about something the model has almost nothing on look identical from the outside. That is the single most important thing to take from Section 1.",
+      "reviewHref": "sections/1-what-youre-talking-to.html",
+      "reviewLabel": "Review Section 1"
+    },
+    {
+      "id": "q2-verify-citation",
+      "kind": "single",
+      "section": "2",
+      "prompt": "A student brings you an AI-generated reading list. One entry is: Nguyen, T. (2021). Information literacy instruction in first-year seminars. College & Research Libraries, 82(3), 411–428. The journal is real and the volume and year line up. What is the fastest way to establish whether this article exists?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Ask the AI tool whether it is confident the citation is real.",
+          "why": "Asking the model to grade itself does not work. Its confidence is generated the same way the citation was — a prediction about what a confident answer sounds like, not a lookup against any record of what it retrieved. Models will often affirm a citation they invented and add convincing detail when pressed."
+        },
+        {
+          "id": "b",
+          "text": "Search the journal's table of contents, or a database, for volume 82 issue 3 and see what is actually on those pages.",
+          "why": ""
+        },
+        {
+          "id": "c",
+          "text": "Search the author's name to confirm they are a real researcher in this field.",
+          "why": "A weak test, because fabricated citations almost always name real people working in roughly the right area — that is precisely what makes them plausible. Confirming a Nguyen who studies information literacy exists tells you nothing about whether this particular article does."
+        },
+        {
+          "id": "d",
+          "text": "Run the citation through an AI detector.",
+          "why": "Different tool, different question. Detectors estimate whether text was machine-written; they say nothing about whether a cited article exists. They are also unreliable enough that a score should not drive a decision — see Section 3."
+        }
+      ],
+      "correct": ["b"],
+      "explanation": "Go to the container, not the citation. A fabricated reference is assembled from real parts — a real journal, a real author, a plausible page range — so checking any individual part tends to confirm it. Checking the issue's actual contents tests the one thing that must be true if the article exists, and it takes under a minute.",
+      "reviewHref": "sections/2-when-it-makes-things-up.html",
+      "reviewLabel": "Review Section 2"
+    },
+    {
+      "id": "q3-real-but-wrong",
+      "kind": "single",
+      "section": "2",
+      "prompt": "An AI tool with web search gives you an answer, and every claim has a working link to a real, reputable source. What is the most important remaining risk?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "The links might stop working later.",
+          "why": "Link rot is a genuine nuisance but it is not a truth problem, and it is not specific to AI output. It also announces itself — a dead link is obvious in a way that a live link to a misdescribed source is not."
+        },
+        {
+          "id": "b",
+          "text": "The sources may be real and correctly linked, but may not actually say what the answer claims they say.",
+          "why": ""
+        },
+        {
+          "id": "c",
+          "text": "Very little — verifiable sources are exactly what you were told to look for.",
+          "why": "This is the trap, and it is an understandable one. Citations were the fix for the 2023 problem, so it is natural to read their presence as the all-clear. But a link proves a document exists, not that it supports the sentence attached to it. Retrieval made sources checkable; it did not make them checked."
+        },
+        {
+          "id": "d",
+          "text": "The sources might be paywalled and hard for you to read.",
+          "why": "A real access problem, and one the Libraries can usually solve. But it is an inconvenience rather than a risk to the accuracy of what you are reading — and notice that it is precisely when a source is hard to open that people skip checking it."
+        }
+      ],
+      "correct": ["b"],
+      "explanation": "This is the failure mode that has replaced invented citations, and it is harder to catch because everything looks right. A real source can be cited for a claim its authors never made, or stretched well past what they found. The only check that catches it is opening the source and reading what it says — which is the check people skip, precisely because the link looks reassuring.",
+      "reviewHref": "sections/2-when-it-makes-things-up.html",
+      "reviewLabel": "Review Section 2"
+    },
+    {
+      "id": "q4-detectors",
+      "kind": "single",
+      "section": "3",
+      "prompt": "A student tells you they have been accused of using AI because a detector flagged their essay at 92% AI-written. English is their third language. What is the most accurate thing you can tell them?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "A 92% score is very high, so they should probably admit it and ask for leniency.",
+          "why": "Treats the score as evidence, which it is not. Telling someone to confess to something a tool asserted about them — when that tool is known to misfire on exactly their profile — is close to the worst available advice."
+        },
+        {
+          "id": "b",
+          "text": "Detector scores are not evidence, and multilingual writers are flagged at dramatically higher rates than native English writers.",
+          "why": ""
+        },
+        {
+          "id": "c",
+          "text": "Detectors are completely random and the score means nothing at all.",
+          "why": "Over-correcting in the other direction, and it will not survive contact with an instructor. Detectors are not random; they respond to real textual features like sentence uniformity and limited vocabulary variation. The problem is that those features also describe careful writing by someone composing in an additional language."
+        },
+        {
+          "id": "d",
+          "text": "They should run it through several other detectors and bring the results that clear them.",
+          "why": "Understandable instinct, but it concedes the central point — that a detector score settles the question — and then asks for a better roll of the dice. It also hands the instructor a set of conflicting numbers, which tends to look like shopping for a result."
+        }
+      ],
+      "correct": ["b"],
+      "explanation": "The evidential status of the score is the whole issue. Detectors identify statistical patterns associated with machine-generated text, and those patterns overlap heavily with the writing of people composing in an additional language — producing false-positive rates for multilingual writers many times higher than for native speakers. Institutions have been quietly stepping back from these tools for this reason. The useful move is to shift the conversation from the score to the student's actual process: drafts, notes, version history.",
+      "reviewHref": "sections/3-whose-world.html",
+      "reviewLabel": "Review Section 3"
+    },
+    {
+      "id": "q5-what-not-to-paste",
+      "kind": "multiple",
+      "section": "4",
+      "prompt": "You are using a free personal chatbot account — not a tool UNLV holds a contract for. Select every item that should not go into it.",
+      "hint": "Select all that apply. Three of the five belong here.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "A paragraph from a LibGuide you wrote that is already published on the library website.",
+          "why": "This one is fine. Your own writing, already public — there is no confidentiality left to protect."
+        },
+        {
+          "id": "b",
+          "text": "A student's email about a fine, including their name and NSHE ID.",
+          "why": ""
+        },
+        {
+          "id": "c",
+          "text": "A patron's reference question with identifying details removed, which you are trying to reword.",
+          "why": "This one is acceptable, with care. Removing identifiers is the right instinct — just check that what remains is not identifying anyway. On one campus, a very specific research topic can point to exactly one person."
+        },
+        {
+          "id": "d",
+          "text": "Five pages of a licensed ebook you want summarised.",
+          "why": ""
+        },
+        {
+          "id": "e",
+          "text": "A colleague's unpublished conference paper they asked you to read.",
+          "why": ""
+        }
+      ],
+      "correct": ["b", "d", "e"],
+      "explanation": "Three different reasons, one shared question. The student email is an education record under FERPA. The ebook pages are governed by a licence that limits extraction and can put the agreement at risk for the whole campus. The unpublished paper was entrusted to you and is not yours to share. In each case the block is that the information belongs to someone else — which is the question worth asking before you paste anything.",
+      "reviewHref": "sections/4-what-not-to-paste.html",
+      "reviewLabel": "Review Section 4"
+    },
+    {
+      "id": "q6-which-tool",
+      "kind": "single",
+      "section": "4",
+      "prompt": "You want to use AI on some internal Libraries data — no patron information, but not public either. Which consideration should carry the most weight in choosing a tool?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Whether the tool is one UNLV has an agreement with that includes data protection.",
+          "why": ""
+        },
+        {
+          "id": "b",
+          "text": "Which tool gives the best quality output for this kind of task.",
+          "why": "Output quality is a real consideration and worth weighing — but second. Choosing where institutional data goes on the basis of which tool writes better prose gets the order of operations backwards: quality is recoverable if you pick wrong, a disclosure is not."
+        },
+        {
+          "id": "c",
+          "text": "Whether the tool is free, since the Libraries should not be paying for this.",
+          "why": "Free is often the more expensive option here. A personal free account typically comes with the weakest data terms, which is precisely the wrong trade for institutional data. As it happens UNLV provides Rebel Spark AI at no cost with Enhanced Data Protection, so cost and protection do not actually conflict."
+        },
+        {
+          "id": "d",
+          "text": "Whether your colleagues are already using it, so your workflow is consistent.",
+          "why": "Consistency has genuine value and makes handover easier. But widespread use is not evidence of an agreement — a tool can be popular across campus and still have no institutional data protection. Microsoft 365 Copilot Chat is available to everyone here and does not carry Enhanced Data Protection."
+        }
+      ],
+      "correct": ["a"],
+      "explanation": "For anything that is not already public, the contract is the first question and everything else is secondary. UNLV provides Rebel Spark AI (Claude) free to students, faculty and staff with Enhanced Data Protection, so in most cases you do not have to choose between protection and cost. Availability on campus is not the same as protection on campus — check which is which.",
+      "reviewHref": "sections/4-what-not-to-paste.html",
+      "reviewLabel": "Review Section 4"
+    },
+    {
+      "id": "q7-permission-disclosure",
+      "kind": "single",
+      "section": "5",
+      "prompt": "You have read three articles, you understand them, and you use an AI tool to suggest two alternative ways to order your argument. Your syllabus permits AI “for brainstorming and planning, with acknowledgment.” Which best describes this?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Permitted, and worth a one-line acknowledgment — the thinking and the sources are yours, and you chose among the suggested structures.",
+          "why": ""
+        },
+        {
+          "id": "b",
+          "text": "Not permitted — any use of AI on a graded assignment is academic misconduct.",
+          "why": "Over-correcting, and over-correction has costs too. Blanket avoidance is not the safe default when the syllabus explicitly allows brainstorming; it just means following a rule nobody set. The question is never 'was AI involved?' but 'what did it do, was that allowed, and did I say so?'"
+        },
+        {
+          "id": "c",
+          "text": "Permitted, and no acknowledgment is needed, since none of the AI's text appears in what you submit.",
+          "why": "The use is fine; the conclusion about acknowledgment is not. This syllabus asks you to acknowledge brainstorming use, not only generated text. Disclosure describes what the tool did for you — which is why one sentence is usually enough."
+        },
+        {
+          "id": "d",
+          "text": "Not permitted — your outline is your intellectual property and should not be handed to a company.",
+          "why": "Your outline being yours is exactly what makes this your call. Privacy caution matters most when the information belongs to someone else, is protected by law or contract, or was entrusted to you. Your own draft, in a tool you chose, is yours to share."
+        }
+      ],
+      "correct": ["a"],
+      "explanation": "Run the four questions and they all clear: you can check the suggestions because you know the material, the judgment stays with you, the input is your own work, and your syllabus permits it provided you say so. That last clause is the one people drop — permitted and disclosed are two separate requirements, and this syllabus asks for both.",
+      "reviewHref": "sections/5-using-it-honestly.html",
+      "reviewLabel": "Review Section 5"
+    },
+    {
+      "id": "q8-what-first",
+      "kind": "single",
+      "section": "6",
+      "prompt": "Your supervisor asks you to use AI to summarise a year of patron complaint emails, which contain names and detailed accounts. What do you do first?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Strip the identifying details out of the emails.",
+          "why": "This is likely part of the eventual answer, but not the first move. De-identifying before establishing whether the task should proceed in this form means you may do hours of careful work on a premise your supervisor has not actually examined — and de-identification here is genuinely hard, because a narrated incident can identify someone with every name removed."
+        },
+        {
+          "id": "b",
+          "text": "Raise the confidentiality problem with your supervisor and bring a workable alternative.",
+          "why": ""
+        },
+        {
+          "id": "c",
+          "text": "Check which AI tool has the strongest data protection and use that one.",
+          "why": "Right instinct applied at the wrong point. Choosing a well-protected tool matters, but it answers 'where should this go?' before anyone has answered 'should this go anywhere?'. Patron confidentiality is not resolved by a better destination."
+        },
+        {
+          "id": "d",
+          "text": "Do it manually over the week and say nothing — it avoids the problem entirely.",
+          "why": "Avoids the immediate risk and leaves the underlying misunderstanding fully intact. Your supervisor still believes this was a reasonable thing to ask, and will ask again. Quietly absorbing the cost of someone else's misunderstanding is a habit worth breaking."
+        }
+      ],
+      "correct": ["b"],
+      "explanation": "The ordering is the point. Patron confidentiality was never your supervisor's to waive, so the decision belongs with the person who owns it — and they have not yet realised there is a decision to make. Arriving with a proposal rather than only an objection is what keeps this from reading as obstruction, and it fixes the problem for the next request as well as this one.",
+      "reviewHref": "sections/6-deciding-when-to-use-it.html",
+      "reviewLabel": "Review Section 6"
+    },
+    {
+      "id": "q9-prompting",
+      "kind": "single",
+      "section": "7",
+      "prompt": "Someone shows you their prompt: “Write about climate policy. Be accurate and do not make anything up. This is really important to my career.” The output is generic. What is the single most useful change?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Say who it is for, what form it should take, and narrow the topic to a specific question.",
+          "why": ""
+        },
+        {
+          "id": "b",
+          "text": "Emphasise the accuracy instruction more strongly — put it in capitals or repeat it.",
+          "why": "Doubling a technique that does nothing does not make it do something. Accuracy is not a setting the model is declining to enable; fabrication follows from how output is produced. If anything, pressing harder on accuracy produces text that sounds more confident, which makes errors harder to spot."
+        },
+        {
+          "id": "c",
+          "text": "Remove the career line and leave the rest as it is.",
+          "why": "You are right that the career line is doing nothing — that piece of folklore does not hold up. But removing noise is not the same as adding signal. Delete it by all means; the output stays generic, because the prompt still does not say what is actually wanted."
+        },
+        {
+          "id": "d",
+          "text": "Ask it to write a longer response with more detail.",
+          "why": "More words on an unspecified topic produces more generic words. Length is not the missing ingredient — constraint is. A longer answer to 'write about climate policy' is still an answer to a question nobody really asked."
+        }
+      ],
+      "correct": ["a"],
+      "explanation": "Two of the three things in that prompt are superstition and the third is too vague to act on. What actually improves output is information the model did not otherwise have: who is reading, what form it should take, and which specific question you want answered. A useful filter for prompting advice generally — if a technique does not add information or produce something you can check, be sceptical of it.",
+      "reviewHref": "sections/7-getting-better-output.html",
+      "reviewLabel": "Review Section 7"
+    },
+    {
+      "id": "q10-judgment",
+      "kind": "multiple",
+      "section": "6",
+      "prompt": "You are facing a situation nobody has written a rule for. Select every question that belongs in your decision.",
+      "hint": "Select all that apply.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Can I check the output?",
+          "why": ""
+        },
+        {
+          "id": "b",
+          "text": "Does the judgment in this task belong to me?",
+          "why": ""
+        },
+        {
+          "id": "c",
+          "text": "Is the information I would put in mine to share?",
+          "why": ""
+        },
+        {
+          "id": "d",
+          "text": "Am I allowed to do this, and will I say that I did?",
+          "why": ""
+        },
+        {
+          "id": "e",
+          "text": "Would most people at my university probably do this?",
+          "why": "This is the one to leave out, and it is worth being clear about why. What colleagues happen to be doing is information about norms, not about whether something is defensible — and with a technology this new, widespread practice frequently runs ahead of anyone having thought it through. The other four give you an answer you can explain. This one only tells you that you would have company."
+        }
+      ],
+      "correct": ["a", "b", "c", "d"],
+      "explanation": "These four hold up in situations nobody anticipated, which is the point of having them — specific rules about specific tools go out of date within a semester. They also produce an answer you can articulate to a supervisor, an instructor, or a review board, which is a genuinely different thing from an answer you merely feel confident about.",
+      "reviewHref": "sections/6-deciding-when-to-use-it.html",
+      "reviewLabel": "Review Section 6"
+    }
+  ]
+}

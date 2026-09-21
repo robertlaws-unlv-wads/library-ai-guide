@@ -1,0 +1,62 @@
+# Content validation gate.
+#
+# This runs on pull requests ONLY. It is deliberately NOT part of the deploy
+# path: GitHub Pages serves this site straight from the `main` branch, so a
+# failure here is information, never an outage.
+#
+# It uses no actions beyond checkout and no npm packages at all. The scripts
+# it runs are Node standard library only. That is the point -- this repository
+# has no package.json, so there is no dependency tree to rot, no lockfile to
+# conflict, and nothing for a supply-chain compromise to reach.
+#
+# Node is preinstalled on the GitHub runner image, so we do not even need
+# actions/setup-node.
+
+name: Validate content
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show Node version
+        run: node --version
+
+      - name: Validate quiz and exercise content
+        run: node tools/validate-content.mjs
+
+      - name: Check internal links and section order
+        run: node tools/check-links.mjs
+
+      - name: Check header and footer have not drifted
+        run: node tools/check-chrome.mjs
+
+      - name: Confirm no dependencies were introduced
+        run: |
+          if [ -f package.json ]; then
+            echo "::error::A package.json has been added. This project is intentionally"
+            echo "::error::dependency-free -- see docs/MAINTENANCE.md before changing that."
+            exit 1
+          fi
+          echo "No package.json. Good."
+
+      - name: Confirm no third-party requests were introduced
+        run: |
+          # The privacy claim on the About page says every file comes from this
+          # site. Keep it true: no CDN scripts, no Google Fonts, no pixels.
+          if grep -rnE '(src|href)="https?://' --include='*.html' . \
+             | grep -vE 'creativecommons\.org|library\.unlv\.edu|unlv\.edu|ala\.org|doi\.org|github\.com|guides\.library\.unlv\.edu|docs\.github\.com' \
+             | grep -E '\.(js|css|woff2?)"' ; then
+            echo "::error::A third-party asset was added. Self-host it instead --"
+            echo "::error::about.html promises zero third-party requests."
+            exit 1
+          fi
+          echo "No third-party assets. Good."

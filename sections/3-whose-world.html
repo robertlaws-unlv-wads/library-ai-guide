@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Whose world does it describe? — AI Literacy Module — UNLV University Libraries</title>
+<meta name="description" content="How bias enters AI systems through data rather than intent, the difference between representational and allocative harm, and why AI writing detectors misfire on multilingual writers.">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-root="../">
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <p class="site-title">
+      <span class="site-title__org">UNLV University Libraries</span>
+      <a href="../index.html">AI Literacy Module</a>
+    </p>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../index.html">Start here</a></li>
+        <li><a href="../quiz.html">Quiz</a></li>
+        <li><a href="../summary.html">Summary</a></li>
+        <li><a href="../about.html">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<div class="wrap page-body prose">
+  <h1>Whose world does it describe?</h1>
+
+  <p class="lede">These systems learned from an enormous amount of human
+  writing, which means they learned what that writing contains — including
+  which people show up often and are described generously, and which do not.</p>
+
+  <div class="objectives">
+    <h2>In this section</h2>
+    <ul>
+      <li>How bias gets into a system nobody intended to make biased.</li>
+      <li>The difference between output that misrepresents and output that decides.</li>
+      <li>Why AI writing detectors are a live problem at this university.</li>
+    </ul>
+  </div>
+
+  <h2>Bias is inherited, not inserted</h2>
+
+  <p>People usually picture bias as someone putting their opinions into a
+  system. That happens occasionally and it is comparatively easy to find and
+  argue about. The common case is duller and much harder to see: a model
+  trained on a faithful record of an unequal world reproduces it accurately.</p>
+
+  <p>If most text about physicists describes men, the likely continuation
+  after &ldquo;the physicist said&rdquo; reflects that. If a language has
+  little presence online, the model is worse at it — and will still answer
+  confidently. If historical hiring data records who got hired, a model
+  trained on it learns who gets hired, not who should have.</p>
+
+  <p>Nobody decided any of this. That is the point, and it is why &ldquo;the
+  data is objective&rdquo; is not a defence. Data records outcomes, and
+  outcomes carry the conditions that produced them.</p>
+
+  <h2>Two different kinds of harm</h2>
+
+  <p>Worth separating, because they need different responses.</p>
+
+  <p><strong>Representational harm</strong> is about how people are depicted:
+  whose English is treated as correct, whose names get mangled or
+  &ldquo;corrected&rdquo;, who appears when you ask for an image of a
+  professor, which communities are described in flattened or stereotyped
+  terms. It is often subtle and cumulative.</p>
+
+  <p><strong>Allocative harm</strong> is about decisions made regarding
+  people: who gets flagged, screened out, prioritised, or investigated. This
+  is the one with immediate consequences, and it is where a biased system
+  stops being a bad description and starts being a bad outcome.</p>
+
+  <h2>Check yourself</h2>
+
+  <div class="exercise-mount" data-exercise="s3-check"></div>
+
+  <h2>Detectors, which are both kinds at once</h2>
+
+  <p>AI writing detectors estimate whether text was machine-generated. They
+  work by looking for statistical regularities — uniform sentence length,
+  limited vocabulary variation, predictable structure.</p>
+
+  <p>Those features also describe careful writing by someone composing in an
+  additional language. The result, found repeatedly in research on these
+  tools, is that multilingual writers are flagged at rates many times higher
+  than native English writers, on work they wrote themselves. Institutions
+  have been steadily backing away from these tools as the evidence has
+  accumulated; some have disabled them outright.</p>
+
+  <p>This is the clearest example in the module of the same problem landing on
+  both audiences from opposite directions. Students are the ones accused.
+  Staff are the ones asked what to do about it. Both need the same fact: a
+  detector score is not evidence. It is a probability estimate from a tool
+  with a known and unevenly distributed error rate.</p>
+
+  <div class="callout callout--caution">
+    <h2 class="callout__title">If this happens to you, or to someone at your desk</h2>
+    <p>The productive move is to shift the conversation from the score to the
+    process. Drafts, outlines, notes, browser or document version history,
+    and the ability to talk through the argument are all evidence of how the
+    work was done. A detector percentage is not. If you need support, UNLV's
+    <a href="https://www.unlv.edu/osrr">Office of Student Conduct</a> and the
+    Libraries can both point you to the right person.</p>
+  </div>
+
+  <h2>Closer to home</h2>
+
+  <p>Library systems have their own version of this. Subject headings carry
+  the assumptions of the era that wrote them. Discovery layers rank by
+  signals that favour what was already well-used, which tends to mean
+  English-language work from large publishers. Recommendation features
+  reinforce whatever is already visible. Adding an AI layer on top of those
+  systems does not neutralise any of it — it inherits all of it and adds
+  fluent prose, which makes it harder to notice.</p>
+
+  <div class="two-situations">
+    <h2 class="two-situations__title">Two situations, one principle</h2>
+    <div class="two-situations__grid">
+      <div class="two-situations__case">
+        <h4>Writing a paper</h4>
+        <p>You ask for &ldquo;the major scholars&rdquo; on a topic and get a
+        list. Ask yourself who is likely missing: work in other languages,
+        from smaller presses, or too recent to be well cited. The list is a
+        starting point, not a field.</p>
+      </div>
+      <div class="two-situations__case">
+        <h4>At a service desk</h4>
+        <p>A tool you are evaluating promises better relevance ranking. Ask
+        the vendor what it was trained on and what it does to material that
+        was historically under-discovered. &ldquo;It learns from user
+        behaviour&rdquo; is an answer worth following up on.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="takeaways">
+    <h2>Key takeaways</h2>
+    <ul>
+      <li>Bias is mostly inherited from data that accurately records an unequal past.</li>
+      <li>Separate harms of depiction from harms of decision — the second acts on people.</li>
+      <li>Detector scores are not evidence, and they misfire hardest on multilingual writers.</li>
+      <li>Shift from the score to the process: drafts, notes, version history.</li>
+    </ul>
+  </div>
+
+  <nav class="section-nav" aria-label="Section navigation">
+    <div class="section-nav__prev">
+      <a href="2-when-it-makes-things-up.html"><span class="section-nav__dir">Previous</span>When it makes things up</a>
+    </div>
+    <div class="section-nav__next">
+      <a href="4-what-not-to-paste.html"><span class="section-nav__dir">Next</span>What not to paste</a>
+    </div>
+  </nav>
+
+  <p class="meta">Last reviewed: September 2026.</p>
+
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>AI Literacy Module</strong> — University Libraries, University of Nevada, Las Vegas.</p>
+    <p>Content licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC&nbsp;BY&nbsp;4.0</a>.
+    <a href="../about.html">About this module, and how to report an accessibility barrier</a>.</p>
+  </div>
+</footer>
+
+<script src="../assets/js/schema.js"></script>
+<script src="../assets/js/engine.js"></script>
+<script src="../assets/js/exercises.js"></script>
+
+</body>
+</html>
